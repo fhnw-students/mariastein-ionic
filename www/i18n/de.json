@@ -1,0 +1,9 @@
+{
+  "LABEL": {
+    "MENU":     "Menu",
+    "WELCOME":  "Welcome",
+    "SETTINGS": "Settings",
+    "HISTORY":  "History",
+    "NEWS":     "News"
+  }
+}

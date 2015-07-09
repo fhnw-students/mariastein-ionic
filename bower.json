@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "lodash": "~3.10.0",
-    "angular-translate": "~2.7.2"
+    "angular-translate": "~2.7.2",
+    "angular-translate-loader-static-files": "~2.7.2"
   }
 }

@@ -2,8 +2,14 @@
   'use strict';
 
   angular.module('kmsscan.views', [
-    'kmsscan.views.chats',
-    'kmsscan.views.chatsDetail'
+
+    'kmsscan.views.Menu',
+    'kmsscan.views.Welcome',
+    'kmsscan.views.Tutorial',
+    'kmsscan.views.News',
+    'kmsscan.views.History',
+
+
   ]);
 
 }());
