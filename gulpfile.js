@@ -6,24 +6,45 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var browserSync = require('browser-sync');
+var reload = browserSync.reload;
 
 var paths = {
   sass: ['./scss/**/*.scss']
 };
 
-gulp.task('default', ['sass']);
+gulp.task('default', ['serve']);
+
+/**
+ * SERVE
+ * Creates a webserver and adds some watchers to automatically refresh your browser
+ */
+gulp.task('serve', ['sass'], function () {
+
+  browserSync({
+    server: {
+      baseDir: './www/',
+      index:   'index.html',
+      browser: 'Google Chrome',
+      open:    true
+    }
+  });
+
+  gulp.watch('./scss/ionic.app.scss', ['sass', browserSync.reload]);
+
+});
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
     .pipe(sass({
       errLogToConsole: true
     }))
-    .pipe(gulp.dest('./www/assets/css/'))
+    .pipe(gulp.dest('./www/css/'))
     .pipe(minifyCss({
       keepSpecialComments: 0
     }))
     .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('./www/assets/css/'))
+    .pipe(gulp.dest('./www/css/'))
     .on('end', done);
 });
 
