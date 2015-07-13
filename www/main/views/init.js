@@ -18,18 +18,18 @@
   }
 
 
-  function InitController(dataService, $state, $ionicHistory) {
+  function InitController(dataService, $state, $ionicHistory, $timeout) {
     var vm = this; // view-model
-    //dataService.loadCsv()
-    //  .then(function () {
-    //    $ionicHistory.nextViewOptions({
-    //      disableAnimate: true,
-    //      disableBack:    true
-    //    });
-    //    $state.go('welcome');
-    //  }).error(function (err) {
-    //    alert(err);
-    //  });
+    dataService.loadCsv()
+      .then(function () {
+        $timeout(function () {
+          $ionicHistory.nextViewOptions({
+            //disableAnimate: true,
+            disableBack:    true
+          });
+          $state.go('welcome');
+        }, 1000);
+      });
   }
 
 
