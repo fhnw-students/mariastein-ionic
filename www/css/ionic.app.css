@@ -7692,3 +7692,11 @@ a.button {
   opacity: 0;
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
+
+.footer-button {
+  padding: 0; }
+
+.footer-button .button.button-full {
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0; }
