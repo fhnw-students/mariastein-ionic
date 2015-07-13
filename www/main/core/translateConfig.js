@@ -5,7 +5,7 @@
     .config(TranslateConfig);
 
   function TranslateConfig($translateProvider) {
-    $translateProvider.useSanitizeValueStrategy('sanitize');
+//    $translateProvider.useSanitizeValueStrategy('sanitize');
     $translateProvider.preferredLanguage('en');
     $translateProvider.useStaticFilesLoader({
       prefix: './i18n/',

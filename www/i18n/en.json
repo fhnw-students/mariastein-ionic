@@ -5,6 +5,10 @@
     "SETTINGS": "Settings",
     "HISTORY": "History",
     "NEWS": "News",
-    "SCAN": "Scan"
+    "SCAN": "Scan",
+    "TUTORIAL": "Open Tutorial",
+    "CONTACT": "Contact",
+    "LANGUAGE": "Language",
+    "FONTSIZE": "Font Size"
   }
 }

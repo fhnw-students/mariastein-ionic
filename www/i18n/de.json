@@ -1,0 +1,14 @@
+{
+  "LABEL": {
+    "MENU": "Menu",
+    "WELCOME": "Willkommen",
+    "SETTINGS": "Einstellungen",
+    "HISTORY": "Letzte Scans",
+    "NEWS": "Neuigkeiten",
+    "SCAN": "Scannen",
+    "TUTORIAL": "Tutorial Starten",
+    "CONTACT": "Kontakt",
+    "LANGUAGE": "Sprache",
+    "FONTSIZE": "Schriftgrösse"
+  }
+}

@@ -15,8 +15,14 @@
       });
   }
 
-  function MenuController() {
+  function MenuController($translate) {
     var vm = this;
+
+    vm.language = angular.uppercase($translate.use());
+
+    vm.onLanguageChange = function (){
+        $translate.use(vm.language.toLowerCase());
+    };
 
   }
 
