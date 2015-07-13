@@ -29,13 +29,14 @@
     ////////////////
 
     function scan() {
-      $cordovaBarcodeScanner.scan()
-        .then(function (barcodeData) {
-          itemFound(barcodeData.text);
-        }, function (error) {
-
-          itemFound();
-        });
+      if (device) {
+        $cordovaBarcodeScanner.scan()
+          .then(function (barcodeData) {
+            itemFound(barcodeData.text);
+          }, function (error) {
+            itemFound();
+          });
+      }
     }
 
     function itemFound(id) {
