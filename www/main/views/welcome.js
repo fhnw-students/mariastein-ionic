@@ -1,7 +1,9 @@
 (function () {
   'use strict';
 
-  angular.module('kmsscan.views.Welcome', [])
+  angular.module('kmsscan.views.Welcome', [
+      'kmsscan.services.BarcodeScanner'
+  ])
     .config(StateConfig)
     .controller('WelcomeCtrl', WelcomeController);
 
@@ -16,10 +18,12 @@
   }
 
 
-  function WelcomeController() {
+  function WelcomeController(barcodeScanner) {
     var wm = this;  // view-model
 
-    // Code goes here
+    wm.scan = function () {
+      barcodeScanner.scan();
+    };
 
   }
 
