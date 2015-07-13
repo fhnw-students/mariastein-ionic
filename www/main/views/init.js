@@ -1,7 +1,9 @@
 (function () {
   'use strict';
 
-  angular.module('kmsscan.views.Init', [])
+  angular.module('kmsscan.views.Init', [
+    'kmsscan.services.Data'
+  ])
     .config(StateConfig)
     .controller('InitCtrl', InitController);
 
@@ -16,10 +18,16 @@
   }
 
 
-  function InitController() {
+  function InitController(dataService, $state, $ionicHistory) {
     var vm = this; // view-model
-
-    // Code goes here
+    dataService.loadCsv()
+      .then(function () {
+        $ionicHistory.nextViewOptions({
+          disableAnimate: true,
+          disableBack:    true
+        });
+        $state.go('welcome');
+      });
 
   }
 

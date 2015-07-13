@@ -7,9 +7,7 @@
     .run(run);
 
   function run($log, dataService) {
-    dataService.loadCsv();
-    $log.info(dataService.get());
-    $log.info(dataService.get(3));
+    //dataService.loadCsv();
   }
 
 }());
