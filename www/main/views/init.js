@@ -20,15 +20,16 @@
 
   function InitController(dataService, $state, $ionicHistory) {
     var vm = this; // view-model
-    dataService.loadCsv()
-      .then(function () {
-        $ionicHistory.nextViewOptions({
-          disableAnimate: true,
-          disableBack:    true
-        });
-        $state.go('welcome');
-      });
-
+    //dataService.loadCsv()
+    //  .then(function () {
+    //    $ionicHistory.nextViewOptions({
+    //      disableAnimate: true,
+    //      disableBack:    true
+    //    });
+    //    $state.go('welcome');
+    //  }).error(function (err) {
+    //    alert(err);
+    //  });
   }
 
 
