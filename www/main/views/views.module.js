@@ -7,7 +7,7 @@
     'kmsscan.views.Welcome',
     'kmsscan.views.Tutorial',
     'kmsscan.views.News',
-    'kmsscan.views.History',
+    'kmsscan.views.History'
 
 
   ]);
