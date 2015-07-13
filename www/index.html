@@ -14,17 +14,23 @@
     <script src="lib/angular-sanitize/angular-sanitize.js"></script>
     <script src="lib/angular-translate/angular-translate.min.js"></script>
     <script src="lib/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+    <script src="lib/papaparse/papaparse.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
     <script src="main/app.js"></script>
+    <script src="main/services/services.module.js"></script>
+    <script src="main/views/views.module.js"></script>
     <script src="main/core/ionicPlatform.js"></script>
     <script src="main/core/routerConfig.js"></script>
     <script src="main/core/translateConfig.js"></script>
-    <script src="main/services/chats.services.js"></script>
-    <script src="main/views/views.module.js"></script>
+    <script src="main/services/barcodeScanner.service.js"></script>
+    <script src="main/services/data.service.js"></script>
+    <script src="main/app.run.js"></script>
+    <script src="main/views/init.js"></script>
     <script src="main/views/tutorial.js"></script>
     <script src="main/views/welcome.js"></script>
     <script src="main/views/history.js"></script>

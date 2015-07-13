@@ -5,6 +5,7 @@
 
     // Libaries
     'ionic',
+    'ngCordova',
     'ngSanitize',
     'pascalprecht.translate',
 
@@ -12,6 +13,9 @@
     'kmsscan.ionicPlatform',
     'kmsscan.routerConfig',
     'kmsscan.translateConfig',
+
+    'kmsscan.services',
+    'kmsscan.run',
 
     // Views
     'kmsscan.views'

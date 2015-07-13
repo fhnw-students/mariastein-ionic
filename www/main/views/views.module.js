@@ -3,6 +3,7 @@
 
   angular.module('kmsscan.views', [
 
+    'kmsscan.views.Init',
     'kmsscan.views.Menu',
     'kmsscan.views.Welcome',
     'kmsscan.views.Tutorial',
