@@ -7,7 +7,6 @@
     .run(run);
 
   function run($log, dataService, barcodeScanner, $rootScope) {
-
     $rootScope.scan = barcodeScanner.scan;
     //dataService.loadCsv();
   }

@@ -13,6 +13,7 @@
     var service = {
       isFulfilled: isFulfilled,
       loadCsv:     loadCsv,
+      has:         has,
       get:         get
     };
 
@@ -50,6 +51,16 @@
           }
         }
       }
+    }
+
+    function has(id) {
+      var bol = false;
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].ID === id.toString()) {
+          bol = true;
+        }
+      }
+      return bol;
     }
 
 

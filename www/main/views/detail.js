@@ -20,6 +20,7 @@
     var vm = this; // view-model
 
     vm.item = dataService.get($stateParams.id);
+
     console.log(vm.item);
     console.log($stateParams);
 

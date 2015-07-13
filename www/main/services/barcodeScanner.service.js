@@ -1,16 +1,17 @@
-var barcodeScanner = (function () {
+(function () {
   'use strict';
 
   angular
     .module('kmsscan.services.BarcodeScanner', [
-      'ngCordova'
+      'ngCordova',
+      'kmsscan.services.Data'
     ])
     .factory('barcodeScanner', BarcodeScanner);
 
-  BarcodeScanner.$inject = ['$q', '$cordovaBarcodeScanner', '$ionicPlatform'];
+  BarcodeScanner.$inject = ['$q', '$cordovaBarcodeScanner', '$ionicPlatform', '$state', 'dataService'];
 
   /* @ngInject */
-  function BarcodeScanner($q, $cordovaBarcodeScanner, $ionicPlatform) {
+  function BarcodeScanner($q, $cordovaBarcodeScanner, $ionicPlatform, $state, dataService) {
 
     var device = false;
     $ionicPlatform.ready(function () {
@@ -21,24 +22,31 @@ var barcodeScanner = (function () {
       scan: scan
     };
 
+    window.barcodeScanner = itemFound;
+
     return service;
 
     ////////////////
 
-    function scan(value) {
-      if (device && value) {
-        var deferred = $q.defer();
-        deferred.resolve(barcode);
-        return deferred.promise;
-      }
-      return $cordovaBarcodeScanner.scan();
+    function scan() {
+      $cordovaBarcodeScanner.scan()
+        .then(function (barcodeData) {
+          itemFound(barcodeData.text);
+        }, function (error) {
 
+          itemFound();
+        });
+    }
+
+    function itemFound(id) {
+      if (id && dataService.has(id)) {
+        $state.go('detail', {id: id});
+      } else {
+        $state.go('notFound');
+      }
     }
 
   }
 
-  return function (value) {
-    console.log(value);
-  }
 
 })();
