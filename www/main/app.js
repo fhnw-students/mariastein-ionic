@@ -15,6 +15,7 @@
     'kmsscan.translateConfig',
 
     'kmsscan.services',
+    'kmsscan.directives',
     'kmsscan.run',
 
     // Views
