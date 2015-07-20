@@ -1,25 +1,32 @@
 (function () {
   'use strict';
 
-  angular.module('kmsscan.views.Detail', [])
+  angular.module('kmsscan.views.Detail', [
+    'kmsscan.services.History'
+  ])
     .config(StateConfig)
     .controller('DetailCtrl', DetailController);
 
 
   function StateConfig($stateProvider) {
     $stateProvider
-      .state('detail', {
+      .state('menu.detail', {
         url:         '/detail/:id',
-        templateUrl: 'main/views/detail.html',
-        controller:  'DetailCtrl as detail'
+        views: {
+          'menuContent': {
+            templateUrl: 'main/views/detail.html',
+            controller:  'DetailCtrl as detail'
+          }
+        }
+
       });
   }
 
 
-  function DetailController($stateParams, dataService) {
+  function DetailController($stateParams, historyService) {
     var vm = this; // view-model
 
-    vm.item = dataService.get($stateParams.id);
+    vm.item = historyService.get($stateParams.id);
 
     console.log(vm.item);
     console.log($stateParams);
