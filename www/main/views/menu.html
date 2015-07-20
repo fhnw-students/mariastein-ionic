@@ -37,7 +37,7 @@
                     <i class="icon ion-chevron-right icon-accessory"></i>
                 </ion-item>
 
-                <ion-item menu-close class="item-icon-left item-icon-left item-icon-right" type="item-text-wrap" href="#/menu/contact">
+                <ion-item menu-close class="item-icon-left item-icon-right" type="item-text-wrap" href="#/menu/contact">
                     <i class="icon ion-person"></i>
                     {{ 'LABEL.CONTACT' | translate }}
                     <i class="icon ion-chevron-right icon-accessory"></i>
@@ -51,14 +51,25 @@
                 <ion-item class="item-select" type="item-text-wrap">
                     <i class=""></i>
                     {{ 'LABEL.LANGUAGE' | translate }}
-                <span class="item-note">
-                <select ng-model="menu.language" ng-change="menu.onLanguageChange()">
-                    <option>DE</option>
-                    <option>EN</option>
-                    <option>FR</option>
-                </select>
-                </span>
+                    <span class="item-note">
+                        <select ng-model="menu.language" ng-change="menu.onLanguageChange()">
+                            <option>DE</option>
+                            <option>EN</option>
+                            <option>FR</option>
+                        </select>
+                    </span>
                 </ion-item>
+
+                <ion-item type="item-text-wrap" class="item item-toggle">
+                    {{ 'LABEL.VIBRATION' | translate }}
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <div class="track">
+                            <div class="handle" ng-model="menu.vibration" ng-chane="menu.onVibraChange()"></div>
+                        </div>
+                    </label>
+                </ion-item>
+
                 <!--
                 <ion-item class="item-select" type="item-text-wrap">
                 <i class=""></i>

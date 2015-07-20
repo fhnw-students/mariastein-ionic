@@ -22,7 +22,7 @@
     }
 
 
-    function ScanController($cordovaBarcodeScanner, historyService, $timeout) {
+    function ScanController($cordovaBarcodeScanner, historyService, $cordovaVibration) {
         var vm = this; // view-model
         vm.isReady = false;
         vm.barcodeText = "";
@@ -47,6 +47,7 @@
             $cordovaBarcodeScanner
                 .scan()
                 .then(function (barcodeData) {
+                    $cordovaVibration.vibrate(100);
                     if (barcodeData.cancelled !== 1){
                         if (barcodeData.format == "QR_CODE") {
                             vm.data = barcodeData.text;
@@ -72,10 +73,6 @@
             if (vm.barcodeText !== ""){
                 historyService.add(vm.barcodeText);
                 vm.barcodeText="";
-                //vm.submitted = true;
-                //$timeout(function(){
-                //    vm.submitted = false;
-                //}, 2000);
             }
         }
 
