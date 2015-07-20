@@ -14,26 +14,26 @@ var paths = {
   sass: ['./scss/**/*.scss']
 };
 
-gulp.task('default', ['serve']);
+gulp.task('default', ['sass']);
 
-/**
- * SERVE
- * Creates a webserver and adds some watchers to automatically refresh your browser
- */
-gulp.task('serve', ['sass'], function () {
-
-  browserSync({
-    server: {
-      baseDir: './www/',
-      index:   'index.html',
-      browser: 'Google Chrome',
-      open:    true
-    }
-  });
-
-  gulp.watch('./scss/ionic.app.scss', ['sass', browserSync.reload]);
-
-});
+///**
+// * SERVE
+// * Creates a webserver and adds some watchers to automatically refresh your browser
+// */
+//gulp.task('serve', ['sass'], function () {
+//
+//  browserSync({
+//    server: {
+//      baseDir: './www/',
+//      index:   'index.html',
+//      browser: 'Google Chrome',
+//      open:    true
+//    }
+//  });
+//
+//  gulp.watch('./scss/ionic.app.scss', ['sass', browserSync.reload]);
+//
+//});
 
 gulp.task('sass', function (done) {
   gulp.src('./scss/ionic.app.scss')
