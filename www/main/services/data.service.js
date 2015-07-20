@@ -5,7 +5,7 @@
     .module('kmsscan.services.Data', [])
     .factory('dataService', DataService);
 
-  function DataService($http, $q) {
+  function DataService($http, $q, $log) {
 
     var data = [];
     var fulfilled = false;
@@ -32,6 +32,7 @@
           fulfilled = true;
           var result = Papa.parse(res, {header: true});
           data = result.data;
+          $log.info('data: ', data.length);
           deferred.resolve(data);
         })
         .error(function (err) {

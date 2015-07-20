@@ -11,7 +11,7 @@
   function StateConfig($stateProvider) {
     $stateProvider
       .state('menu.detail', {
-        url:         '/detail/:id',
+        url:   '/detail/:id',
         views: {
           'menuContent': {
             templateUrl: 'main/views/detail.html',
@@ -25,8 +25,12 @@
 
   function DetailController($stateParams, historyService) {
     var vm = this; // view-model
+    vm.item = {};
 
-    vm.item = historyService.get($stateParams.id);
+    historyService.get($stateParams.id)
+      .then(function (result) {
+        vm.item = result;
+      });
 
     console.log(vm.item);
     console.log($stateParams);

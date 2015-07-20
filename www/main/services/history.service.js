@@ -29,8 +29,9 @@
         .then(function (result) {
           if (result !== null) {
             history = JSON.parse(result);
+            $log.info('history: ', history.length, history)
           }
-          deferred.resolve(history);
+          deferred.resolve();
         })
         .catch(function (err) {
           $log.error(err);
@@ -42,11 +43,12 @@
     function add(id) {
       id = id.toString();
       var deferred = $q.defer();
-      var idx = _.findIndex(history, function(item){
-        return item.data.ID = id;
+      var idx = _.findIndex(history, function (item) {
+        return item.data.ID === id;
       });
       if (idx >= 0) {
         history[idx].stamp = new Date().getTime();
+        history[idx].data = dataService.get(history[idx].data.ID);
         $localForage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
         deferred.resolve(history[idx]);
       } else {
@@ -83,9 +85,9 @@
       if (!id) {
         deferred.resolve(history);
       } else {
-        return _.find(history, function(item){
-          deferred.resolve(item.data.ID = id);
-        });
+        deferred.resolve(_.find(history, function (item) {
+          return item.data.ID === id;
+        }));
       }
       return deferred.promise;
     }
