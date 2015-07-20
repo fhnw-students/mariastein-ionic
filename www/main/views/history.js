@@ -28,7 +28,7 @@
     vm.list = [];
     historyService.get()
       .then(function (result) {
-        vm.list = _.map(_.sortByOrder(result, ['date'], ['desc']), _.values);
+        vm.list = _.map(_.sortByOrder(result, ['stamp'], ['desc']), _.values);
       });
 
 
