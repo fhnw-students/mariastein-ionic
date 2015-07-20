@@ -34,12 +34,10 @@
       vm.scan();
     }
 
-
     document.addEventListener("deviceready", function () {
       vm.isReady = true;
       vm.scan();
     }, false);
-
 
     //////////////////////////////////////////
 
@@ -47,11 +45,10 @@
       $cordovaBarcodeScanner
         .scan()
         .then(function (barcodeData) {
+          $cordovaVibration.vibrate(100);
           if (barcodeData.cancelled !== 1) {
             if (barcodeData.format == "QR_CODE") {
               afterScan(barcodeData.text);
-
-
               vm.format = false;
               vm.cancel = false;
             } else {
@@ -90,11 +87,6 @@
     function submit() {
       if (vm.barcodeText !== "") {
         afterScan(vm.barcodeText);
-        //vm.barcodeText="";
-        //vm.submitted = true;
-        //$timeout(function(){
-        //    vm.submitted = false;
-        //}, 2000);
       }
     }
 

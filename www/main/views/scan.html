@@ -16,16 +16,10 @@
                     </div>
                 </form>
             </span>
-            <span ng-if="scan.submitted"><br/>{{ 'MESSAGE.SCANSUBMITTED' | translate }}</span>
             <span ng-if="!(scan.format || scan.cancel || !scan.isReady)">{{ 'MESSAGE.SCAN' | translate }}</span>
             <span ng-if="scan.format">{{ 'MESSAGE.SCANWRONGFORMAT' | translate }}</span>
             <span ng-if="scan.cancel">{{ 'MESSAGE.SCANCANCELLED' | translate }}</span>
-
-
         </h3>
-
-        <pre>{{scan.data|json}}</pre>
-
     </ion-content>
     <ion-footer-bar class="footer-button">
         <button class="button button-full button-positive ion-qr-scanner" on-tap="scan.scan()">

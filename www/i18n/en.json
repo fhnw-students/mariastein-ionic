@@ -12,14 +12,13 @@
     "LANGUAGE": "Language",
     "FONTSIZE": "Font Size",
     "NOT_FOUND": "Not found",
-    "SUBMITBUTTON": "Submit"
+    "SUBMITBUTTON": "Submit",
+    "VIBRATION": "Vibration"
   },
   "MESSAGE": {
     "NOT_FOUND": "No item was found. Please try again!",
-    "INIT": "Content is loading, please wait...",
     "SCAN": "scanning...",
     "SCANCANCELLED": "scanning cancelled",
-    "SCANWRONGFORMAT": "wrong barcode format",
-    "SCANSUBMITTED": "code successfully submitted"
+    "SCANWRONGFORMAT": "wrong barcode format"
   }
 }
