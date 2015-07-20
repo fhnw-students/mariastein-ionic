@@ -29,6 +29,11 @@
         .then(function(){
           vm.language = $rootScope.settings.language.toUpperCase();
           $translate.use(vm.language.toLowerCase());
+          if ($rootScope.settings.vibration != 0){
+            vm.vibration = true;
+          } else {
+            vm.vibration = false;
+          }
         });
 
 

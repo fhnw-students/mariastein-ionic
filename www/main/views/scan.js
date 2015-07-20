@@ -22,7 +22,7 @@
   }
 
 
-  function ScanController($cordovaBarcodeScanner, historyService, $state, $rootScope) {
+  function ScanController($cordovaBarcodeScanner, $cordovaVibration, historyService, $state, $rootScope) {
     var vm = this; // view-model
     vm.isReady = false;
     vm.barcodeText = "";
