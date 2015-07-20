@@ -10,13 +10,15 @@
     "CONTACT": "Contact",
     "LANGUAGE": "Language",
     "FONTSIZE": "Font Size",
-    "NOT_FOUND": "Not found"
+    "NOT_FOUND": "Not found",
+    "SUBMITBUTTON": "Submit"
   },
   "MESSAGE": {
     "NOT_FOUND": "No item was found. Please try again!",
     "INIT": "Content is loading, please wait...",
     "SCAN": "scanning...",
     "SCANCANCELLED": "scanning cancelled",
-    "SCANWRONGFORMAT": "wrong barcode format"
+    "SCANWRONGFORMAT": "wrong barcode format",
+    "SCANSUBMITTED": "code successfully submitted"
   }
 }

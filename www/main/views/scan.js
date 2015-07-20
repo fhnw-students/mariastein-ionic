@@ -22,18 +22,21 @@
     }
 
 
-    function ScanController($cordovaBarcodeScanner, historyService) {
+    function ScanController($cordovaBarcodeScanner, historyService, $timeout) {
         var vm = this; // view-model
-        var isReady = false;
+        vm.isReady = false;
+        vm.barcodeText = "";
 
         vm.scan = scan;
+        vm.submit = submit;
 
-        if (isReady) {
+        if (vm.isReady) {
             vm.scan();
         }
 
+
         document.addEventListener("deviceready", function () {
-            isReady = true;
+            vm.isReady = true;
             vm.scan();
         }, false);
 
@@ -63,7 +66,17 @@
                     //vm.data = error;
                     // An error occurred
                 });
+        }
 
+        function submit(){
+            if (vm.barcodeText !== ""){
+                historyService.add(vm.barcodeText);
+                vm.barcodeText="";
+                //vm.submitted = true;
+                //$timeout(function(){
+                //    vm.submitted = false;
+                //}, 2000);
+            }
         }
 
     }

@@ -3,7 +3,21 @@
         <h3 style="text-align: center; margin-top: 2em;">
             <i class="ion-qr-scanner big-icon"></i>
             <br/>
-            <span ng-if="!(scan.format || scan.cancel)">{{ 'MESSAGE.SCAN' | translate }}</span>
+            <span ng-if="!scan.isReady">
+                <form ng-submit="scan.submit()">
+                    <div class="item item-input-inset">
+                        <label class="item-input-wrapper">
+                            <i class="icon ion-search placeholder-icon"></i>
+                            <input type="text" placeholder="QR-Code" ng-model="scan.barcodeText">
+                        </label>
+                        <button class="button button-small" ng-click="scan.submit()">
+                            {{ 'LABEL.SUBMITBUTTON' | translate }}
+                        </button>
+                    </div>
+                </form>
+            </span>
+            <span ng-if="scan.submitted"><br/>{{ 'MESSAGE.SCANSUBMITTED' | translate }}</span>
+            <span ng-if="!(scan.format || scan.cancel || !scan.isReady)">{{ 'MESSAGE.SCAN' | translate }}</span>
             <span ng-if="scan.format">{{ 'MESSAGE.SCANWRONGFORMAT' | translate }}</span>
             <span ng-if="scan.cancel">{{ 'MESSAGE.SCANCANCELLED' | translate }}</span>
 
