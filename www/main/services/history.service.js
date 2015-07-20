@@ -47,6 +47,8 @@
       });
       if (idx >= 0) {
         history[idx].stamp = new Date().getTime();
+        $localForage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
+        deferred.resolve(history[idx]);
       } else {
         if (dataService.has(id)) {
           var newItem = {
@@ -77,13 +79,15 @@
     }
 
     function get(id) {
+      var deferred = $q.defer();
       if (!id) {
-        return history;
+        deferred.resolve(history);
       } else {
         return _.find(history, function(item){
-          return item.data.ID = id;
+          deferred.resolve(item.data.ID = id);
         });
       }
+      return deferred.promise;
     }
 
   }
