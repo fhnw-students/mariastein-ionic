@@ -24,10 +24,10 @@
       .then(function () {
         $timeout(function () {
           $ionicHistory.nextViewOptions({
-            //disableAnimate: true,
+            disableAnimate: false,
             disableBack:    true
           });
-          $state.go('welcome');
+          $state.go('menu.welcome');
         }, 1000);
       });
   }

@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('kmsscan.views.Welcome', [
-      'kmsscan.services.BarcodeScanner'
+    'kmsscan.services.BarcodeScanner'
   ])
     .config(StateConfig)
     .controller('WelcomeCtrl', WelcomeController);
@@ -10,10 +10,14 @@
 
   function StateConfig($stateProvider) {
     $stateProvider
-      .state('welcome', {
-        url:         '/welcome',
-        templateUrl: 'main/views/welcome.html',
-        controller:  'WelcomeCtrl as welcome'
+      .state('menu.welcome', {
+        url:   '/welcome',
+        views: {
+          'menuContent': {
+            templateUrl: 'main/views/welcome.html',
+            controller:  'WelcomeCtrl as welcome'
+          }
+        }
       });
   }
 

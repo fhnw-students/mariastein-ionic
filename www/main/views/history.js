@@ -8,10 +8,14 @@
 
   function StateConfig($stateProvider) {
     $stateProvider
-      .state('history', {
-        url:         '/history',
-        templateUrl: 'main/views/history.html',
-        controller:  'HistoryCtrl as history'
+      .state('menu.history', {
+        url:   '/history',
+        views: {
+          'menuContent': {
+            templateUrl: 'main/views/history.html',
+            controller:  'HistoryCtrl as history'
+          }
+        }
       });
   }
 

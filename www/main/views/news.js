@@ -8,10 +8,14 @@
 
   function StateConfig($stateProvider) {
     $stateProvider
-      .state('news', {
-        url:         '/news',
-        templateUrl: 'main/views/news.html',
-        controller:  'NewsCtrl as welcome'
+      .state('menu.news', {
+        url:   '/news',
+        views: {
+          'menuContent': {
+            templateUrl: 'main/views/news.html',
+            controller:  'NewsCtrl as news'
+          }
+        }
       });
   }
 

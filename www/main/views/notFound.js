@@ -8,10 +8,14 @@
 
   function StateConfig($stateProvider) {
     $stateProvider
-      .state('notFound', {
-        url:         '/notFound',
-        templateUrl: 'main/views/notFound.html',
-        controller:  'NotFoundCtrl as notFound'
+      .state('menu.notFound', {
+        url:   '/not-found',
+        views: {
+          'menuContent': {
+            templateUrl: 'main/views/notFound.html',
+            controller:  'NotFoundCtrl as notFound'
+          }
+        }
       });
   }
 

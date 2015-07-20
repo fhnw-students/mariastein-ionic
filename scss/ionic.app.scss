@@ -30,3 +30,16 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   margin-top: 0;
   margin-bottom: 0;
 }
+
+.big-icon{
+  font-size: 8em;
+  color: $scroll-refresh-icon-color;
+  text-align: center;
+}
+
+.spinner svg {
+  width: 44px;
+  height: 44px;
+  stroke: $scroll-refresh-icon-color;;
+  fill: $scroll-refresh-icon-color;;
+}

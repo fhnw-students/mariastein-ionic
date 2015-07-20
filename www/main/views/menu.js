@@ -10,6 +10,7 @@
     $stateProvider
       .state('menu', {
         url:         '/menu',
+        abstract:    true,
         templateUrl: 'main/views/menu.html',
         controller:  'MenuCtrl as menu'
       });
@@ -20,8 +21,8 @@
 
     vm.language = angular.uppercase($translate.use());
 
-    vm.onLanguageChange = function (){
-        $translate.use(vm.language.toLowerCase());
+    vm.onLanguageChange = function () {
+      $translate.use(vm.language.toLowerCase());
     };
 
   }

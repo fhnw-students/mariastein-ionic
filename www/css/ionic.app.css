@@ -7700,3 +7700,14 @@ a.button {
   width: 100%;
   margin-top: 0;
   margin-bottom: 0; }
+
+.big-icon {
+  font-size: 8em;
+  color: #666666;
+  text-align: center; }
+
+.spinner svg {
+  width: 44px;
+  height: 44px;
+  stroke: #666666;
+  fill: #666666; }

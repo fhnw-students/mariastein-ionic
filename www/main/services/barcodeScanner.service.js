@@ -34,7 +34,7 @@
           .then(function (barcodeData) {
             itemFound(barcodeData.text);
           }, function (error) {
-            itemFound();
+            //itemFound();
           });
       }
     }
