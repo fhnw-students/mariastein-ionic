@@ -1,7 +1,9 @@
 (function () {
     'use strict';
 
-    angular.module('kmsscan.views.Scan', [])
+    angular.module('kmsscan.views.Scan', [
+        'kmsscan.services.History'
+    ])
         .config(StateConfig)
         .controller('ScanCtrl', ScanController);
 
@@ -20,7 +22,7 @@
     }
 
 
-    function ScanController($cordovaBarcodeScanner) {
+    function ScanController($cordovaBarcodeScanner, historyService) {
         var vm = this; // view-model
         var isReady = false;
 
@@ -45,6 +47,7 @@
                     if (barcodeData.cancelled !== 1){
                         if (barcodeData.format == "QR_CODE") {
                             vm.data = barcodeData.text;
+                            historyService.add(vm.data);
                             vm.format = false;
                             vm.cancel = false;
                         } else {

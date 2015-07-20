@@ -1,6 +1,15 @@
 <ion-view view-title="{{ 'LABEL.HISTORY' | translate }}">
     <ion-content class="padding">
-        <h1>{{ 'LABEL.HISTORY' | translate }}</h1>
-        <p>Content</p>
+        <ion-list>
+
+            <ion-list>
+                <ion-item ng-repeat="item in history.list">
+                    {{item[0]}}
+                </ion-item>
+            </ion-list>
+
+            <pre>{{history.list|json}}</pre>
+
+        </ion-list>
     </ion-content>
 </ion-view>
