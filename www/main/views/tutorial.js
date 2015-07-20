@@ -8,19 +8,26 @@
 
   function StateConfig($stateProvider) {
     $stateProvider
-      .state('tutorial', {
+      .state('menu.tutorial', {
         url:         '/tutorial',
-        templateUrl: 'main/views/tutorial.html',
-        controller:  'TutorialCtrl as tutorial'
+        views: {
+                  'menuContent': {
+                    templateUrl: 'main/views/tutorial.html',
+                    controller:  'TutorialCtrl as tutorial'
+                  }
+               }
       });
   }
 
 
-  function TutorialController() {
+  function TutorialController($translate) {
     var vm = this; // view-model
 
-    // Code goes here
+    vm.language = angular.uppercase($translate.use());
 
+        vm.onLanguageChange = function () {
+          $translate.use(vm.language.toLowerCase());
+        };
   }
 
 
