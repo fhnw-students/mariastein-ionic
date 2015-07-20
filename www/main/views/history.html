@@ -3,7 +3,7 @@
         <ion-list>
 
             <ion-list>
-                <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="item in history.list" href="#/menu/welcome">
+                <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="item in history.list" href="#/menu/detail/{{item[0]}}">
                     <img src="./img/welcome.jpg">
                     <h2>{{item[0]}}</h2>
                     <p>{{item[1]}}</p>
