@@ -8,11 +8,15 @@
 
   function StateConfig($stateProvider) {
     $stateProvider
-      .state('contact', {
-        url:         '/contact',
-        templateUrl: 'main/views/contact.html',
-        controller:  'ContactCtrl as contact'
-      });
+        .state('menu.contact', {
+          url:   '/contact',
+          views: {
+            'menuContent': {
+              templateUrl: 'main/views/contact.html',
+              controller:  'ContactCtrl as contact'
+            }
+          }
+        });
   }
 
 

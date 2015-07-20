@@ -1,14 +1,33 @@
 <ion-view view-title="{{ 'LABEL.CONTACT' | translate }}">
-    <ion-nav-bar class="bar-positive">
+    <!--<ion-nav-bar class="bar-positive">
         <ion-nav-back-button></ion-nav-back-button>
 
         <ion-nav-buttons side="right">
             <kms-nav-menu-button></kms-nav-menu-button>
         </ion-nav-buttons>
-    </ion-nav-bar>
+    </ion-nav-bar> -->
     <ion-content class="padding">
 
-        <p>content</p>
+        <h2>
+            {{'LABEL.CONTACT_NAME' | translate}}
+            <br>
+            {{'LABEL.POSTAL_CODE' | translate}}
+            {{'LABEL.CITY' | translate}}
+            <br>
+            <a href="tel:{{'LABEL.TELEPHONE_NO' | translate}}">
+                +41 (0)61 735 11 11
+            </a>
+            <br>
+            <a href="mailto:{{'LABEL.CONTACT_EMAIL' | translate}}">
+                E-Mail
+            </a>
+            <br>
+            <br>
+            <a href="https://www.google.com/maps/preview/@47.475243,7.491205,15z">
+                Google Maps
+            </a>
+        </h2>
+
 
     </ion-content>
 </ion-view>

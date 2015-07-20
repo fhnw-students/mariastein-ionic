@@ -10,7 +10,12 @@
     "CONTACT": "Contact",
     "LANGUAGE": "Language",
     "FONTSIZE": "Font Size",
-    "NOT_FOUND": "Not found"
+    "NOT_FOUND": "Not found",
+    "CONTACT_NAME": "Benediktinerkloster Mariastein",
+    "POSTAL_CODE": "CH-4115",
+    "CITY": "Mariastein",
+    "TELEPHONE_NO": "+41 61 735 11 11",
+    "CONTACT_EMAIL": "info@kloster-mariastein.ch"
   },
   "MESSAGE": {
     "NOT_FOUND": "No item was found. Please try again!",

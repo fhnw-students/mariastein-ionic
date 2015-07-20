@@ -9,6 +9,11 @@
     "TUTORIAL": "Tutorial",
     "CONTACT": "Kontakt",
     "LANGUAGE": "Sprache",
-    "FONTSIZE": "Schriftgrösse"
+    "FONTSIZE": "Schriftgrösse",
+    "CONTACT_NAME": "Benediktinerkloster Mariastein",
+    "POSTAL_CODE": "CH-4115",
+    "CITY": "Mariastein",
+    "TELEPHONE_NO": "+41 (0)61 735 11 11",
+    "CONTACT_EMAIL": "info@kloster-mariastein.ch"
   }
 }
