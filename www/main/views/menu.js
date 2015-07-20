@@ -21,13 +21,16 @@
     var vm = this;
 
     var settings = {
-      language: EN,
+      language: "",
       vibration: 0
     };
 
-    vm.language = angular.uppercase($translate.use());
+    init()
+        .then(function(){
+          vm.language = settings.language.toUpperCase();
+          $translate.use(vm.language.toLowerCase());
+        });
 
-    init();
 
     vm.onLanguageChange = function () {
       $translate.use(vm.language.toLowerCase());
@@ -42,7 +45,7 @@
         settings.vibration = 100;
       }
       saveSettings();
-    }
+    };
 
     function init() {
       var deferred = $q.defer();
@@ -51,7 +54,7 @@
             if (result !== null) {
               settings = JSON.parse(result);
             }
-            deferred.resolve(history);
+            deferred.resolve(settings);
           })
           .catch(function (err) {
             $log.error(err);
