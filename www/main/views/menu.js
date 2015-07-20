@@ -17,32 +17,32 @@
       });
   }
 
-  function MenuController($translate, $q, $log, SETTINGS_STORAGE_KEY, $localForage) {
+  function MenuController($translate, $q, $log, SETTINGS_STORAGE_KEY, $localForage, $rootScope) {
     var vm = this;
 
-    var settings = {
+    $rootScope.settings = {
       language: "",
       vibration: 0
     };
 
     init()
         .then(function(){
-          vm.language = settings.language.toUpperCase();
+          vm.language = $rootScope.settings.language.toUpperCase();
           $translate.use(vm.language.toLowerCase());
         });
 
 
     vm.onLanguageChange = function () {
       $translate.use(vm.language.toLowerCase());
-      settings.language = vm.language.toLowerCase();
+      $rootScope.settings.language = vm.language.toLowerCase();
       saveSettings();
     };
 
     vm.onVibraChange = function(){
-      if (settings.vibration != 0){
-        settings.vibration = 0;
+      if ($rootScope.settings.vibration != 0){
+        $rootScope.settings.vibration = 0;
       } else {
-        settings.vibration = 100;
+        $rootScope.settings.vibration = 100;
       }
       saveSettings();
     };
@@ -52,9 +52,9 @@
       $localForage.getItem(SETTINGS_STORAGE_KEY)
           .then(function (result) {
             if (result !== null) {
-              settings = JSON.parse(result);
+              $rootScope.settings = JSON.parse(result);
             }
-            deferred.resolve(settings);
+            deferred.resolve($rootScope.settings);
           })
           .catch(function (err) {
             $log.error(err);
@@ -64,7 +64,7 @@
     }
 
     function saveSettings(){
-      $localForage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+      $localForage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify($rootScope.settings));
     }
 
   }

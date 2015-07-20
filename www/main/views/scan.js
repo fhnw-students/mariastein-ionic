@@ -22,7 +22,7 @@
   }
 
 
-  function ScanController($cordovaBarcodeScanner, historyService, $state, $timeout) {
+  function ScanController($cordovaBarcodeScanner, historyService, $state, $rootScope) {
     var vm = this; // view-model
     vm.isReady = false;
     vm.barcodeText = "";
@@ -45,7 +45,7 @@
       $cordovaBarcodeScanner
         .scan()
         .then(function (barcodeData) {
-          $cordovaVibration.vibrate(100);
+          $cordovaVibration.vibrate($rootScope.settings.vibration);
           if (barcodeData.cancelled !== 1) {
             if (barcodeData.format == "QR_CODE") {
               afterScan(barcodeData.text);
