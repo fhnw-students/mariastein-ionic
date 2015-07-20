@@ -26,8 +26,15 @@
     var vm = this; // view-model
 
 
-    vm.hist = historyService.get();
-    vm.list = _.map(_.sortByOrder(vm.hist, ['date'], ['desc']), _.values);
+    vm.list = [];
+    historyService.init()
+      .then(function (result) {
+        vm.list = _.map(_.sortByOrder(result, ['date'], ['desc']), _.values);
+      });
+
+
+    //vm.hist = historyService.get();
+    //vm.list = _.map(_.sortByOrder(vm.hist, ['date'], ['desc']), _.values);
 
     // Code goes here
 
