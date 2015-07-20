@@ -42,10 +42,22 @@
             $cordovaBarcodeScanner
                 .scan()
                 .then(function (barcodeData) {
-                    vm.data = barcodeData;
+                    if (barcodeData.cancelled !== 1){
+                        if (barcodeData.format == "QR_CODE") {
+                            vm.data = barcodeData.text;
+                            vm.format = false;
+                            vm.cancel = false;
+                        } else {
+                            vm.format = true;
+                            vm.cancel = false;
+                        }
+                    } else {
+                        vm.cancel = true;
+                        vm.format = false;
+                    }
                     // Success! Barcode data is here
                 }, function (error) {
-                    vm.data = error;
+                    //vm.data = error;
                     // An error occurred
                 });
 

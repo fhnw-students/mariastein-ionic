@@ -2,8 +2,12 @@
     <ion-content class="padding">
         <h3 style="text-align: center; margin-top: 2em;">
             <i class="ion-qr-scanner big-icon"></i>
-            <br/><br/>
-            {{ 'MESSAGE.SCAN' | translate }}
+            <br/>
+            <span ng-if="!(scan.format || scan.cancel)">{{ 'MESSAGE.SCAN' | translate }}</span>
+            <span ng-if="scan.format">{{ 'MESSAGE.SCANWRONGFORMAT' | translate }}</span>
+            <span ng-if="scan.cancel">{{ 'MESSAGE.SCANCANCELLED' | translate }}</span>
+
+
         </h3>
 
         <pre>{{scan.data|json}}</pre>
