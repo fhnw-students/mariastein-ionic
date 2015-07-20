@@ -1,19 +1,20 @@
 {
-  "LABEL":   {
-    "MENU":      "Menu",
-    "WELCOME":   "Welcome",
-    "SETTINGS":  "Settings",
-    "HISTORY":   "History",
-    "NEWS":      "News",
-    "SCAN":      "Scan",
-    "TUTORIAL":  "Open Tutorial",
-    "CONTACT":   "Contact",
-    "LANGUAGE":  "Language",
-    "FONTSIZE":  "Font Size",
+  "LABEL": {
+    "MENU": "Menu",
+    "WELCOME": "Welcome",
+    "SETTINGS": "Settings",
+    "HISTORY": "History",
+    "NEWS": "News",
+    "SCAN": "Scan",
+    "TUTORIAL": "Tutorial",
+    "CONTACT": "Contact",
+    "LANGUAGE": "Language",
+    "FONTSIZE": "Font Size",
     "NOT_FOUND": "Not found"
   },
   "MESSAGE": {
     "NOT_FOUND": "No item was found. Please try again!",
-    "INIT":      "Content is loading, please wait..."
+    "INIT": "Content is loading, please wait...",
+    "SCAN": "scanning..."
   }
 }

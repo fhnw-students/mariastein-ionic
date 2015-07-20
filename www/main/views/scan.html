@@ -1,6 +1,17 @@
-<ion-view view-title="{{ 'LABEL.HISTORY' | translate }}">
+<ion-view view-title="{{ 'LABEL.SCAN' | translate }}">
     <ion-content class="padding">
-        <h1>{{ 'LABEL.HISTORY' | translate }}</h1>
-        <p>Content</p>
+        <h3 style="text-align: center; margin-top: 2em;">
+            <i class="ion-qr-scanner big-icon"></i>
+            <br/><br/>
+            {{ 'MESSAGE.SCAN' | translate }}
+        </h3>
+
+        <pre>{{scan.data|json}}</pre>
+
     </ion-content>
+    <ion-footer-bar class="footer-button">
+        <button class="button button-full button-positive ion-qr-scanner" on-tap="scan.scan()">
+            {{ 'LABEL.SCAN' | translate }}
+        </button>
+    </ion-footer-bar>
 </ion-view>
