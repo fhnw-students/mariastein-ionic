@@ -34,14 +34,38 @@ module.exports = function () {
 
   // angular script files & 3rd party code from bower
   conf.files = conf.files.concat([
-    'www/main/lib/ionic/js/ionic.bundle.js',
-    'www/main/lib/lodash/lodash.min.js',
-    'www/main/lib/angular-sanitize/angular-sanitize.js',
-    'www/main/lib/angular-translate/angular-translate.min.js',
-    'www/main/lib/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js',
+    'www/lib/ionic/js/ionic.bundle.js',
+    'www/lib/lodash/lodash.min.js',
+    'www/lib/angular-sanitize/angular-sanitize.js',
+    'www/lib/angular-translate/angular-translate.min.js',
+    'www/lib/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js',
+    'www/lib/papaparse/papaparse.min.js',
+    'www/lib/localforage/dist/localforage.min.js',
+    'www/lib/angular-localForage/dist/angular-localForage.min.js',
 
-    'www/main/**/*.module.js',
-    'www/main/**/*.js'
+    'www/main/app.js',
+    'www/main/services/services.module.js',
+    'www/main/directives/directives.module.js',
+    'www/main/views/views.module.js',
+    'www/main/core/ionicPlatform.js',
+    'www/main/core/routerConfig.js',
+    'www/main/core/translateConfig.js',
+    'www/main/services/barcodeScanner.service.js',
+    'www/main/services/data.service.js',
+    'www/main/services/history.service.js',
+    'www/main/directives/navMenuButton.js',
+    'www/main/directives/scanButton.js',
+    'www/main/app.run.js',
+    'www/main/views/init.js',
+    'www/main/views/tutorial.js',
+    'www/main/views/detail.js',
+    'www/main/views/notFound.js',
+    'www/main/views/welcome.js',
+    'www/main/views/contact.js',
+    'www/main/views/history.js',
+    'www/main/views/news.js',
+    'www/main/views/menu.js',
+    'www/main/views/scan.js'
   ]);
 
   conf.files = conf.files.concat(
