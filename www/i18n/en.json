@@ -15,8 +15,9 @@
     "CONTACT_NAME": "Benediktinerkloster Mariastein",
     "POSTAL_CODE": "CH-4115",
     "CITY": "Mariastein",
-    "TELEPHONE_NO": "+41 61 735 11 11",
-    "CONTACT_EMAIL": "info@kloster-mariastein.ch"
+    "TELEPHONE": "Telephone",
+    "EMAIL": "Email",
+    "MAPS": "Show on Google Maps",
     "SUBMITBUTTON": "Submit",
     "VIBRATION": "Vibration"
   },
