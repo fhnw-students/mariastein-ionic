@@ -1,16 +1,16 @@
-<ion-view view-title="Detail">
-    <ion-nav-bar class="bar-positive">
+<ion-view view-title="{{ 'LABEL.DETAIL' | translate }}">
+    <ion-nav-bar class="bar-default">
         <ion-nav-back-button></ion-nav-back-button>
 
-        <ion-nav-buttons side="right">
-            <kms-nav-menu-button></kms-nav-menu-button>
-        </ion-nav-buttons>
+        <!--<ion-nav-buttons side="right">-->
+        <!--<kms-nav-menu-button></kms-nav-menu-button>-->
+        <!--</ion-nav-buttons>-->
     </ion-nav-bar>
-    <ion-content class="padding">
-        <p>{{detail.item.Name}}</p>
+    <ion-content>
 
-        <p>{{detail.item.Text}}</p>
+        <p>{{detail.item.data.Name}}</p>
 
+        <p>{{detail.item.data.Text}}</p>
 
     </ion-content>
     <ion-footer-bar class="footer-button">
