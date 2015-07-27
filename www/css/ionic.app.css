@@ -7711,3 +7711,6 @@ a.button {
   height: 44px;
   stroke: #666666;
   fill: #666666; }
+
+.tutorial-content .scroll, .tutorial-content .scroll > .slider {
+  height: 100%; }

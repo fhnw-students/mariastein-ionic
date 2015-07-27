@@ -10,7 +10,9 @@
     "CONTACT": "Contact",
     "LANGUAGE": "Language",
     "FONTSIZE": "Font Size",
-    "NOT_FOUND": "Not found"
+    "NOT_FOUND": "Not found",
+    "BACK": "Back",
+    "CONTINUE": "Continue"
   },
   "MESSAGE": {
     "NOT_FOUND": "No item was found. Please try again!",

@@ -43,3 +43,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   stroke: $scroll-refresh-icon-color;;
   fill: $scroll-refresh-icon-color;;
 }
+
+.tutorial-content {
+  .scroll, .scroll > .slider{
+    height: 100%;
+  }
+}
