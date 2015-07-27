@@ -32,12 +32,10 @@
           fulfilled = true;
           var result = Papa.parse(res, {header: true});
           data = result.data.map(function(item) {
-            item.Images = item.Images.split(',')
+            item.Images = item.Images.split(',');
             return item;
           });
-
           $log.info('data: ', data);
-
           deferred.resolve(data);
         })
         .error(function (err) {
