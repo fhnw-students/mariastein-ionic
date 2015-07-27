@@ -16,14 +16,19 @@
       });
   }
 
-  function MenuController($translate) {
+  function MenuController($translate, $rootScope) {
     var vm = this;
 
     vm.language = angular.uppercase($translate.use());
 
     vm.onLanguageChange = function () {
-      $translate.use(vm.language.toLowerCase());
+      //$translate.use(vm.language.toLowerCase());
+      $rootScope.$broadcast('onLanguageChange', vm.language.toLowerCase());
     };
+
+    $rootScope.$on('onLanguageChange', function(event, langKey){
+      vm.language = angular.uppercase(langKey);
+    });
 
   }
 

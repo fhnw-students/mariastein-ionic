@@ -6,9 +6,12 @@
   ])
     .run(run);
 
-  function run($log, dataService, barcodeScanner, $rootScope) {
+  function run($log, dataService, barcodeScanner, $rootScope, $translate) {
     $rootScope.scan = barcodeScanner.scan;
-    //dataService.loadCsv();
+
+    $rootScope.$on('onLanguageChange', function(event, langKey){
+      $translate.use(langKey);
+    })
   }
 
 }());
