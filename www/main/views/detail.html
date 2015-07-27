@@ -8,9 +8,35 @@
     </ion-nav-bar>
     <ion-content>
 
-        <p>{{detail.item.data.Name}}</p>
+        <div class="preview">
+        <ion-slide-box on-slide-changed="detail.slideHasChanged($index)" on-tap="detail.openModal()">
+              <ion-slide>
+                <div class="preview-image">
+                    <img class="box" src="img/init.png" alt="">
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <div class="preview-image">
+                    <img class="box" src="img/welcome.jpg" alt="">
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <div class="preview-image">
+                    <img class="box" src="img/init.png" alt="">
+                </div>
+              </ion-slide>
+            </ion-slide-box>
+        </div>
+        
+        <div class="padding">
+            <h3>{{detail.item.data.Name}}</h3>
 
-        <p>{{detail.item.data.Text}}</p>
+            <p>{{detail.item.data.Text}}</p>
+
+            <button class="button button-clear button-positive">
+                {{'LABEL.MORE'|translate}}
+            </button>
+        </div>
 
     </ion-content>
     <ion-footer-bar class="footer-button">
