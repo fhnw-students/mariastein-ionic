@@ -6,8 +6,8 @@
   ])
     .run(run);
 
-  function run($log, barcodeScanner, $rootScope) {
-    $rootScope.scan = barcodeScanner.scan;
+  function run($log, $rootScope) {
+    // $rootScope.scan = barcodeScanner.scan;
   }
 
 }());
