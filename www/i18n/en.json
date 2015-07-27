@@ -12,6 +12,12 @@
     "LANGUAGE": "Language",
     "FONTSIZE": "Font Size",
     "NOT_FOUND": "Not found",
+    "CONTACT_NAME": "Benediktinerkloster Mariastein",
+    "POSTAL_CODE": "CH-4115",
+    "CITY": "Mariastein",
+    "TELEPHONE": "Telephone",
+    "EMAIL": "Email",
+    "MAPS": "Show on Google Maps",
     "SUBMITBUTTON": "Submit",
     "VIBRATION": "Vibration"
   },

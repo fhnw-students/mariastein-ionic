@@ -23,7 +23,7 @@
   function NewsController() {
     var wm = this;  // view-model
 
-    // Code goes here
+
 
   }
 
