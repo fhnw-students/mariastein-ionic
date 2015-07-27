@@ -31,8 +31,13 @@
         .success(function (res) {
           fulfilled = true;
           var result = Papa.parse(res, {header: true});
-          data = result.data;
-          $log.info('data: ', data.length);
+          data = result.data.map(function(item) {
+            item.Images = item.Images.split(',')
+            return item;
+          });
+
+          $log.info('data: ', data);
+
           deferred.resolve(data);
         })
         .error(function (err) {

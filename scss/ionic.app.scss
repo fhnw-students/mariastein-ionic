@@ -1,25 +1,61 @@
+@font-face {
+    font-family: "ChaparralPro-Regular";
+    src: url("../font/ChaparralPro-Regular.eot?") format("eot"),
+    //      url("../font/ChaparralPro-Regular.woff2") format("woff2"),
+    //      url("../font/ChaparralPro-Regular.woff") format("woff"),
+         url("../font/ChaparralPro-Regular.ttf") format("truetype");
+    //      url("../font/ChaparralPro-Regular.svg#Samplino") format("svg");
+}
+
+$font-family-sans-serif:          "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !default;
+$font-family-serif:               "ChaparralPro-Regular", serif !default;
+$headings-font-family:            $font-family-serif !default;
+
 /*
 To customize the look and feel of Ionic, you can override the variables
 in ionic's _variables.scss file.
 
 For example, you might change some of the default colors:
-
-$light:                           #fff !default;
-$stable:                          #f8f8f8 !default;
-$positive:                        #387ef5 !default;
-$calm:                            #11c1f3 !default;
-$balanced:                        #33cd5f !default;
-$energized:                       #ffc900 !default;
-$assertive:                       #ef473a !default;
-$royal:                           #886aea !default;
-$dark:                            #444 !default;
 */
+$light:                           #fff !default;
+$stable:                          rgb(191, 192, 191) !default;
+$positive:                        rgb(69, 106, 162) !default;
+$calm:                            rgb(81, 174, 226) !default;
+$balanced:                        rgb(81, 174, 98) !default;
+$energized:                       rgb(178, 119, 14) !default;
+$assertive:                       rgb(217, 78, 40) !default;
+$royal:                           rgb(127, 74, 148) !default;
+$dark:                            rgb(84, 76, 70) !default;
+
+$base-color:                      rgb(112, 113, 115) !default;
+
+
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+
+.bar-header .title, .bar-header h1{
+  font-family: $headings-font-family;
+  font-weight: bold; // Bug fix until we have the original font files
+  font-size: 1.6em; // Bug fix until we have the original font files
+  padding-top: 3px; // Bug fix until we have the original font files
+  font-style: italic;
+  color: $positive !important;
+}
+
+.bar-dark .title, .bar-dark h1{
+  color: $stable !important;
+}
+
+.item-content h2{
+  font-size: 1.2em;
+  font-family: $headings-font-family;
+  // font-weight: bold;
+  // color: $positive !important;
+}
 
 .footer-button{
   padding: 0;
@@ -42,4 +78,49 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   height: 44px;
   stroke: $scroll-refresh-icon-color;;
   fill: $scroll-refresh-icon-color;;
+}
+
+.preview-modal{
+
+  .scroll, .scroll > .slider{
+    height: 100%;
+  }
+
+  .slider-slide img{
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+    
+
+.preview{
+  height: 220px;
+
+  > button{
+    margin-top: -31px;
+  }
+
+  .preview-image{
+    background-color: #000000;
+    text-align: center;
+    width: 100%;
+    height: 220px;
+    line-height: 220px;
+    vertical-align: middle;
+  }
+
+  .slider{
+    height: 220px;
+
+    img{
+      min-height: 220px;
+      max-height: 260px;
+      vertical-align: middle;
+    }
+  }
+
+}
+
+.preview-modal{
+  background-color: $dark;
 }

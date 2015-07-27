@@ -66,18 +66,6 @@
         }
       }
       return deferred.promise;
-
-      //for (var i = 0; i < history.length; i++) {
-      //  if (history[i].id === id.toString()) {
-      //    history[i].date = new Date().getTime();
-      //    return;
-      //  }
-      //}
-      //history.push({
-      //  id:   id,
-      //  date: new Date().getTime()
-      //});
-      //$localForage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
     }
 
     function get(id) {
