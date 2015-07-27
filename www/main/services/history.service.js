@@ -16,12 +16,17 @@
     var service = {
       init: init,
       add:  add,
-      get:  get
+      get:  get,
+      set:  set
     };
 
     return service;
 
     ////////////////
+
+    function set(data) {
+      history = data;
+    }
 
     function init() {
       var deferred = $q.defer();
@@ -29,7 +34,7 @@
         .then(function (result) {
           if (result !== null) {
             history = JSON.parse(result);
-            $log.info('history: ', history.length, history)
+            $log.info('history: ', history.length, JSON.stringify(history));
           }
           deferred.resolve();
         })
