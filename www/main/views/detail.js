@@ -24,6 +24,18 @@
   function DetailController($stateParams, historyService, $ionicModal, $ionicSlideBoxDelegate, $scope) {
     var vm = this; // view-model
     vm.item = {};
+    vm.more = false;
+
+    vm.showMore = function(){
+      if (!vm.more){
+        vm.more = true;
+      }
+    }
+    vm.showLess = function(){
+      if (vm.more){
+        vm.more = false;
+      }
+    }
 
     historyService.get($stateParams.id)
       .then(function(result) {

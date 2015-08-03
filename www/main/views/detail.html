@@ -33,8 +33,13 @@
 
             <p>{{detail.item.data.Text}}</p>
 
-            <button class="button button-clear button-positive">
+            <button ng-if="!detail.more" class="button button-clear button-positive" on-tap="detail.showMore()">
                 {{'LABEL.MORE'|translate}}
+            </button>
+            <p ng-if="detail.more">{{detail.item.data.LongText}}</p>
+
+            <button ng-if="detail.more" class="button button-clear button-positive" on-tap="detail.showLess()">
+                {{'LABEL.LESS'|translate}}
             </button>
         </div>
 
