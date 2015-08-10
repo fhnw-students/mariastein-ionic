@@ -1,7 +1,9 @@
 (function () {
   'use strict';
 
-  angular.module('kmsscan.views.News', [])
+  angular.module('kmsscan.views.News', [
+    'kmsscan.services.News'
+  ])
     .config(StateConfig)
     .controller('NewsCtrl', NewsController);
 
@@ -20,11 +22,11 @@
   }
 
 
-  function NewsController() {
-    var wm = this;  // view-model
+  function NewsController(newsService) {
+    var vm = this;  // view-model
 
-
-
+    vm.list = newsService.get();
+    
   }
 
 

@@ -2,10 +2,9 @@
   'use strict';
 
   angular.module('kmsscan.services', [
-
-    // 'kmsscan.services.BarcodeScanner',
-    'kmsscan.services.Data'
-
+    'kmsscan.services.Data',
+    'kmsscan.services.History',
+    'kmsscan.services.News'
   ]);
 
 }());

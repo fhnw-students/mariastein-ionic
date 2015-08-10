@@ -11,6 +11,7 @@
     'kmsscan.views.Contact',
     //'kmsscan.views.Tutorial',
     'kmsscan.views.News',
+    'kmsscan.views.NewsPage',
     'kmsscan.views.Map',
     'kmsscan.views.History',
     'kmsscan.views.Scan'

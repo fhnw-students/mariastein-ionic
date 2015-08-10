@@ -3,7 +3,8 @@
 
   angular.module('kmsscan.views.Init', [
     'kmsscan.services.Data',
-    'kmsscan.services.History'
+    'kmsscan.services.History',
+    'kmsscan.services.News'
   ])
     .config(StateConfig)
     .controller('InitCtrl', InitController);
@@ -19,12 +20,13 @@
   }
 
 
-  function InitController($q, dataService, historyService, $state, $ionicHistory, $timeout) {
+  function InitController($q, dataService, historyService, newsService, $state, $ionicHistory, $timeout) {
     var vm = this; // view-model
 
     $q.all([
       dataService.loadCsv(),
-      historyService.init()
+      historyService.init(),
+      newsService.init()
     ])
       .then(function (results) {
         $timeout(function () {

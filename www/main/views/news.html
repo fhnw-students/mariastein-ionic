@@ -1,6 +1,16 @@
 <ion-view view-title="{{ 'LABEL.NEWS' | translate }}">
-    <ion-content class="padding">
-        <h1>{{ 'LABEL.NEWS' | translate }}</h1>
-        <p>Content</p>
+    <ion-content>
+        <ion-list>
+            <ion-list>
+                <ion-item class="item item-icon-right" ng-repeat="item in news.list"
+                          href="#/menu/newsPage/{{item.id}}">
+                    <h2>{{item.title}}</h2>
+                    <p>{{item.text}}</p>
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </ion-item>
+            </ion-list>
+        </ion-list>
     </ion-content>
 </ion-view>
+
+
