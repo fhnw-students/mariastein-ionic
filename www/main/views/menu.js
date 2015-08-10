@@ -35,6 +35,11 @@
           } else {
             vm.vibration = false;
           }
+          if ($rootScope.settings.music != 0){
+            vm.music = true;
+          } else {
+            vm.music = false;
+          }
         });
 
 
@@ -57,7 +62,7 @@
       if ($rootScope.settings.music != 0){
         $rootScope.settings.music = 0;
       } else {
-        $rootScope.settings.music = 100;
+        $rootScope.settings.music = 1;
       }
       saveSettings();
     };
