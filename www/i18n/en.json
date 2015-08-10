@@ -12,7 +12,7 @@
     "TUTORIAL": "Tutorial",
     "CONTACT": "Contact",
     "LANGUAGE": "Language",
-    "FONTSIZE": "Font Size",
+    "FONT_SIZE": "Font Size",
     "DONE": "Done",
     "CLOSE": "Close",
     "MORE": "More",
@@ -24,13 +24,13 @@
     "TELEPHONE": "Telephone",
     "EMAIL": "Email",
     "MAPS": "Show on Google Maps",
-    "SUBMITBUTTON": "Submit",
+    "SUBMIT_BUTTON": "Submit",
     "VIBRATION": "Vibration"
   },
   "MESSAGE": {
     "NOT_FOUND": "No item was found. Please try again!",
     "SCAN": "scanning...",
-    "SCANCANCELLED": "scanning cancelled",
-    "SCANWRONGFORMAT": "wrong barcode format"
+    "SCAN_CANCELLED": "scanning cancelled",
+    "SCAN_WRONG_FORMAT": "wrong barcode format"
   }
 }
