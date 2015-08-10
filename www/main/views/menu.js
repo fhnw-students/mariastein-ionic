@@ -22,7 +22,8 @@
 
     $rootScope.settings = {
       language: "",
-      vibration: 0
+      vibration: 0,
+      music: 0
     };
 
     init()
@@ -48,6 +49,15 @@
         $rootScope.settings.vibration = 0;
       } else {
         $rootScope.settings.vibration = 100;
+      }
+      saveSettings();
+    };
+
+    vm.onMusicChange = function(){
+      if ($rootScope.settings.music != 0){
+        $rootScope.settings.music = 0;
+      } else {
+        $rootScope.settings.music = 100;
       }
       saveSettings();
     };

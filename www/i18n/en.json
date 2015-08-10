@@ -25,7 +25,8 @@
     "EMAIL": "Email",
     "MAPS": "Show on Google Maps",
     "SUBMIT_BUTTON": "Submit",
-    "VIBRATION": "Vibration"
+    "VIBRATION": "Vibration",
+    "MUSIC": "Music"
   },
   "MESSAGE": {
     "NOT_FOUND": "No item was found. Please try again!",
