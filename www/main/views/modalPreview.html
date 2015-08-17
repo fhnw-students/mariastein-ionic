@@ -1,36 +1,64 @@
-<ion-modal-view class="preview-modal">
-    <ion-header-bar class="bar-dark">
+<!--<ion-modal-view class="preview-modal">-->
+    <!--<ion-header-bar class="bar-dark">-->
 
-      <h1 class="title">{{'LABEL.PREVIEW'|translate}}</h1>
-			
-			<div class="buttons">
-				<button class="button button-clear button-stable" ng-click="detail.closeModal()">
-					<i class="ion-close-round"></i>
-			  	<b>{{'LABEL.CLOSE'|translate}}</b>
-				</button>
-			</div>
+      <!--<h1 class="title">{{'LABEL.PREVIEW'|translate}}</h1>-->
+			<!-- -->
+			<!--<div class="buttons">-->
+				<!--<button class="button button-clear button-stable" ng-click="detail.closeModal()">-->
+					<!--<i class="ion-close-round"></i>-->
+			  	<!--<b>{{'LABEL.CLOSE'|translate}}</b>-->
+				<!--</button>-->
+			<!--</div>-->
+
+    <!--</ion-header-bar>-->
+    <!--<ion-content>-->
+		<!-- -->
+		<!--<ion-slide-box on-slide-changed="detail.slideHasChanged($index)">-->
+          <!--<ion-slide>-->
+            <!--<div class="preview-image">-->
+                <!--<img class="box" src="img/init.png" alt="">-->
+            <!--</div>-->
+          <!--</ion-slide>-->
+          <!--<ion-slide>-->
+            <!--<div class="preview-image">-->
+                <!--<img class="box" src="img/welcome.jpg" alt="">-->
+            <!--</div>-->
+          <!--</ion-slide>-->
+          <!--<ion-slide>-->
+            <!--<div class="preview-image">-->
+                <!--<img class="box" src="img/init.png" alt="">-->
+            <!--</div>-->
+          <!--</ion-slide>-->
+        <!--</div>-->
+        <!--</ion-slide-box>-->
+
+    <!--</ion-content>-->
+  <!--</ion-modal-view>-->
+<div class="modal image-modal ">
+    <ion-header-bar class="bar-stable">
+
+        <h1 class="title">{{'LABEL.PREVIEW'|translate}}</h1>
+
+        <div class="buttons">
+            <button class="button button-clear" ng-click="closeModal()">
+                {{'LABEL.CLOSE'|translate}}
+            </button>
+        </div>
 
     </ion-header-bar>
     <ion-content>
-		
-		<ion-slide-box on-slide-changed="detail.slideHasChanged($index)">
-          <ion-slide>
-            <div class="preview-image">
-                <img class="box" src="img/init.png" alt="">
-            </div>
-          </ion-slide>
-          <ion-slide>
-            <div class="preview-image">
-                <img class="box" src="img/welcome.jpg" alt="">
-            </div>
-          </ion-slide>
-          <ion-slide>
-            <div class="preview-image">
-                <img class="box" src="img/init.png" alt="">
-            </div>
-          </ion-slide>
-        </div>
-        </ion-slide-box>
+        <ion-slide-box on-slide-changed="slideChanged(index)" active-slide="activeSlide">
+            <ion-slide ng-repeat="image in allImages">
 
+                <ion-scroll direction="xy" scrollbar-x="false" scrollbar-y="false"
+                            zooming="true" min-zoom="{{zoomMin}}" style="width: 100%; height: 100%;"
+                            delegate-handle="scrollHandle{{$index}}" on-double-tap="zoom(activeSlide)" on-scroll="updateSlideStatus(activeSlide)" on-release="updateSlideStatus(activeSlide)">
+
+                    <div ng-style="{height: hgt+ 'px'}" class="image" style="background-image: url( {{image.src}} )"></div>
+
+
+                </ion-scroll>
+            </ion-slide>
+        </ion-slide-box>
     </ion-content>
-  </ion-modal-view>
+</div>

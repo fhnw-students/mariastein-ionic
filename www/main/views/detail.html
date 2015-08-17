@@ -1,5 +1,5 @@
 <ion-view view-title="{{ 'LABEL.DETAIL' | translate }}">
-    <ion-nav-bar class="bar-default">
+    <ion-nav-bar class="bar-stable">
         <ion-nav-back-button></ion-nav-back-button>
 
         <!--<ion-nav-buttons side="right">-->
@@ -9,23 +9,29 @@
     <ion-content>
 
         <div class="preview">
-        <ion-slide-box on-slide-changed="detail.slideHasChanged($index)" on-tap="detail.openModal()">
-              <ion-slide>
-                <div class="preview-image">
-                    <img class="box" src="img/init.png" alt="">
-                </div>
-              </ion-slide>
-              <ion-slide>
-                <div class="preview-image">
-                    <img class="box" src="img/welcome.jpg" alt="">
-                </div>
-              </ion-slide>
-              <ion-slide>
-                <div class="preview-image">
-                    <img class="box" src="img/init.png" alt="">
-                </div>
-              </ion-slide>
-            </ion-slide-box>
+        <!--<ion-slide-box on-slide-changed="detail.slideHasChanged($index)" on-tap="detail.openModal()">-->
+              <!--<ion-slide>-->
+                <!--<div class="preview-image">-->
+                    <!--<img class="box" src="img/init.png" alt="">-->
+                <!--</div>-->
+              <!--</ion-slide>-->
+              <!--<ion-slide>-->
+                <!--<div class="preview-image">-->
+                    <!--<img class="box" src="img/welcome.jpg" alt="">-->
+                <!--</div>-->
+              <!--</ion-slide>-->
+              <!--<ion-slide>-->
+                <!--<div class="preview-image">-->
+                    <!--<img class="box" src="img/init.png" alt="">-->
+                <!--</div>-->
+              <!--</ion-slide>-->
+            <!--</ion-slide-box>-->
+
+            <a class="item item-list-detail">
+                <ion-scroll direction="x">
+                    <img ng-repeat="image in allImages" ng-src="{{image.src}}" ng-click="showImages($index)" class="image-list-thumb"/>
+                </ion-scroll>
+            </a>
         </div>
         
         <div class="padding">

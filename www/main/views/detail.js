@@ -21,7 +21,7 @@
       });
   }
 
-  function DetailController($stateParams, historyService, $ionicModal, $ionicSlideBoxDelegate, $scope) {
+  function DetailController($window, $stateParams, historyService, $ionicModal, $ionicSlideBoxDelegate, $scope, $ionicBackdrop, $ionicScrollDelegate) {
     var vm = this; // view-model
     vm.item = {};
     vm.more = false;
@@ -42,49 +42,98 @@
         vm.item = result;
       });
 
-    $ionicSlideBoxDelegate.slide(0);
+    //$ionicSlideBoxDelegate.slide(0);
+    //
+    //vm.next = function() {
+    //  $ionicSlideBoxDelegate.next();
+    //};
+    //
+    //vm.slideChanged = function(index) {
+    //  $scope.slideIndex = index;
+    //};
+    //
+    //console.log(vm.item);
+    //console.log($stateParams);
+    //
+    //$ionicModal.fromTemplateUrl('main/views/modalPreview.html', {
+    //    scope: $scope,
+    //    animation: 'slide-in-up'
+    //  })
+    //  .then(function(modal) {
+    //    vm.modal = modal;
+    //  });
+    //
+    //vm.openModal = function() {
+    //  vm.modal.show();
+    //};
+    //
+    //vm.closeModal = function() {
+    //  vm.modal.hide();
+    //};
+    //
+    ////Cleanup the modal when we're done with it!
+    //$scope.$on('$destroy', function() {
+    //  vm.modal.remove();
+    //});
+    //
+    //// Execute action on hide modal
+    //$scope.$on('modal.hidden', function() {
+    //  // Execute action
+    //});
+    //
+    //// Execute action on remove modal
+    //$scope.$on('modal.removed', function() {
+    //  // Execute action
+    //});
 
-    vm.next = function() {
-      $ionicSlideBoxDelegate.next();
+    $scope.allImages = [{
+      src: 'img/init.png'
+    }, {
+      src: 'img/welcome.jpg'
+    }, {
+      src: 'img/init.png'
+    }];
+
+    $scope.zoomMin = 1;
+
+    $scope.hgt = $window.innerHeight-50;
+
+    $scope.showImages = function(index) {
+      $scope.activeSlide = index;
+      $scope.showModal('main/views/modalPreview.html');
     };
 
-    vm.slideChanged = function(index) {
-      $scope.slideIndex = index;
-    };
-
-    console.log(vm.item);
-    console.log($stateParams);
-
-    $ionicModal.fromTemplateUrl('main/views/modalPreview.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-      })
-      .then(function(modal) {
-        vm.modal = modal;
+    $scope.showModal = function(templateUrl) {
+      $ionicModal.fromTemplateUrl(templateUrl, {
+        scope: $scope
+      }).then(function(modal) {
+        $scope.modal = modal;
+        $scope.modal.show();
       });
+    }
 
-    vm.openModal = function() {
-      vm.modal.show();
+    $scope.closeModal = function() {
+      $scope.modal.hide();
+      $scope.modal.remove()
     };
 
-    vm.closeModal = function() {
-      vm.modal.hide();
+    $scope.updateSlideStatus = function(slide) {
+      var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).getScrollPosition().zoom;
+      if (zoomFactor == $scope.zoomMin) {
+        $ionicSlideBoxDelegate.enableSlide(true);
+      } else {
+        $ionicSlideBoxDelegate.enableSlide(false);
+      }
     };
 
-    //Cleanup the modal when we're done with it!
-    $scope.$on('$destroy', function() {
-      vm.modal.remove();
-    });
-
-    // Execute action on hide modal
-    $scope.$on('modal.hidden', function() {
-      // Execute action
-    });
-
-    // Execute action on remove modal
-    $scope.$on('modal.removed', function() {
-      // Execute action
-    });
+    $scope.zoom = function(slide){
+      var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).getScrollPosition().zoom;
+      if (zoomFactor == $scope.zoomMin) {
+        $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).zoomBy(2, true);
+      } else {
+        $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).zoomTo(1, true);
+      }
+    }
 
   }
 
