@@ -15,8 +15,11 @@
         
         <div class="padding">
             <h3>{{detail.item.data.Name}}</h3>
+            <ion-scroll zooming="true" direction="xy" style="width: 100%; ">
+                <div>{{detail.item.data.Text}}</div>
+            </ion-scroll>
 
-            <p>{{detail.item.data.Text}}</p>
+
 
             <button ng-if="!detail.more" class="button button-clear button-positive" on-tap="detail.showMore()">
                 {{'LABEL.MORE'|translate}}

@@ -40,16 +40,16 @@
 
 
 
-    //dataService.loadCsv()
-    //  .then(function () {
-    //    $timeout(function () {
-    //      $ionicHistory.nextViewOptions({
-    //        disableAnimate: false,
-    //        disableBack:    true
-    //      });
-    //      $state.go('menu.welcome');
-    //    }, 1000);
-    //  });
+    dataService.loadCsv()
+      .then(function () {
+        $timeout(function () {
+          $ionicHistory.nextViewOptions({
+            disableAnimate: false,
+            disableBack:    true
+          });
+          $state.go('menu.welcome');
+        }, 1000);
+      });
   }
 
 

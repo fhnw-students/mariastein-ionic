@@ -42,50 +42,6 @@
         vm.item = result;
       });
 
-    //$ionicSlideBoxDelegate.slide(0);
-    //
-    //vm.next = function() {
-    //  $ionicSlideBoxDelegate.next();
-    //};
-    //
-    //vm.slideChanged = function(index) {
-    //  $scope.slideIndex = index;
-    //};
-    //
-    //console.log(vm.item);
-    //console.log($stateParams);
-    //
-    //$ionicModal.fromTemplateUrl('main/views/modalPreview.html', {
-    //    scope: $scope,
-    //    animation: 'slide-in-up'
-    //  })
-    //  .then(function(modal) {
-    //    vm.modal = modal;
-    //  });
-    //
-    //vm.openModal = function() {
-    //  vm.modal.show();
-    //};
-    //
-    //vm.closeModal = function() {
-    //  vm.modal.hide();
-    //};
-    //
-    ////Cleanup the modal when we're done with it!
-    //$scope.$on('$destroy', function() {
-    //  vm.modal.remove();
-    //});
-    //
-    //// Execute action on hide modal
-    //$scope.$on('modal.hidden', function() {
-    //  // Execute action
-    //});
-    //
-    //// Execute action on remove modal
-    //$scope.$on('modal.removed', function() {
-    //  // Execute action
-    //});
-
     $scope.allImages = [{
       src: 'img/init.png'
     }, {
