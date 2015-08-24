@@ -6,7 +6,7 @@
 
         <ion-slide-box on-slide-changed="slideHasChanged($index)">
             <ion-slide>
-                <div class="welcome"><h1>{{tutorial.language}} {{'LABEL.WELCOME' | translate}}</h1>
+                <div class="welcome"><h1>{{'LABEL.WELCOME' | translate}}</h1>
                     <p>{{ 'LABEL.LANGUAGE' | translate }}</p>
                     <ion-radio ng-model="tutorial.language" ng-value="'DE'" ng-change="tutorial.onLanguageChange()" >
                         <img src="./img/de.png" alt="flag_DE" width="15%">DE</ion-radio>
