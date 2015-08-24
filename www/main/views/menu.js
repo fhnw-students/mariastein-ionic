@@ -69,10 +69,10 @@
     };
 
     vm.onIsFirstStartChange = function(){
-       if ($rootScope.settings.isFirstStart=false){
-        $rootScope.settings.isFirstStart=true;
+       if ($rootScope.settings.isFirstStart == false){
+        $rootScope.settings.isFirstStart = true;
        }else {
-        $rootScope.settings.isFirstStart=false;
+        $rootScope.settings.isFirstStart = false;
        }
        saveSettings();
     };
