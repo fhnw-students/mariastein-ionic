@@ -22,8 +22,15 @@
 
   function TutorialController($translate, $rootScope) {
     var vm = this; // view-model
+    var sysLang = navigator.language.substring(0,2);
+    console.log(sysLang);
 
-    vm.language = angular.uppercase($translate.use());
+    if((sysLang=="de" || sysLang=="en" || sysLang=="fr")){
+      vm.language=angular.uppercase(sysLang);
+      $rootScope.$broadcast('onLanguageChange', vm.language.toLowerCase());
+    }else{
+      vm.language= angular.uppercase($translate.use());
+    }
 
     $rootScope.$on('onLanguageChange', function(event, langKey){
         vm.language = angular.uppercase(langKey);
