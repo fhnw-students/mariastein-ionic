@@ -23,7 +23,8 @@
     $rootScope.settings = {
       language: "",
       vibration: 0,
-      music: 0
+      music: 0,
+      isFirstStart: false
     };
 
     init()
@@ -65,6 +66,15 @@
         $rootScope.settings.music = 1;
       }
       saveSettings();
+    };
+
+    vm.onIsFirstStartChange = function(){
+       if ($rootScope.settings.isFirstStart == false){
+        $rootScope.settings.isFirstStart = true;
+       }else {
+        $rootScope.settings.isFirstStart = false;
+       }
+       saveSettings();
     };
 
     function init() {
