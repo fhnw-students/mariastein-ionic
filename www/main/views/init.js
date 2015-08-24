@@ -4,7 +4,8 @@
   angular.module('kmsscan.views.Init', [
     'kmsscan.services.Data',
     'kmsscan.services.History',
-    'kmsscan.services.News'
+    'kmsscan.services.News',
+    'kmsscan.services.Typo3'
   ])
     .config(StateConfig)
     .controller('InitCtrl', InitController);
@@ -20,13 +21,14 @@
   }
 
 
-  function InitController($q, dataService, historyService, newsService, $state, $ionicHistory, $timeout) {
+  function InitController($q, dataService, historyService, newsService, $state, $ionicHistory, $timeout, typo3Service) {
     var vm = this; // view-model
 
     $q.all([
       dataService.loadCsv(),
       historyService.init(),
-      newsService.init()
+      newsService.init(),
+      typo3Service.get()
     ])
       .then(function (results) {
         $timeout(function () {
