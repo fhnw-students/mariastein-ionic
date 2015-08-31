@@ -20,7 +20,8 @@
     ////////////////
 
     function get(){
-      $http.get('http://localhost:3000/data')
+      //$http.get('http://localhost:3000/data')
+      $http.get('http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000')
           .then(function(response) {
             console.log(response);
             data = response.data;
