@@ -1,16 +1,35 @@
-<ion-view view-title="Detail">
-    <ion-nav-bar class="bar-positive">
+<ion-view view-title="{{ 'LABEL.DETAIL' | translate }}">
+    <ion-nav-bar class="bar-stable">
         <ion-nav-back-button></ion-nav-back-button>
-
-        <ion-nav-buttons side="right">
-            <kms-nav-menu-button></kms-nav-menu-button>
-        </ion-nav-buttons>
     </ion-nav-bar>
-    <ion-content class="padding">
-        <p>{{detail.item.Name}}</p>
+    <ion-content>
 
-        <p>{{detail.item.Text}}</p>
+        <div class="preview">
 
+            <a class="item item-list-detail detail-image-slider">
+                <ion-scroll direction="x">
+                    <img ng-repeat="image in allImages" ng-src="{{image.src}}" ng-click="showImages($index)" class="image-list-thumb"/>
+                </ion-scroll>
+            </a>
+        </div>
+        
+        <div class="padding">
+            <h3>{{detail.item.data.Name}}</h3>
+            <ion-scroll zooming="true" direction="xy" style="width: 100%; ">
+                <div>{{detail.item.data.Text}}</div>
+            </ion-scroll>
+
+
+
+            <button ng-if="!detail.more" class="button button-clear button-positive" on-tap="detail.showMore()">
+                {{'LABEL.MORE'|translate}}
+            </button>
+            <p ng-if="detail.more">{{detail.item.data.LongText}}</p>
+
+            <button ng-if="detail.more" class="button button-clear button-positive" on-tap="detail.showLess()">
+                {{'LABEL.LESS'|translate}}
+            </button>
+        </div>
 
     </ion-content>
     <ion-footer-bar class="footer-button">

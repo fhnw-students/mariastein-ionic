@@ -1,14 +1,28 @@
 <ion-view view-title="{{ 'LABEL.CONTACT' | translate }}">
-    <ion-nav-bar class="bar-positive">
-        <ion-nav-back-button></ion-nav-back-button>
-
-        <ion-nav-buttons side="right">
-            <kms-nav-menu-button></kms-nav-menu-button>
-        </ion-nav-buttons>
-    </ion-nav-bar>
     <ion-content class="padding">
+        <!-- image (responsive width) -->
+        <div class="row responsive-sm">
+            <img src="./img/init.png" alt="monastery" width="100%">
 
-        <p>content</p>
+            <h2>{{'LABEL.CONTACT_NAME' | translate}}</h2>
+            {{'LABEL.POSTAL_CODE' | translate}} {{'LABEL.CITY' | translate}}
+            <p>
+                <br>
+                <a href="tel:0041-61-735-1111">
+                    {{'LABEL.TELEPHONE' | translate}}: +41 (0)61 735 11 11
+                </a>
+                <br>
+                <a href="#" onclick="window.location='mailto:info@kloster-mariastein.ch'; return false;"
+                   class="noHighlight">
+                    {{'LABEL.EMAIL' | translate}}: info@kloster-mariastein.ch
+                </a>
+            </p>
 
+            <p>
+                <a href="https://www.google.com/maps/preview/@47.475243,7.491205,15z">
+                    {{'LABEL.MAPS' | translate}}
+                </a>
+            </p>
+        </div>
     </ion-content>
 </ion-view>

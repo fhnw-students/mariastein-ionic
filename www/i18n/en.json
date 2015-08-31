@@ -5,18 +5,35 @@
     "SETTINGS": "Settings",
     "HISTORY": "History",
     "NEWS": "News",
+    "MAP": "Floor Plan",
     "SCAN": "Scan",
+    "DETAIL": "Detail",
+    "PREVIEW": "Preview",
     "TUTORIAL": "Tutorial",
     "CONTACT": "Contact",
     "LANGUAGE": "Language",
-    "FONTSIZE": "Font Size",
-    "NOT_FOUND": "Not found",
     "BACK": "Back",
-    "CONTINUE": "Continue"
+    "CONTINUE": "Continue",
+    "FONT_SIZE": "Font Size",
+    "DONE": "Done",
+    "CLOSE": "Close",
+    "MORE": "More",
+    "LESS": "Less",
+    "NOT_FOUND": "Not found",
+    "CONTACT_NAME": "Benediktinerkloster Mariastein",
+    "POSTAL_CODE": "CH-4115",
+    "CITY": "Mariastein",
+    "TELEPHONE": "Telephone",
+    "EMAIL": "Email",
+    "MAPS": "Show on Google Maps",
+    "SUBMIT_BUTTON": "Submit",
+    "VIBRATION": "Vibration",
+    "MUSIC": "Music"
   },
   "MESSAGE": {
     "NOT_FOUND": "No item was found. Please try again!",
-    "INIT": "Content is loading, please wait...",
-    "SCAN": "scanning..."
+    "SCAN": "scanning...",
+    "SCAN_CANCELLED": "scanning cancelled",
+    "SCAN_WRONG_FORMAT": "wrong barcode format"
   }
 }

@@ -5,10 +5,27 @@
     "SETTINGS": "Einstellungen",
     "HISTORY": "Letzte Scans",
     "NEWS": "Neuigkeiten",
+    "MAP": "Grundriss",
     "SCAN": "Scannen",
+    "DETAIL": "Detail",
+    "PREVIEW": "Vorschau",
     "TUTORIAL": "Tutorial",
     "CONTACT": "Kontakt",
     "LANGUAGE": "Sprache",
-    "FONTSIZE": "Schriftgrösse"
+    "FONT_SIZE": "Schriftgrösse",
+    "DONE": "Erledigt",
+    "CLOSE": "Schliessen",
+    "MORE": "Mehr",
+    "LESS": "Weniger",
+    "NOT_FOUND": "Nicht gefunden",
+    "CONTACT_NAME": "Benediktinerkloster Mariastein",
+    "POSTAL_CODE": "CH-4115",
+    "CITY": "Mariastein",
+    "TELEPHONE": "+41 (0)61 735 11 11",
+    "EMAIL": "info@kloster-mariastein.ch",
+    "MAPS": "Zeige auf Google Maps",
+    "SUBMIT_BUTTON": "Bestätigen",
+    "VIBRATION": "Vibration",
+    "MUSIC": "Musik"
   }
 }

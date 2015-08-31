@@ -1,6 +1,16 @@
 <ion-view view-title="{{ 'LABEL.HISTORY' | translate }}">
-    <ion-content class="padding">
-        <h1>{{ 'LABEL.HISTORY' | translate }}</h1>
-        <p>Content</p>
+    <ion-content>
+        <ion-list>
+
+            <ion-list>
+                <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="item in history.list" href="#/menu/detail/{{item[0].ID}}">
+                    <img src="./img/a.JPG">
+                    <h2>{{item[0].Name}}</h2>
+                    <p>{{item[0].Text}}</p>
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </ion-item>
+            </ion-list>
+        </ion-list>
+
     </ion-content>
 </ion-view>
