@@ -1,7 +1,7 @@
 @charset "UTF-8";
 @font-face {
   font-family: "ChaparralPro-Regular";
-  src: url("../font/ChaparralPro-Regular.eot?") format("eot"), url("../font/ChaparralPro-Regular.ttf") format("truetype"); }
+  src: url("../font/ChaparralPro-Regular.eot?") format("eot"); }
 
 /*
 To customize the look and feel of Ionic, you can override the variables
@@ -7723,6 +7723,9 @@ a.button {
   height: 44px;
   stroke: #666666;
   fill: #666666; }
+
+.tutorial-content .scroll, .tutorial-content .scroll > .slider {
+  height: 100%; }
 
 /* image zoom */
 .image-list-thumb {

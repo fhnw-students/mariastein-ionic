@@ -1,15 +1,13 @@
 @font-face {
-    font-family: "ChaparralPro-Regular";
-    src: url("../font/ChaparralPro-Regular.eot?") format("eot"),
-    //      url("../font/ChaparralPro-Regular.woff2") format("woff2"),
-    //      url("../font/ChaparralPro-Regular.woff") format("woff"),
-         url("../font/ChaparralPro-Regular.ttf") format("truetype");
-    //      url("../font/ChaparralPro-Regular.svg#Samplino") format("svg");
+  font-family: "ChaparralPro-Regular";
+  src:         url("../font/ChaparralPro-Regular.eot?") format("eot"),
+                 //      url("../font/ChaparralPro-Regular.woff2") format("woff2"), //      url("../font/ChaparralPro-Regular.woff") format("woff"), url("../font/ChaparralPro-Regular.ttf") format("truetype");
+  //      url("../font/ChaparralPro-Regular.svg#Samplino") format("svg");
 }
 
-$font-family-sans-serif:          "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !default;
-$font-family-serif:               "ChaparralPro-Regular", serif !default;
-$headings-font-family:            $font-family-serif !default;
+$font-family-sans-serif: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !default;
+$font-family-serif: "ChaparralPro-Regular", serif !default;
+$headings-font-family: $font-family-serif !default;
 
 /*
 To customize the look and feel of Ionic, you can override the variables
@@ -17,19 +15,17 @@ in ionic's _variables.scss file.
 
 For example, you might change some of the default colors:
 */
-$light:                           #fff !default;
-$stable:                          rgb(191, 192, 191) !default;
-$positive:                        rgb(69, 106, 162) !default;
-$calm:                            rgb(81, 174, 226) !default;
-$balanced:                        rgb(81, 174, 98) !default;
-$energized:                       rgb(178, 119, 14) !default;
-$assertive:                       rgb(217, 78, 40) !default;
-$royal:                           rgb(127, 74, 148) !default;
-$dark:                            rgb(84, 76, 70) !default;
+$light: #fff !default;
+$stable: rgb(191, 192, 191) !default;
+$positive: rgb(69, 106, 162) !default;
+$calm: rgb(81, 174, 226) !default;
+$balanced: rgb(81, 174, 98) !default;
+$energized: rgb(178, 119, 14) !default;
+$assertive: rgb(217, 78, 40) !default;
+$royal: rgb(127, 74, 148) !default;
+$dark: rgb(84, 76, 70) !default;
 
-$base-color:                      rgb(112, 113, 115) !default;
-
-
+$base-color: rgb(112, 113, 115) !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -37,96 +33,103 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
-.bar-header .title, .bar-header h1{
+.bar-header .title, .bar-header h1 {
   font-family: $headings-font-family;
   font-weight: bold; // Bug fix until we have the original font files
-  font-size: 1.6em; // Bug fix until we have the original font files
+  font-size:   1.6em; // Bug fix until we have the original font files
   padding-top: 3px; // Bug fix until we have the original font files
-  font-style: italic;
-  color: $positive !important;
+  font-style:  italic;
+  color:       $positive !important;
 }
 
-.bar-dark .title, .bar-dark h1{
+.bar-dark .title, .bar-dark h1 {
   color: $stable !important;
 }
+
 .bg-dark {
   background-color: #000000;
 }
 
-.item-content h2{
-  font-size: 1.2em;
+.item-content h2 {
+  font-size:   1.2em;
   font-family: $headings-font-family;
   // font-weight: bold;
   // color: $positive !important;
 }
 
-.footer-button{
+.footer-button {
   padding: 0;
 }
 
 .footer-button .button.button-full {
-  width:100%;
-  margin-top: 0;
+  width:         100%;
+  margin-top:    0;
   margin-bottom: 0;
 }
 
-.big-icon{
-  font-size: 8em;
-  color: $scroll-refresh-icon-color;
+.big-icon {
+  font-size:  8em;
+  color:      $scroll-refresh-icon-color;
   text-align: center;
 }
 
 .spinner svg {
-  width: 44px;
+  width:  44px;
   height: 44px;
   stroke: $scroll-refresh-icon-color;;
-  fill: $scroll-refresh-icon-color;;
+  fill:   $scroll-refresh-icon-color;;
+}
+
+.tutorial-content {
+  .scroll, .scroll > .slider {
+    height: 100%;
+  }
 }
 
 /* image zoom */
 .image-list-thumb {
-  padding: 0 2px;
+  padding:        0 2px;
   padding-bottom: 2px;
-  height: 180px;
+  height:         180px;
 }
 
-.image-list-thumb:first-child{
+.image-list-thumb:first-child {
   padding-left: 0;
 }
 
-.image-list-thumb:last-child{
+.image-list-thumb:last-child {
   padding-right: 0;
 }
 
 .detail-image-slider {
-  padding:0;
-  border:none;
+  padding: 0;
+  border:  none;
 }
 
 .image-modal {
-  width: 100% !important;
+  width:  100% !important;
   height: 100%;
-  top: 0 !important;
-  left: 0 !important;
+  top:    0 !important;
+  left:   0 !important;
 }
 
 .transparent {
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .slider {
-  width: 100%;
+  width:  100%;
   height: 100%;
 }
 
 .image {
-  width: 100%;
-  height: 500px;
-  background-size: contain;
-  background-repeat: no-repeat;
+  width:               100%;
+  height:              500px;
+  background-size:     contain;
+  background-repeat:   no-repeat;
   background-position: center, center;
 }
 
 .slide-pager-dark .slider-pager .slider-pager-page {
-  color:white;
+  color: white;
 }

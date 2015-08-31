@@ -17,6 +17,7 @@
       });
   }
 
+
   function MenuController($translate, $q, $log, SETTINGS_STORAGE_KEY, $localForage, $rootScope) {
     var vm = this;
 
@@ -45,6 +46,11 @@
 
 
     vm.onLanguageChange = function () {
+      $rootScope.$broadcast('onLanguageChange', vm.language.toLowerCase());
+      $rootScope.$on('onLanguageChange', function(event, langKey){
+        vm.language = angular.uppercase(langKey);
+      });
+
       $translate.use(vm.language.toLowerCase());
       $rootScope.settings.language = vm.language.toLowerCase();
       saveSettings();
