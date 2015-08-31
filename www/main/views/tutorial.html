@@ -8,12 +8,10 @@
             <ion-slide>
                 <div class="welcome"><h1>{{'LABEL.WELCOME' | translate}}</h1>
                     <p>{{ 'LABEL.LANGUAGE' | translate }}</p>
-                    <ion-radio ng-model="tutorial.language" ng-value="'DE'" ng-change="tutorial.onLanguageChange()" >
-                        <img src="./img/de.png" alt="flag_DE" width="15%">DE</ion-radio>
-                    <ion-radio ng-model="tutorial.language" ng-value="'EN'" ng-change="tutorial.onLanguageChange()">
-                        <img src="./img/gb.png" alt="flag_EN" width="15%">GB</ion-radio>
-                    <ion-radio ng-model="tutorial.language" ng-value="'FR'" ng-change="tutorial.onLanguageChange()">
-                        <img src="./img/fr.png" alt="flag_FR" width="15%">FR</ion-radio>
+                    <ion-radio ng-model="tutorial.language" ng-value="'DE'" ng-change="tutorial.onLanguageChange()">Deutsch</ion-radio>
+                    <ion-radio ng-model="tutorial.language" ng-value="'EN'" ng-change="tutorial.onLanguageChange()">English</ion-radio>
+                    <ion-radio ng-model="tutorial.language" ng-value="'FR'" ng-change="tutorial.onLanguageChange()">Fran&ccedil;ais</ion-radio>
+                    <ion-radio ng-model="tutorial.language" ng-value="'IT'" ng-change="tutorial.onLanguageChange()">Italiano</ion-radio>
                     <br>
 
                 </div>
