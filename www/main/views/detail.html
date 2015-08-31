@@ -3,15 +3,14 @@
         <ion-nav-back-button></ion-nav-back-button>
     </ion-nav-bar>
     <ion-content>
-
-        <div class="preview">
-
-            <a class="item item-list-detail detail-image-slider">
-                <ion-scroll direction="x">
-                    <img ng-repeat="image in allImages" ng-src="{{image.src}}" ng-click="showImages($index)" class="image-list-thumb"/>
-                </ion-scroll>
-            </a>
-        </div>
+        <ion-slide-box class="slidebox">
+            <ion-slide ng-repeat="image in allImages" class="slidebox slidebox-slider"><img ng-src="{{image.src}}" ng-click="showImages($index)" class="slidebox-img"></ion-slide>
+        </ion-slide-box>
+            <!--<a class="item item-list-detail detail-image-slider">-->
+                <!--<ion-scroll direction="x">-->
+                    <!--<img ng-repeat="image in allImages" ng-src="{{image.src}}" ng-click="showImages($index)" class="image-list-thumb"/>-->
+                <!--</ion-scroll>-->
+            <!--</a>-->
         
         <div class="padding">
             <h3>{{detail.item.data.Name}}</h3>
