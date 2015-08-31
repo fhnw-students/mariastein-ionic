@@ -15,7 +15,7 @@
         
         <div class="padding">
             <h3>{{detail.item.data.Name}}</h3>
-            <ion-scroll zooming="true" direction="xy" style="width: 100%; ">
+            <ion-scroll zooming="true" min-zoom="{{zoomMin}}" direction="xy" style="width: 100%;" delegate-handle="scrollHandle1" on-double-tap="zoom(1)">
                 <div>{{detail.item.data.Text}}</div>
             </ion-scroll>
 

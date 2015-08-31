@@ -20,9 +20,8 @@
     ////////////////
 
     function get(){
-      $http.get('http://localhost:3000/data')
+      $http.get('http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000')
           .then(function(response) {
-            console.log(response);
             data = response.data;
             initDB();
           }, function(response) {
@@ -31,21 +30,48 @@
           });
     }
 
+    function getObject(obj){
+      for(var key in obj){
+        if(angular.isObject(obj)){
+          return obj[key];
+        }
+      }
+      return {};
+    }
+
     function initDB(){
       var img_blob;
       var parameters;
-      for (var i = 0; i < data.length; i++){
-        //getblob
-        for (var j = 0; j < data[i]['file'].length; j++) {
-          img_blob = getBlob(data[i]['file'][j]['url']);
+      data = data.map(function(item){
+        var newItem = getObject(item.content);
+        newItem.image = parseImage(newItem.image);
+        return newItem;
+      });
+
+      console.info(data);
+      for (var i = 0; i<data.length; i++){
+        for (var j = 0; j<data[i].image.length; j++){
+          img_blob = getBlob(data[i].image[j].originalResource.publicUrl);
+          query("INSERT INTO data_img (uid, file) VALUES (?,?)", [data[i].uid,img_blob]);
         }
-        parameters = [data[i]['title'],data[i]['teaser'],data[i]['content'],data[i]['qrcode'],img_blob,data[i]['room']['000000004af0b2e20000000015508849']['title']];
-        //query("INSERT INTO data_main (title,teaser,content,qrcode,file,room) VALUES (?,?,?,?,?,?)", parameters);
+        parameters = [data[i].uid,data[i].title,data[i].teaser,data[i].content,data[i].qrcode];
+        query("INSERT INTO data_main (id,title,teaser,content,qrcode,file,room) VALUES (?,?,?,?,?,?,?)", parameters);
+        query("INSERT INTO data_room (uid, name, qrcode) VALUES (?,?,?)",[data[i].uid,data[i].room.title,data[i].room.qrcode]);
+
+      }
+
+      function parseImage(images){
+        var a = [];
+        for(var key in images){
+          a.push(images[key]);
+        }
+        return a;
       }
       getAll();
     }
 
     function getBlob(url){
+      url = "http://kloster-mariastein.business-design.ch/"+url;
       // Simulate a call to Dropbox or other service that can
       // return an image as an ArrayBuffer.
       var xhr = new XMLHttpRequest();
