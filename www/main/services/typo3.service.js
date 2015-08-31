@@ -55,7 +55,7 @@
           query("INSERT INTO data_img (uid, file) VALUES (?,?)", [data[i].uid,img_blob]);
         }
         parameters = [data[i].uid,data[i].title,data[i].teaser,data[i].content,data[i].qrcode];
-        query("INSERT INTO data_main (id,title,teaser,content,qrcode,file,room) VALUES (?,?,?,?,?,?,?)", parameters);
+        query("INSERT INTO data_main (id,title,teaser,content,qrcode) VALUES (?,?,?,?,?)", parameters);
         query("INSERT INTO data_room (uid, name, qrcode) VALUES (?,?,?)",[data[i].uid,data[i].room.title,data[i].room.qrcode]);
 
       }
