@@ -86,11 +86,11 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   }
 }
 
-/* image zoom */
+/* slider with thumbnails */
 .image-list-thumb {
   padding:        0 2px;
   padding-bottom: 2px;
-  height:         180px;
+  height:         200px;
 }
 
 .image-list-thumb:first-child {
@@ -112,6 +112,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   top:    0 !important;
   left:   0 !important;
 }
+/* END: slider with thumbnails */
 
 .transparent {
   background: rgba(0, 0, 0, 0.7);
@@ -133,3 +134,27 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .slide-pager-dark .slider-pager .slider-pager-page {
   color: white;
 }
+
+
+/* slider with box */
+//.slidebox{
+//  background-color: black;
+//  border:none;
+//}
+//.slidebox-slider {
+//  text-align: center;
+//}
+//.slidebox-img {
+//  height:200px;
+//}
+//.slidebox .slider-slides{
+//  height:220px;
+//}
+//.slidebox .slider-pager {
+//  background-color: white;
+//  bottom:0px;
+//  height:21px;
+//  margin-bottom:-1px;
+//  padding-top:5px;
+//}
+/* END: slider with box */
