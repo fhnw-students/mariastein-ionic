@@ -32,7 +32,20 @@
     vm.onLanguageChange = function () {
       $rootScope.$broadcast('onLanguageChange', vm.language.toLowerCase());
     };
+
+    $rootScope.onClick = function (msg) {
+      //ui-sref="menu.welcome"
+      //$state.go('^');
+     // $location.path("#/menu/welcome");
+      alert(msg);
+    }
+
+
+
+
   }
+
+
 
 
 }());
