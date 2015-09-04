@@ -4,7 +4,8 @@
   angular.module('kmsscan.services', [
     'kmsscan.services.Data',
     'kmsscan.services.History',
-    'kmsscan.services.News'
+    'kmsscan.services.News',
+    'kmsscan.services.Map'
   ]);
 
 }());
