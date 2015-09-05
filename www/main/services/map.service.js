@@ -25,12 +25,14 @@
           {
             id: 1,
             img: 'kapelle.jpg',
+            img_plan: 'Grundrissplan_gnadenkapelle.png',
             title: 'Johanneskapelle',
             scanned: '2/5'
           },
           {
             id: 2,
             img: 'kapelle2.jpg',
+            img_plan: 'Grundrissplan_gnadenkapelle.png',
             title: 'Markuskapelle',
             scanned: '3/5'
           }

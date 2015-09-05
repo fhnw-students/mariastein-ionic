@@ -3,7 +3,7 @@
         <h1>{{ 'LABEL.MAP' | translate }}</h1>
         <p>Content</p>
         <div class="list">
-            <a ng-repeat="item in map.list" href="#" class="item item-thumbnail-left">
+            <a ng-repeat="item in map.list" href="#/menu/mapPage/{{item.id}}" class="item item-thumbnail-left">
                 <img ng-src="../img/{{item.img}}">
                 <h2>{{item.title}}</h2>
                 <h4>{{item.scanned}} gescannt</h4>
