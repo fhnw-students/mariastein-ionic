@@ -16,7 +16,7 @@ var db;
     'kmsscan.translateConfig',
 
     'kmsscan.directives',
-    //'kmsscan.run',
+    'kmsscan.run',
 
     // Views
     'kmsscan.views'

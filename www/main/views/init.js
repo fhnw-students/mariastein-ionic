@@ -2,9 +2,6 @@
     'use strict';
 
     angular.module('kmsscan.views.Init', [
-      //'kmsscan.services.History',
-      //'kmsscan.services.News'
-
       'kmsscan.services.rest.Typo3',
       'kmsscan.services.sql.Objects',
       'kmsscan.services.sql.Rooms',

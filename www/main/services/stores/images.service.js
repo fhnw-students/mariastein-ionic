@@ -8,8 +8,6 @@
   /**
    * Service Class
    * @param $q
-   * @param $cordovaSQLite
-   * @param $ionicPlatform
    * @returns {{sync: sync, getAll: getAll}}
    * @constructor
    */
