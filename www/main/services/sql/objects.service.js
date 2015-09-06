@@ -2,15 +2,36 @@
   'use strict';
 
   angular
-    .module('kmsscan.services.Data', [])
-    .factory('dataService', DataService);
+    .module('kmsscan.services.sql.Objects', [])
+    .factory('objectsSqlService', ObjectsSqlService);
 
-  function DataService($q, $cordovaSQLite) {
-    console.info('[DataService]');
+  /**
+   * Static Variables
+   * @type {{OBJECTS: string, OBJECTS_HAS_IMAGES: string}}
+   */
+  ObjectsSqlService.TABLENAME = {
+    OBJECTS: 'objects',
+    OBJECTS_HAS_IMAGES: 'objects_has_media'
+  };
 
-    var db = $cordovaSQLite.openDB({name: 'kmsscan.data'});
-    _create();
+  /**
+   * Service Class
+   * @param $q
+   * @param $cordovaSQLite
+   * @param $ionicPlatform
+   * @returns {{sync: sync, getAll: getAll}}
+   * @constructor
+   */
+  function ObjectsSqlService($q, $cordovaSQLite, $ionicPlatform) {
+    console.info('[ObjectsSqlService]');
 
+    var db;
+    $ionicPlatform.ready(function () {
+      db = $cordovaSQLite.openDB({name: 'kmsscan.objects'});
+      _create();
+    });
+
+    // Public API
     var service = {
       sync: sync,
       getAll: getAll
@@ -29,8 +50,8 @@
     function getAll() {
       var deferred = $q.defer();
       $q.all([
-        _selectAllData(),
-        _selectAllDataHasMedia()
+        _selectAllObjects(),
+        _selectAllObjectsHasMedia()
       ])
         .then(function (results) {
           var data = results[0];
@@ -80,11 +101,11 @@
      * @returns {deferred.promise|{then, always}}
      * @private
      */
-    function _selectAllData() {
+    function _selectAllObjects() {
       var deferred = $q.defer();
-      var query = "SELECT * FROM data";
+      var query = 'SELECT * FROM ' + ObjectsSqlService.TABLENAME.OBJECTS + '';
       $cordovaSQLite.execute(db, query).then(function (res) {
-        var data = _parseRawSqlData(res);
+        var data = _parseRawSqlObjects(res);
         deferred.resolve(data);
       }, function (err) {
         console.error(err);
@@ -98,11 +119,11 @@
      * @returns {deferred.promise|{then, always}}
      * @private
      */
-    function _selectAllDataHasMedia() {
+    function _selectAllObjectsHasMedia() {
       var deferred = $q.defer();
-      var query = "SELECT * FROM dataHasMedia";
+      var query = 'SELECT * FROM ' + ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES + '';
       $cordovaSQLite.execute(db, query).then(function (res) {
-        var data = _parseRawSqlData(res);
+        var data = _parseRawSqlObjects(res);
         deferred.resolve(data);
       }, function (err) {
         console.error(err);
@@ -117,7 +138,7 @@
      * @returns {Array}
      * @private
      */
-    function _parseRawSqlData(rawSqlResult) {
+    function _parseRawSqlObjects(rawSqlResult) {
       var data = [];
       for (var i = 0; i < rawSqlResult.rows.length; i++) {
         data.push(rawSqlResult.rows.item(i));
@@ -133,7 +154,7 @@
      */
     function _insert(data) {
       return $q.all([
-        _insertData(data),
+        _insertObjects(data),
         _insertMedia(data)
       ]);
     }
@@ -145,7 +166,7 @@
      * @private
      */
     function _insertMedia(data) {
-      var query = "INSERT INTO dataHasMedia (uid, mediaId) VALUES (?,?)";
+      var query = 'INSERT INTO ' + ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES + ' (uid, mediaId) VALUES (?,?)';
       var queue = [];
       for (var i = 0; i < data.length; i++) {
         for (var n = 0; n < data[i].image.length; n++) {
@@ -166,8 +187,8 @@
      * @returns {Promise}
      * @private
      */
-    function _insertData(data) {
-      var query = "INSERT INTO data (uid, title, content, teaser, roomId, qrcode) VALUES (?,?,?,?,?,?)";
+    function _insertObjects(data) {
+      var query = 'INSERT INTO ' + ObjectsSqlService.TABLENAME.OBJECTS + ' (uid, title, content, teaser, roomId, qrcode) VALUES (?,?,?,?,?,?)';
       var queue = [];
       for (var i = 0; i < data.length; i++) {
         queue.push(
@@ -191,8 +212,8 @@
      */
     function _truncateTables() {
       return $q.all([
-        $cordovaSQLite.execute(db, "DROP TABLE data"),
-        $cordovaSQLite.execute(db, "DROP TABLE dataHasMedia")
+        $cordovaSQLite.execute(db, 'DROP TABLE ' + ObjectsSqlService.TABLENAME.OBJECTS + ''),
+        $cordovaSQLite.execute(db, 'DROP TABLE ' + ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES + '')
       ]);
     }
 
@@ -203,8 +224,8 @@
      */
     function _create() {
       return $q.all([
-        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS data (uid integer primary key, title text, content text, teaser text, roomId integer, qrcode text)"),
-        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS dataHasMedia (uid integer, mediaId integer)")
+        $cordovaSQLite.execute(db, 'CREATE TABLE IF NOT EXISTS ' + ObjectsSqlService.TABLENAME.OBJECTS + ' (uid integer primary key, title text, content text, teaser text, roomId integer, qrcode text)'),
+        $cordovaSQLite.execute(db, 'CREATE TABLE IF NOT EXISTS ' + ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES + ' (uid integer, mediaId integer)')
       ]);
     }
 

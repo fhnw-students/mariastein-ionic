@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('kmsscan.services.Typo3', [])
+    .module('kmsscan.services.rest.Typo3', [])
     .factory('typo3Service', Typo3Service);
 
   function Typo3Service($q, $http) {

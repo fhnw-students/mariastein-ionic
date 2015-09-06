@@ -1,13 +1,15 @@
 (function () {
   'use strict';
 
-  angular.module('kmsscan.services', [
-    'kmsscan.services.History',
-    'kmsscan.services.News',
-    'kmsscan.services.Typo3',
-    'kmsscan.services.Data',
-    'kmsscan.services.Rooms',
-    'kmsscan.services.Media'
+  var namespace = 'kmsscan.services';
+
+  angular.module(namespace, [
+    namespace + '.rest',
+    namespace + '.sql',
+    namespace + '.stores',
+
+    namespace + '.History',
+    namespace + '.News'
   ]);
 
 }());

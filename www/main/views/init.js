@@ -4,10 +4,11 @@
     angular.module('kmsscan.views.Init', [
       //'kmsscan.services.History',
       //'kmsscan.services.News'
-      'kmsscan.services.Typo3',
-      'kmsscan.services.Data',
-      'kmsscan.services.Rooms',
-      'kmsscan.services.Media'
+
+      'kmsscan.services.rest.Typo3',
+      'kmsscan.services.sql.Objects',
+      'kmsscan.services.sql.Rooms',
+      'kmsscan.services.sql.Images'
     ])
       .config(StateConfig)
       .controller('InitCtrl', InitController);
@@ -23,7 +24,7 @@
     }
 
 
-    function InitController($q, $ionicPlatform, typo3Service, dataService, roomsService, mediaService) {
+    function InitController($q, $ionicPlatform, typo3Service, objectsSqlService, roomsSqlService, imagesSqlService) {
       var vm = this; // view-model
       vm.typo3Data = {};
       console.info('[InitController]');
