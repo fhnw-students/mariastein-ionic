@@ -176,7 +176,7 @@
             data[i].title || '',
             data[i].content || '',
             data[i].teaser || '',
-            data[i].room || null,
+            data[i].room.uid || null,
             data[i].qrcode || null
           ])
         );
