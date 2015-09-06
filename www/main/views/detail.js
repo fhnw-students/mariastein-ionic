@@ -30,12 +30,13 @@
       if (!vm.more){
         vm.more = true;
       }
-    }
+    };
+
     vm.showLess = function(){
       if (vm.more){
         vm.more = false;
       }
-    }
+    };
 
     historyService.get($stateParams.id)
       .then(function(result) {
@@ -66,7 +67,7 @@
         $scope.modal = modal;
         $scope.modal.show();
       });
-    }
+    };
 
     $scope.closeModal = function() {
       $scope.modal.hide();
@@ -89,7 +90,7 @@
       } else {
         $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).zoomTo(1, true);
       }
-    }
+    };
 
   }
 
