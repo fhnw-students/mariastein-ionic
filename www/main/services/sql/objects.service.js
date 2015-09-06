@@ -2,7 +2,9 @@
   'use strict';
 
   angular
-    .module('kmsscan.services.sql.Objects', [])
+    .module('kmsscan.services.sql.Objects', [
+      'kmsscan.services.stores.Objects'
+    ])
     .factory('objectsSqlService', ObjectsSqlService);
 
   /**
@@ -22,7 +24,7 @@
    * @returns {{sync: sync, getAll: getAll}}
    * @constructor
    */
-  function ObjectsSqlService($q, $cordovaSQLite, $ionicPlatform) {
+  function ObjectsSqlService($q, $cordovaSQLite, $ionicPlatform, objectsStoreService) {
     console.info('[ObjectsSqlService]');
 
     var db;
@@ -86,6 +88,10 @@
           return _insert(data);
         })
         .then(function () {
+          return getAll();
+        })
+        .then(function (res) {
+          objectsStoreService.init(res);
           deferred.resolve();
         })
         .catch(function (err) {

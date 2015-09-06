@@ -2,9 +2,7 @@
   'use strict';
 
   angular
-    .module('kmsscan.services.stores.Images', [
-      'kmsscan.services.stores.Images'
-    ])
+    .module('kmsscan.services.stores.Images', [])
     .factory('imagesStoreService', ImagesStoreService);
 
   /**
@@ -15,18 +13,34 @@
    * @returns {{sync: sync, getAll: getAll}}
    * @constructor
    */
-  function ImagesStoreService($q, imagesSqlService) {
+  function ImagesStoreService($q) {
     console.info('[ImagesStoreService]');
     var storage;
 
 
     // Public API
-    var service = {};
+    var service = {
+      init: init,
+      getAll: getAll,
+      get: get
+    };
 
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
+    function init(data) {
+      storage = data;
+    }
 
+    function getAll() {
+      return storage;
+    }
+
+    function get(id) {
+      return storage.filter(function (item) {
+          return item.uid === id;
+        })[0] || {};
+    }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
 
