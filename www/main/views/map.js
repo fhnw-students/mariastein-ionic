@@ -1,7 +1,9 @@
 (function () {
   'use strict';
 
-  angular.module('kmsscan.views.Map', [])
+  angular.module('kmsscan.views.Map', [
+    'kmsscan.services.Map'
+  ])
     .config(StateConfig)
     .controller('MapCtrl', MapController);
 
@@ -20,10 +22,9 @@
   }
 
 
-  function MapController() {
+  function MapController(mapService) {
     var vm = this;  // view-model
-
-
+    vm.list = mapService.get();
 
   }
 

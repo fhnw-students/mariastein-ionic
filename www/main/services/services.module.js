@@ -9,7 +9,8 @@
     namespace + '.stores',
 
     namespace + '.History',
-    namespace + '.News'
+    namespace + '.News',
+    namespace + '.Map'
   ]);
 
 }());
