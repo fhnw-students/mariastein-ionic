@@ -24,6 +24,7 @@
     // Public API
     var service = {
       set: set,
+      has: has,
       getAll: getAll,
       get: get,
       visited: visited
@@ -32,6 +33,10 @@
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
+    function has(uid) {
+      return get(uid) !== undefined;
+    }
+
     function set(data) {
       log.info('set()', data);
       storage = data;
@@ -41,10 +46,10 @@
       return storage;
     }
 
-    function get(id) {
+    function get(uid) {
       return storage.filter(function (item) {
-          return item.uid === id;
-        })[0] || {};
+        return item.uid === parseInt(uid, 10);
+      })[0];
     }
 
     function visited(id) {

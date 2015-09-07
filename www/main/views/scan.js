@@ -2,6 +2,7 @@
   'use strict';
 
   angular.module('kmsscan.views.Scan', [
+    'kmsscan.services.stores.Objects',
     'kmsscan.services.stores.History'
   ])
     .config(StateConfig)
@@ -21,7 +22,7 @@
       });
   }
 
-  function ScanController($cordovaBarcodeScanner, $cordovaVibration, $state, $rootScope, historyStoreService) {
+  function ScanController($cordovaBarcodeScanner, $cordovaVibration, $state, $rootScope, historyStoreService, objectsStoreService) {
     var vm = this; // view-model
     vm.isReady = false;
     vm.barcodeText = "";
@@ -68,21 +69,20 @@
     }
 
     function afterScan(uid) {
-      historyStoreService.visited(uid)
-        .then(function () {
-          $state.go('menu.detail', {
-            id: uid
-          }, {
-            location: "replace"
-          })
-        })
-        .catch(function () {
-          if (error === 'NotFound') {
-            $state.go('menu.notFound', {}, {
+      if (objectsStoreService.has(uid)) {
+        historyStoreService.visited(uid)
+          .then(function () {
+            $state.go('menu.detail', {
+              id: uid
+            }, {
               location: "replace"
-            })
-          }
+            });
+          });
+      } else {
+        $state.go('menu.notFound', {}, {
+          location: "replace"
         });
+      }
     }
 
     function submit() {

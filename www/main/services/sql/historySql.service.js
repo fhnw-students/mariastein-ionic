@@ -59,7 +59,6 @@
      */
     function sync() {
       var deferred = $q.defer();
-
       _create()
         .then(function () {
           return getAll();
@@ -107,30 +106,6 @@
      */
     function _selectAll() {
       return sqlLiteUtilsService.selectAll(db, HistorySqlService.TABLENAME);
-    }
-
-    /**
-     *
-     * @param data
-     * @returns {Promise}
-     * @private
-     */
-    function _insert(data) {
-      var query = 'INSERT INTO ' + HistorySqlService.TABLENAME + ' (uid, date) VALUES (?,?)';
-      var queue = [];
-      for (var i = 0; i < data.length; i++) {
-        queue.push(
-          $cordovaSQLite.execute(db, query, [
-            data[i].uid,
-            data[i].date || ''
-          ])
-        );
-      }
-      return $q.all(queue);
-    }
-
-    function _update(uid) {
-
     }
 
     /**

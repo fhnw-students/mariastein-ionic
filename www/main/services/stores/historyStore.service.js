@@ -13,34 +13,41 @@
    * @returns {{sync: sync, getAll: getAll}}
    * @constructor
    */
-  function HistoryStoreService(Logger, historySqlService) {
+  function HistoryStoreService($q, Logger, historySqlService) {
     var log = new Logger('kmsscan.services.stores.History');
     log.info('init');
     var storage;
 
     // Public API
     var service = {
+      activate: activate,
+
       set: set,
       visited: visited,
       getAll: getAll,
       get: get
     };
 
-    _activate();
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
     function visited(id) {
+      var deferred = $q.defer();
       historySqlService.select(id)
-        .then(function (result) {
-          log.info('visited -> select', result);
-
+        .then(function (results) {
+          log.info('visited -> select', results);
+          if (results.length > 0) {
+            return historySqlService.update(id);
+          } else {
+            return historySqlService.create(id);
+          }
         })
-        .catch(function (err) {
-
-        });
-
-
+        .then(function (res) {
+          log.info('visited -> saved', res);
+          deferred.resolve(res);
+        })
+        .catch(deferred.reject);
+      return deferred.promise;
     }
 
     function set(data) {
@@ -52,15 +59,14 @@
       return storage;
     }
 
-    function get(id) {
+    function get(uid) {
       return storage.filter(function (item) {
-          return item.uid === id;
-        })[0] || {};
+          return item.uid === parseInt(uid, 10);
+        })[0];
     }
 
-    // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
-    function _activate() {
-      historySqlService.sync()
+    function activate() {
+      return historySqlService.sync()
         .then(function (history) {
           storage = history;
         });

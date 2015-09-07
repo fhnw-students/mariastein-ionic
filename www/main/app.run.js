@@ -12,7 +12,7 @@
   ])
     .run(run);
 
-  function run($rootScope, $translate, $q, $ionicPlatform, Logger, typo3Service, objectsSqlService, roomsSqlService, imagesSqlService, historySqlService, $state) {
+  function run($rootScope, $translate, $q, $ionicPlatform, Logger, typo3Service, objectsSqlService, roomsSqlService, imagesSqlService, historyStoreService) {
     var log = new Logger('kmsscan.run');
     log.info('start');
 
@@ -33,6 +33,7 @@
           typo3Service.load()
             .then(function (typo3Data) {
               return $q.all([
+                historyStoreService.activate(),
                 objectsSqlService.sync(typo3Data.objects),
                 roomsSqlService.sync(typo3Data.rooms),
                 imagesSqlService.sync(typo3Data.images)
@@ -51,7 +52,7 @@
             });
         } else {
           log.warn('stop ->', 'Cordova Plugins are unreachable');
-          $state.go('menu.welcome');
+          $rootScope.$broadcast('kmsscan.run.activate.failed');
         }
       });
     }

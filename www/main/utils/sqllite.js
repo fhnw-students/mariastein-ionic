@@ -71,8 +71,9 @@
      */
     this.parseRawSqlObjects = function (rawSqlResult) {
       var data = [];
-      for (var i = 0; i < rawSqlResult.rows.length; i++) {
-        data.push(rawSqlResult.rows.item(i));
+      var rows = angular.copy(rawSqlResult.rows);
+      for (var i = 0; i < rows.length; i++) {
+        data.push(rows.item(i));
       }
       return data;
     };
