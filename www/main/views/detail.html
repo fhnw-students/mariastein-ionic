@@ -2,10 +2,7 @@
     <ion-nav-bar class="bar-stable">
         <ion-nav-back-button></ion-nav-back-button>
     </ion-nav-bar>
-    <ion-content>
-        <!--<ion-slide-box class="slidebox">-->
-            <!--<ion-slide ng-repeat="image in allImages" class="slidebox slidebox-slider"><img ng-src="{{image.src}}" ng-click="showImages($index)" class="slidebox-img"></ion-slide>-->
-        <!--</ion-slide-box>-->
+    <ion-content delegate-handle="scrollMain">
         <a class="item item-list-detail detail-image-slider">
             <ion-scroll direction="x">
                 <img ng-repeat="image in allImages" ng-src="{{image.src}}" ng-click="showImages($index)" class="image-list-thumb"/>
@@ -14,21 +11,21 @@
         
         <div class="padding">
             <h3>{{detail.item.data.Name}}</h3>
-            <ion-scroll ng-if="zooming" zooming="{{zooming}}" min-zoom="{{zoomMin}}" direction="xy" style="width: 100%;" delegate-handle="scrollHandle1"
-                        on-double-tap="zoom(1)">
-                <div>{{detail.item.data.Text}}</div>
+            <ion-scroll ng-if="zooming && enableZoom" zooming="{{zooming}}" min-zoom="{{zoomMin}}" direction="xy" style="width: 100%;" delegate-handle="scrollHandle1"
+                        on-double-tap="zoom(1)" ng-style="{height: hgt2+ 'px'}">
+                <p>{{detail.item.data.Text}}</p>
                 <button ng-if="!detail.more" class="button button-clear button-positive" on-tap="detail.showMore()">
                     {{'LABEL.MORE'|translate}}
                 </button>
                 <p ng-if="detail.more">{{detail.item.data.LongText}}</p>
-
                 <button ng-if="detail.more" class="button button-clear button-positive" on-tap="detail.showLess()">
                     {{'LABEL.LESS'|translate}}
                 </button>
+
             </ion-scroll>
 
-            <div ng-if="!zooming">
-                <div>{{detail.item.data.Text}}</div>
+            <div ng-if="!zooming || !enableZoom" on-tap="scrollTop()">
+                <p>{{detail.item.data.Text}}</p>
                 <button ng-if="!detail.more" class="button button-clear button-positive" on-tap="detail.showMore()">
                     {{'LABEL.MORE'|translate}}
                 </button>
