@@ -5,6 +5,7 @@
     'kmsscan.services.Data',
     'kmsscan.services.History',
     'kmsscan.services.News',
+    'kmsscan.services.Map',
     'kmsscan.services.Typo3'
   ])
     .config(StateConfig)
@@ -21,13 +22,14 @@
   }
 
 
-  function InitController($q, dataService, historyService, newsService, $state, $ionicHistory, $timeout, typo3Service) {
+  function InitController($q, dataService, historyService, newsService, mapService, $state, $ionicHistory, $timeout, typo3Service) {
     var vm = this; // view-model
 
     $q.all([
       dataService.loadCsv(),
       historyService.init(),
       newsService.init(),
+      mapService.init(),
       typo3Service.get()
     ])
       .then(function (results) {
