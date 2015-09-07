@@ -56,15 +56,37 @@
         log.warn('stop ->', 'Cordova Plugins are unreachable');
       }
     });
+    //imageTest();
 
     function imageTest() {
-      //imagesSqlService.get(42)
-      //  .then(function (result) {
-      //    log.info('imageTest.done', result);
+      var smallImage = document.getElementById('test');
+
+      //typo3Service.getImageBlob('files/a.jpeg')
+      //  .then(function (blob) {
+      //    var urlCreator = window.URL || window.webkitURL;
+      //    var imageUrl = urlCreator.createObjectURL(blob);
+      //    smallImage.src = imageUrl;
       //  })
       //  .catch(function (err) {
-      //    log.error('imageTest.catch', err);
+      //    console.error(err);
       //  });
+
+
+      imagesSqlService.get(42)
+        .then(function (result) {
+
+          var arrayBufferView = new Uint8Array(result);
+          var blob = new Blob([arrayBufferView], {type: "image/jpeg"});
+          var urlCreator = window.URL || window.webkitURL;
+          var imageUrl = urlCreator.createObjectURL(blob);
+          smallImage.src = imageUrl;
+          //smallImage.src = "data:image/jpeg;base64," + Base64.encode(result.data);
+
+          log.info('imageTest.done', result);
+        })
+        .catch(function (err) {
+          log.error('imageTest.catch', err);
+        });
     }
 
     //$q.all([
