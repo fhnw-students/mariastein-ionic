@@ -4,6 +4,7 @@
   angular
     .module('kmsscan.services.sql.Objects', [
       'kmsscan.utils.Logger',
+      'kmsscan.utils.SqlLite',
 
       'kmsscan.services.stores.Objects'
     ])
@@ -20,13 +21,10 @@
 
   /**
    * Service Class
-   * @param $q
-   * @param $cordovaSQLite
-   * @param $ionicPlatform
    * @returns {{sync: sync, getAll: getAll}}
    * @constructor
    */
-  function ObjectsSqlService($q, $cordovaSQLite, $ionicPlatform, Logger, objectsStoreService) {
+  function ObjectsSqlService($q, $cordovaSQLite, $ionicPlatform, Logger, sqlLiteUtilsService, objectsStoreService) {
     var log = new Logger('kmsscan.services.sql.Objects');
     log.info('init');
 
@@ -113,16 +111,7 @@
      * @private
      */
     function _selectAllObjects() {
-      var deferred = $q.defer();
-      var query = 'SELECT * FROM ' + ObjectsSqlService.TABLENAME.OBJECTS + '';
-      $cordovaSQLite.execute(db, query).then(function (res) {
-        var data = _parseRawSqlObjects(res);
-        deferred.resolve(data);
-      }, function (err) {
-        log.error('_selectAllObjects', err);
-        deferred.reject(err);
-      });
-      return deferred.promise;
+      return sqlLiteUtilsService.selectAll(db, ObjectsSqlService.TABLENAME.OBJECTS);
     }
 
     /**
@@ -131,30 +120,7 @@
      * @private
      */
     function _selectAllObjectsHasMedia() {
-      var deferred = $q.defer();
-      var query = 'SELECT * FROM ' + ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES + '';
-      $cordovaSQLite.execute(db, query).then(function (res) {
-        var data = _parseRawSqlObjects(res);
-        deferred.resolve(data);
-      }, function (err) {
-        log.error('_selectAllObjectsHasMedia()', err);
-        deferred.reject(err);
-      });
-      return deferred.promise;
-    }
-
-    /**
-     *
-     * @param rawSqlResult
-     * @returns {Array}
-     * @private
-     */
-    function _parseRawSqlObjects(rawSqlResult) {
-      var data = [];
-      for (var i = 0; i < rawSqlResult.rows.length; i++) {
-        data.push(rawSqlResult.rows.item(i));
-      }
-      return data;
+      return sqlLiteUtilsService.selectAll(db, ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES);
     }
 
     /**
@@ -223,8 +189,8 @@
      */
     function _truncateTables() {
       return $q.all([
-        $cordovaSQLite.execute(db, 'DROP TABLE ' + ObjectsSqlService.TABLENAME.OBJECTS + ''),
-        $cordovaSQLite.execute(db, 'DROP TABLE ' + ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES + '')
+        sqlLiteUtilsService.truncateTable(db,ObjectsSqlService.TABLENAME.OBJECTS),
+        sqlLiteUtilsService.truncateTable(db,ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES)
       ]);
     }
 
@@ -235,8 +201,8 @@
      */
     function _create() {
       return $q.all([
-        $cordovaSQLite.execute(db, 'CREATE TABLE IF NOT EXISTS ' + ObjectsSqlService.TABLENAME.OBJECTS + ' (uid integer primary key, title text, content text, teaser text, roomId integer, qrcode text)'),
-        $cordovaSQLite.execute(db, 'CREATE TABLE IF NOT EXISTS ' + ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES + ' (uid integer, mediaId integer)')
+        sqlLiteUtilsService.createTable(db, ObjectsSqlService.TABLENAME.OBJECTS, '(uid integer primary key, title text, content text, teaser text, roomId integer, qrcode text)'),
+        sqlLiteUtilsService.createTable(db, ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES, '(uid integer, mediaId integer)')
       ]);
     }
 

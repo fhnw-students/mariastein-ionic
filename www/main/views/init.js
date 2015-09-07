@@ -7,7 +7,8 @@
     'kmsscan.services.rest.Typo3',
     'kmsscan.services.sql.Objects',
     'kmsscan.services.sql.Rooms',
-    'kmsscan.services.sql.Images'
+    'kmsscan.services.sql.Images',
+    'kmsscan.services.sql.History'
   ])
     .config(StateConfig)
     .controller('InitCtrl', InitController);
@@ -21,7 +22,7 @@
       });
   }
 
-  function InitController($q, $ionicPlatform, Logger, typo3Service, objectsSqlService, roomsSqlService, imagesSqlService) {
+  function InitController($q, $ionicPlatform, Logger, typo3Service, objectsSqlService, roomsSqlService, imagesSqlService, historySqlService) {
     var vm = this; // view-model
     var log = new Logger('kmsscan.views.Init');
     vm.typo3Data = {};
@@ -35,9 +36,10 @@
             vm.typo3Data = typo3Data;
             log.info('typo3Data', typo3Data);
             return $q.all([
-              objectsSqlService.sync(typo3Data.objects)
+              historySqlService.sync(),
+              objectsSqlService.sync(typo3Data.objects),
               //imagesSqlService.sync(typo3Data.images),
-              //roomsSqlService.sync(typo3Data.rooms)
+              roomsSqlService.sync(typo3Data.rooms)
             ]);
           })
           .then(function (results) {

@@ -5,7 +5,8 @@
 
   angular
     .module(namespace, [
-      namespace + '.Logger'
+      namespace + '.Logger',
+      namespace + '.SqlLite'
     ]);
 
 })();

@@ -6,7 +6,8 @@
   angular.module(namespace, [
     namespace + '.Objects',
     namespace + '.Rooms',
-    namespace + '.Images'
+    namespace + '.Images',
+    namespace + '.History'
   ]);
 
 }());
