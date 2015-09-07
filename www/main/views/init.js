@@ -38,11 +38,12 @@
             return $q.all([
               historySqlService.sync(),
               objectsSqlService.sync(typo3Data.objects),
-              imagesSqlService.sync(typo3Data.images),
-              roomsSqlService.sync(typo3Data.rooms)
+              roomsSqlService.sync(typo3Data.rooms),
+              imagesSqlService.sync(typo3Data.images)
             ]);
           })
           .then(function (results) {
+            imageTest();
             log.info('done', results);
           })
           .catch(function (err) {
@@ -55,6 +56,16 @@
         log.warn('stop ->', 'Cordova Plugins are unreachable');
       }
     });
+
+    function imageTest() {
+      //imagesSqlService.get(42)
+      //  .then(function (result) {
+      //    log.info('imageTest.done', result);
+      //  })
+      //  .catch(function (err) {
+      //    log.error('imageTest.catch', err);
+      //  });
+    }
 
     //$q.all([
     //  dataService.loadCsv(),

@@ -70,15 +70,15 @@
     }
 
     function _parseImages(data) {
-      var media = [];
+      var images = [];
       for (var i = 0; i < data.length; i++) {
         for (var n = 0; n < data[i].image.length; n++) {
           if (data[i].image[n]) {
-            media.push(data[i].image[n]);
+            images.push(data[i].image[n]);
           }
         }
       }
-      return _.uniq(media, function (item) {
+      return _.uniq(images, function (item) {
         return item.uid;
       });
     }
