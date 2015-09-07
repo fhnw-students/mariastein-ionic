@@ -4,6 +4,7 @@
   angular
     .module('kmsscan.services.sql.Rooms', [
       'kmsscan.utils.Logger',
+      'kmsscan.utils.SqlLite',
 
       'kmsscan.services.stores.Rooms'
     ])
@@ -13,9 +14,7 @@
    * Static Variables
    * @type {{IMAGES: string}}
    */
-  RoomsSqlService.TABLENAME = {
-    ROOMS: 'rooms'
-  };
+  RoomsSqlService.TABLENAME = 'rooms';
 
   /**
    * Service Class
@@ -84,7 +83,7 @@
      * @private
      */
     function _selectAll() {
-      return sqlLiteUtilsService.selectAll(db, RoomsSqlService.TABLENAME.ROOMS);
+      return sqlLiteUtilsService.selectAll(db, RoomsSqlService.TABLENAME);
     }
 
     /**
@@ -94,7 +93,7 @@
      * @private
      */
     function _insert(data) {
-      var query = 'INSERT INTO ' + RoomsSqlService.TABLENAME.ROOMS + ' (uid, title, position) VALUES (?,?,?)';
+      var query = 'INSERT INTO ' + RoomsSqlService.TABLENAME + ' (uid, title, position) VALUES (?,?,?)';
       var queue = [];
       for (var i = 0; i < data.length; i++) {
         queue.push(
@@ -114,7 +113,7 @@
      * @private
      */
     function _truncateTables() {
-      return sqlLiteUtilsService.truncateTable(db,RoomsSqlService.TABLENAME.ROOMS);
+      return sqlLiteUtilsService.truncateTable(db,RoomsSqlService.TABLENAME);
     }
 
     /**
@@ -123,7 +122,7 @@
      * @private
      */
     function _create() {
-      return sqlLiteUtilsService.createTable(db, RoomsSqlService.TABLENAME.ROOMS, '(uid integer primary key, title text, position integer)');
+      return sqlLiteUtilsService.createTable(db, RoomsSqlService.TABLENAME, '(uid integer primary key, title text, position integer)');
     }
   }
 })();

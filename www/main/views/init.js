@@ -38,7 +38,7 @@
             return $q.all([
               historySqlService.sync(),
               objectsSqlService.sync(typo3Data.objects),
-              //imagesSqlService.sync(typo3Data.images),
+              imagesSqlService.sync(typo3Data.images),
               roomsSqlService.sync(typo3Data.rooms)
             ]);
           })

@@ -4,6 +4,7 @@
   angular
     .module('kmsscan.services.sql.History', [
       'kmsscan.utils.Logger',
+      'kmsscan.utils.SqlLite',
 
       'kmsscan.services.stores.History'
     ])
@@ -13,9 +14,7 @@
    * Static Variables
    * @type {{IMAGES: string}}
    */
-  HistorySqlService.TABLENAME = {
-    HISTORY: 'history'
-  };
+  HistorySqlService.TABLENAME = 'history';
 
   /**
    * Service Class
@@ -79,7 +78,7 @@
      * @returns {deferred.promise|{then, always}}
      */
     function create(uid) {
-      var query = 'INSERT INTO ' + HistorySqlService.TABLENAME.HISTORY + ' (uid, date) VALUES (?,?)';
+      var query = 'INSERT INTO ' + HistorySqlService.TABLENAME + ' (uid, date) VALUES (?,?)';
       return $cordovaSQLite.execute(db, query, [
         uid,
         new Date().toString()
@@ -92,7 +91,7 @@
      * @returns {deferred.promise|{then, always}}
      */
     function update(uid) {
-      var query = 'UPDATE ' + HistorySqlService.TABLENAME.HISTORY +
+      var query = 'UPDATE ' + HistorySqlService.TABLENAME +
         ' SET date = \'' + new Date().toString() + '\' WHERE uid = ' + uid;
       return $cordovaSQLite.execute(db, query);
     }
@@ -105,7 +104,7 @@
      * @private
      */
     function _selectAll() {
-      return sqlLiteUtilsService.selectAll(db, HistorySqlService.TABLENAME.HISTORY);
+      return sqlLiteUtilsService.selectAll(db, HistorySqlService.TABLENAME);
     }
 
     /**
@@ -115,7 +114,7 @@
      * @private
      */
     function _insert(data) {
-      var query = 'INSERT INTO ' + HistorySqlService.TABLENAME.HISTORY + ' (uid, date) VALUES (?,?)';
+      var query = 'INSERT INTO ' + HistorySqlService.TABLENAME + ' (uid, date) VALUES (?,?)';
       var queue = [];
       for (var i = 0; i < data.length; i++) {
         queue.push(
@@ -138,7 +137,7 @@
      * @private
      */
     function _create() {
-      return sqlLiteUtilsService.createTable(db, HistorySqlService.TABLENAME.HISTORY, '(uid integer primary key, date text)');
+      return sqlLiteUtilsService.createTable(db, HistorySqlService.TABLENAME, '(uid integer primary key, date text)');
     }
   }
 })();
