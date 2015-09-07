@@ -7,17 +7,36 @@
     ])
     .factory('typo3Service', Typo3Service);
 
-  function Typo3Service($q, $http, Logger) {
+  function Typo3Service($q, $http, $cordovaFileTransfer, Logger) {
     var log = new Logger('kmsscan.services.rest.Typo3');
     log.info('init');
     var service = {
       load: load,
+      downloadImage: downloadImage,
       getImageBlob: getImageBlob
     };
 
     return service;
 
     ////////////////
+
+    function downloadImage(url, id) {
+      var deferred = $q.defer();
+      url = 'http://localhost:3000/' + url;
+      var targetPath = cordova.file.documentsDirectory + id + '.png';
+      var trustHosts = true;
+      var options = {};
+      $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
+        .then(function (result) {
+          deferred.resolve({
+            targetPath: targetPath,
+            image: result
+          });
+        }, function (err) {
+          deferred.reject(err);
+        });
+      return deferred.promise;
+    }
 
     function getImageBlob(url, params) {
       var deferred = $q.defer();

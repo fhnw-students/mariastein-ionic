@@ -96,12 +96,13 @@
 
     function _insert(imageId, imageUrl) {
       var deferred = $q.defer();
-      var query = 'INSERT INTO ' + ImagesSqlService.TABLENAME + ' (uid, data) VALUES (?,?)';
-      typo3Service.getImageBlob(imageUrl)
+      var query = 'INSERT INTO ' + ImagesSqlService.TABLENAME + ' (uid, path) VALUES (?,?)';
+      typo3Service.downloadImage(imageUrl, imageId)
         .then(function (image) {
+          console.log(image);
           return $cordovaSQLite.execute(db, query, [
             imageId,
-            image.response
+            image.targetPath
           ])
         })
         .then(function (result) {
@@ -128,7 +129,7 @@
      * @private
      */
     function _create() {
-      return sqlLiteUtilsService.createTable(db, ImagesSqlService.TABLENAME, '(uid integer primary key, data blob)');
+      return sqlLiteUtilsService.createTable(db, ImagesSqlService.TABLENAME, '(uid integer primary key, path text)');
     }
 
   }

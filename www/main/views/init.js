@@ -6,8 +6,8 @@
 
     'kmsscan.services.rest.Typo3',
     'kmsscan.services.sql.Objects',
-    'kmsscan.services.sql.Rooms',
     'kmsscan.services.sql.Images',
+    'kmsscan.services.sql.Rooms',
     'kmsscan.services.sql.History'
   ])
     .config(StateConfig)
@@ -22,7 +22,7 @@
       });
   }
 
-  function InitController($q, $ionicPlatform, Logger, typo3Service, objectsSqlService, roomsSqlService, imagesSqlService, historySqlService) {
+  function InitController($q, $ionicPlatform, Logger, typo3Service, objectsSqlService, roomsSqlService, imagesSqlService, historySqlService, $cordovaFileTransfer, $timeout, $scope) {
     var vm = this; // view-model
     var log = new Logger('kmsscan.views.Init');
     vm.typo3Data = {};
@@ -56,68 +56,19 @@
         log.warn('stop ->', 'Cordova Plugins are unreachable');
       }
     });
-    //imageTest();
-
+    
     function imageTest() {
       var smallImage = document.getElementById('test');
-
-      //typo3Service.getImageBlob('files/a.jpeg')
-      //  .then(function (blob) {
-      //    var urlCreator = window.URL || window.webkitURL;
-      //    var imageUrl = urlCreator.createObjectURL(blob);
-      //    smallImage.src = imageUrl;
-      //  })
-      //  .catch(function (err) {
-      //    console.error(err);
-      //  });
-
-
       imagesSqlService.get(42)
-        .then(function (result) {
-
-          var arrayBufferView = new Uint8Array(result);
-          var blob = new Blob([arrayBufferView], {type: "image/jpeg"});
-          var urlCreator = window.URL || window.webkitURL;
-          var imageUrl = urlCreator.createObjectURL(blob);
-          smallImage.src = imageUrl;
-          //smallImage.src = "data:image/jpeg;base64," + Base64.encode(result.data);
-
-          log.info('imageTest.done', result);
+        .then(function (image) {
+          smallImage.src = image.path;
+          log.info('imageTest.done', image);
         })
         .catch(function (err) {
           log.error('imageTest.catch', err);
         });
     }
 
-    //$q.all([
-    //  dataService.loadCsv(),
-    //  historyService.init(),
-    //  newsService.init(),
-    //  typo3Service.get(),
-    //  mapService.init(),
-    //])
-    //  .then(function (results) {
-    //    $timeout(function () {
-    //      $ionicHistory.nextViewOptions({
-    //        disableAnimate: false,
-    //        disableBack:    true
-    //      });
-    //      $state.go('menu.welcome');
-    //    }, 1000);
-    //  });
-    //
-    //
-    //
-    //dataService.loadCsv()
-    //  .then(function () {
-    //    $timeout(function () {
-    //      $ionicHistory.nextViewOptions({
-    //        disableAnimate: false,
-    //        disableBack:    true
-    //      });
-    //      $state.go('menu.welcome');
-    //    }, 1000);
-    //  });
   }
 
 }());
