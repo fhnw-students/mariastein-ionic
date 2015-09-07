@@ -20,7 +20,7 @@
 
     function load() {
       //http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000
-      console.info('[Typo3Service] -> load()');
+      log.info('load()');
       var deferred = $q.defer();
       $http({
         url: 'http://localhost:3000/data',
@@ -28,7 +28,7 @@
         dataType: 'json'
       })
         .success(function (response) {
-          console.info('[Typo3Service] -> then()', response);
+          log.info('then()', response);
           var objects = _parseObjects(response);
 
           deferred.resolve({
@@ -38,7 +38,7 @@
           });
         })
         .error(function (err) {
-          console.error('[Typo3Service] -> error()', err);
+          log.error('error()', err);
           deferred.reject(err);
         });
       return deferred.promise;
@@ -73,7 +73,7 @@
         newItem.image = _parseImage(newItem.image);
         return newItem;
       });
-      console.info('[Typo3Service] -> _parseObjects()', data);
+      log.info('_parseObjects()', data);
       return data;
     }
 

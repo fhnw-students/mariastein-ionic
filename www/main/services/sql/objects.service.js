@@ -96,7 +96,7 @@
           return getAll();
         })
         .then(function (res) {
-          objectsStoreService.init(res);
+          objectsStoreService.set(res);
           deferred.resolve();
         })
         .catch(function (err) {

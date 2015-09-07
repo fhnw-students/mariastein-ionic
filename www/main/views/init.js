@@ -41,7 +41,7 @@
             ]);
           })
           .then(function (results) {
-            log.info('stop', results);
+            log.info('done', results);
           })
           .catch(function (err) {
             log.error('stop -> catch', err);
