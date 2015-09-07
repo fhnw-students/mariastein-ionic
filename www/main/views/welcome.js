@@ -21,8 +21,9 @@
   }
 
 
-  function WelcomeController() {
+  function WelcomeController($ionicHistory) {
     var wm = this;  // view-model
+    console.log($ionicHistory.currentTitle());
 
   }
 

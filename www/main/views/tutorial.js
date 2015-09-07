@@ -20,7 +20,7 @@
   }
 
 
-  function TutorialController($translate, $rootScope) {
+  function TutorialController($translate, $rootScope, $state) {
     var vm = this; // view-model
     vm.language=angular.uppercase($rootScope.settings.language);
     $rootScope.$broadcast('onLanguageChange', vm.language.toLowerCase());
@@ -33,16 +33,15 @@
       $rootScope.$broadcast('onLanguageChange', vm.language.toLowerCase());
     };
 
-    $rootScope.onClick = function (msg) {
-      //ui-sref="menu.welcome"
-      //$state.go('^');
-     // $location.path("#/menu/welcome");
-      alert(msg);
+    vm.historyGoBack = function(){
+      if($rootScope.settings.isFirstStart){
+        $state.go('menu.welcome');
+      }else {
+        window.history.back();
+      }
+
+
     }
-
-
-
-
   }
 
 
