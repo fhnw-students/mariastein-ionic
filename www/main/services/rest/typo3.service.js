@@ -2,11 +2,14 @@
   'use strict';
 
   angular
-    .module('kmsscan.services.rest.Typo3', [])
+    .module('kmsscan.services.rest.Typo3', [
+      'kmsscan.utils.Logger'
+    ])
     .factory('typo3Service', Typo3Service);
 
-  function Typo3Service($q, $http) {
-    console.info('[Typo3Service]');
+  function Typo3Service($q, $http, Logger) {
+    var log = new Logger('kmsscan.services.rest.Typo3');
+    log.info('init');
     var service = {
       load: load
     };
@@ -26,12 +29,12 @@
       })
         .success(function (response) {
           console.info('[Typo3Service] -> then()', response);
-          var data = _parseData(response);
+          var objects = _parseObjects(response);
 
           deferred.resolve({
-            data: data,
-            rooms: _parseRooms(data),
-            media: _parseMedia(data)
+            objects: objects,
+            rooms: _parseRooms(objects),
+            images: _parseImages(objects)
           });
         })
         .error(function (err) {
@@ -50,7 +53,7 @@
       });
     }
 
-    function _parseMedia(data) {
+    function _parseImages(data) {
       var media = [];
       for (var i = 0; i < data.length; i++) {
         for (var n = 0; n < data[i].image.length; n++) {
@@ -64,13 +67,13 @@
       });
     }
 
-    function _parseData(data) {
+    function _parseObjects(data) {
       data = data.map(function(item){
         var newItem = _getObject(item.content);
         newItem.image = _parseImage(newItem.image);
         return newItem;
       });
-      console.info('[Typo3Service] -> _parseData()', data);
+      console.info('[Typo3Service] -> _parseObjects()', data);
       return data;
     }
 

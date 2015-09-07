@@ -2,7 +2,9 @@
   'use strict';
 
   angular
-    .module('kmsscan.services.stores.Images', [])
+    .module('kmsscan.services.stores.Images', [
+      'kmsscan.utils.Logger'
+    ])
     .factory('imagesStoreService', ImagesStoreService);
 
   /**
@@ -11,14 +13,15 @@
    * @returns {{sync: sync, getAll: getAll}}
    * @constructor
    */
-  function ImagesStoreService($q) {
-    console.info('[ImagesStoreService]');
+  function ImagesStoreService(Logger) {
+    var log = new Logger('kmsscan.services.stores.Images');
+    log.info('init');
     var storage;
 
 
     // Public API
     var service = {
-      init: init,
+      set: set,
       getAll: getAll,
       get: get
     };
@@ -26,7 +29,8 @@
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
-    function init(data) {
+    function set(data) {
+      log.info('set()', data);
       storage = data;
     }
 

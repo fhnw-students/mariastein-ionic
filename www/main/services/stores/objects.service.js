@@ -2,7 +2,9 @@
   'use strict';
 
   angular
-    .module('kmsscan.services.stores.Objects', [])
+    .module('kmsscan.services.stores.Objects', [
+      'kmsscan.utils.Logger'
+    ])
     .factory('objectsStoreService', ObjectsStoreService);
 
   /**
@@ -13,14 +15,15 @@
    * @returns {{sync: sync, getAll: getAll}}
    * @constructor
    */
-  function ObjectsStoreService() {
-    console.info('[ObjectsStoreService]');
+  function ObjectsStoreService(Logger) {
+    var log = new Logger('kmsscan.services.stores.Objects');
+    log.info('init');
     var storage;
 
 
     // Public API
     var service = {
-      init: init,
+      set: set,
       getAll: getAll,
       get: get,
       visited: visited
@@ -29,7 +32,8 @@
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
-    function init(data) {
+    function set(data) {
+      log.info('set()', data);
       storage = data;
     }
 

@@ -2,7 +2,11 @@
   'use strict';
 
   angular
-    .module('kmsscan.services.sql.Images', [])
+    .module('kmsscan.services.sql.Images', [
+      'kmsscan.utils.Logger',
+
+      'kmsscan.services.stores.Images'
+    ])
     .factory('imagesSqlService', ImagesSqlService);
 
   /**
@@ -21,8 +25,18 @@
    * @returns {{}}
    * @constructor
    */
-  function ImagesSqlService($q, $cordovaSQLite, $ionicPlatform) {
-    console.info('[ImagesSqlService]');
+  function ImagesSqlService($q, $cordovaSQLite, $ionicPlatform, Logger, imagesStoreService) {
+    var log = new Logger('kmsscan.services.sql.Images');
+    log.info('init');
+
+    var db;
+    $ionicPlatform.ready(function () {
+      if (window.cordova) {
+        db = $cordovaSQLite.openDB({name: 'kmsscan'});
+        //_create();
+      }
+    });
+
     var service = {};
 
     return service;

@@ -1,12 +1,14 @@
-(function() {
+(function () {
   'use strict';
 
   angular.module('kmsscan.views.Init', [
-      'kmsscan.services.rest.Typo3',
-      'kmsscan.services.sql.Objects',
-      'kmsscan.services.sql.Rooms',
-      'kmsscan.services.sql.Images'
-    ])
+    'kmsscan.utils.Logger',
+
+    'kmsscan.services.rest.Typo3',
+    'kmsscan.services.sql.Objects',
+    'kmsscan.services.sql.Rooms',
+    'kmsscan.services.sql.Images'
+  ])
     .config(StateConfig)
     .controller('InitCtrl', InitController);
 
@@ -19,31 +21,37 @@
       });
   }
 
-  function InitController($q, $ionicPlatform, typo3Service, objectsSqlService, roomsSqlService, imagesSqlService) {
+  function InitController($q, $ionicPlatform, Logger, typo3Service, objectsSqlService, roomsSqlService, imagesSqlService) {
     var vm = this; // view-model
+    var log = new Logger('kmsscan.views.Init');
     vm.typo3Data = {};
-    console.info('[InitController]');
-    $ionicPlatform.ready(function() {
-      console.info('[$ionicPlatform] ready');
-      typo3Service.load()
-        .then(function(typo3Data) {
-          vm.typo3Data = typo3Data;
-          console.info('[typo3Data] ', typo3Data);
-          return $q.all([
-              dataService.sync(typo3Data.data)
+    log.info('start');
+
+    $ionicPlatform.ready(function () {
+      if (window.cordova) {
+        log.info('$ionicPlatform is ready');
+        typo3Service.load()
+          .then(function (typo3Data) {
+            vm.typo3Data = typo3Data;
+            log.info('typo3Data', typo3Data);
+            return $q.all([
+              objectsSqlService.sync(typo3Data.objects)
+              //imagesSqlService.sync(typo3Data.images),
+              //roomsSqlService.sync(typo3Data.rooms)
             ]);
-        })
-        .then(function(results) {
-          return dataService.getAll();
-        })
-        .then(function(results) {
-          console.info('[after-all] ', results);
-        })
-        .catch(function(err) {
-          // TODO
-          // called asynchronously if an error occurs
-          // or server returns response with an error status.
-        });
+          })
+          .then(function (results) {
+            log.info('stop', results);
+          })
+          .catch(function (err) {
+            log.error('stop -> catch', err);
+            // TODO
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+          });
+      } else {
+        log.warn('stop ->', 'Cordova Plugins are unreachable');
+      }
     });
 
     //$q.all([

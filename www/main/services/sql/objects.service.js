@@ -3,6 +3,8 @@
 
   angular
     .module('kmsscan.services.sql.Objects', [
+      'kmsscan.utils.Logger',
+
       'kmsscan.services.stores.Objects'
     ])
     .factory('objectsSqlService', ObjectsSqlService);
@@ -24,13 +26,16 @@
    * @returns {{sync: sync, getAll: getAll}}
    * @constructor
    */
-  function ObjectsSqlService($q, $cordovaSQLite, $ionicPlatform, objectsStoreService) {
-    console.info('[ObjectsSqlService]');
+  function ObjectsSqlService($q, $cordovaSQLite, $ionicPlatform, Logger, objectsStoreService) {
+    var log = new Logger('kmsscan.services.sql.Objects');
+    log.info('init');
 
     var db;
     $ionicPlatform.ready(function () {
-      db = $cordovaSQLite.openDB({name: 'kmsscan.objects'});
-      _create();
+      if (window.cordova) {
+        db = $cordovaSQLite.openDB({name: 'kmsscan'});
+        _create();
+      }
     });
 
     // Public API
@@ -95,7 +100,7 @@
           deferred.resolve();
         })
         .catch(function (err) {
-          console.error('[dataService.sync()]', err);
+          log.error('sync()', err);
           deferred.reject(err);
         });
       return deferred.promise;
@@ -114,7 +119,7 @@
         var data = _parseRawSqlObjects(res);
         deferred.resolve(data);
       }, function (err) {
-        console.error(err);
+        log.error('_selectAllObjects', err);
         deferred.reject(err);
       });
       return deferred.promise;
@@ -132,7 +137,7 @@
         var data = _parseRawSqlObjects(res);
         deferred.resolve(data);
       }, function (err) {
-        console.error(err);
+        log.error('_selectAllObjectsHasMedia()', err);
         deferred.reject(err);
       });
       return deferred.promise;

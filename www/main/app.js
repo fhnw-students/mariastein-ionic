@@ -15,6 +15,7 @@ var db;
     'kmsscan.routerConfig',
     'kmsscan.translateConfig',
 
+    'kmsscan.utils',
     'kmsscan.directives',
     'kmsscan.run',
 
