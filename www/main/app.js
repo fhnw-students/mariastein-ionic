@@ -9,6 +9,7 @@ var db;
     'ngCordova',
     'ngSanitize',
     'pascalprecht.translate',
+    'LocalForageModule',
 
     // Core components
     'kmsscan.ionicPlatform',

@@ -22,7 +22,7 @@
       });
   }
 
-  function InitController($q, $ionicPlatform, Logger, typo3Service, objectsSqlService, roomsSqlService, imagesSqlService, historySqlService, $cordovaFileTransfer, $timeout, $scope) {
+  function InitController($q, $ionicPlatform, Logger, typo3Service, objectsSqlService, roomsSqlService, imagesSqlService, historySqlService, $state) {
     var vm = this; // view-model
     var log = new Logger('kmsscan.views.Init');
     vm.typo3Data = {};
@@ -43,7 +43,7 @@
             ]);
           })
           .then(function (results) {
-            imageTest();
+            $state.go('menu.welcome');
             log.info('done', results);
           })
           .catch(function (err) {
@@ -54,20 +54,21 @@
           });
       } else {
         log.warn('stop ->', 'Cordova Plugins are unreachable');
+        $state.go('menu.welcome');
       }
     });
-    
-    function imageTest() {
-      var smallImage = document.getElementById('test');
-      imagesSqlService.get(42)
-        .then(function (image) {
-          smallImage.src = image.path;
-          log.info('imageTest.done', image);
-        })
-        .catch(function (err) {
-          log.error('imageTest.catch', err);
-        });
-    }
+
+    //function imageTest() {
+    //  var smallImage = document.getElementById('test');
+    //  imagesSqlService.get(42)
+    //    .then(function (image) {
+    //      smallImage.src = image.path;
+    //      log.info('imageTest.done', image);
+    //    })
+    //    .catch(function (err) {
+    //      log.error('imageTest.catch', err);
+    //    });
+    //}
 
   }
 
