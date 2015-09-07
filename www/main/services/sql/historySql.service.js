@@ -4,9 +4,7 @@
   angular
     .module('kmsscan.services.sql.History', [
       'kmsscan.utils.Logger',
-      'kmsscan.utils.SqlLite',
-
-      'kmsscan.services.stores.History'
+      'kmsscan.utils.SqlLite'
     ])
     .factory('historySqlService', HistorySqlService);
 
@@ -21,7 +19,7 @@
    * @returns {{}}
    * @constructor
    */
-  function HistorySqlService($q, $cordovaSQLite, $ionicPlatform, Logger, historyStoreService, sqlLiteUtilsService) {
+  function HistorySqlService($q, $cordovaSQLite, $ionicPlatform, Logger, sqlLiteUtilsService) {
     var log = new Logger('kmsscan.services.sql.History');
     log.info('init');
 
@@ -35,6 +33,7 @@
     var service = {
       sync: sync,
       getAll: getAll,
+      select: select,
       create: create,
       update: update
     };
@@ -42,6 +41,10 @@
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
+    function select(uid) {
+      return sqlLiteUtilsService.select(db, HistorySqlService.TABLENAME, 'uid = ' + uid);
+    }
+
     /**
      *
      * @returns {deferred.promise|{then, always}}
@@ -62,8 +65,7 @@
           return getAll();
         })
         .then(function (res) {
-          historyStoreService.set(res);
-          deferred.resolve();
+          deferred.resolve(res);
         })
         .catch(function (err) {
           log.error('sync()', err);

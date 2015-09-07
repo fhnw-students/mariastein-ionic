@@ -3,7 +3,8 @@
 
   angular
     .module('kmsscan.services.stores.History', [
-      'kmsscan.utils.Logger'
+      'kmsscan.utils.Logger',
+      'kmsscan.services.sql.History'
     ])
     .factory('historyStoreService', HistoryStoreService);
 
@@ -12,11 +13,10 @@
    * @returns {{sync: sync, getAll: getAll}}
    * @constructor
    */
-  function HistoryStoreService(Logger) {
+  function HistoryStoreService(Logger, historySqlService) {
     var log = new Logger('kmsscan.services.stores.History');
     log.info('init');
     var storage;
-
 
     // Public API
     var service = {
@@ -26,11 +26,21 @@
       get: get
     };
 
+    _activate();
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
     function visited(id) {
-      // TODO
+      historySqlService.select(id)
+        .then(function (result) {
+          log.info('visited -> select', result);
+
+        })
+        .catch(function (err) {
+
+        });
+
+
     }
 
     function set(data) {
@@ -49,7 +59,12 @@
     }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
-
+    function _activate() {
+      historySqlService.sync()
+        .then(function (history) {
+          storage = history;
+        });
+    }
 
   }
 })();

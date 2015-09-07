@@ -13,6 +13,24 @@
      * @param tableName
      * @returns {deferred.promise|{then, always}}
      */
+    this.select = function (db, tableName, where) {
+      var self = this;
+      var deferred = $q.defer();
+      var query = 'SELECT * FROM ' + tableName + ' WHERE ' + where;
+      $cordovaSQLite.execute(db, query).then(function (res) {
+        deferred.resolve(self.parseRawSqlObjects(res));
+      }, function (err) {
+        deferred.reject(err);
+      });
+      return deferred.promise;
+    };
+
+    /**
+     *
+     * @param db
+     * @param tableName
+     * @returns {deferred.promise|{then, always}}
+     */
     this.selectAll = function (db, tableName) {
       var self = this;
       var deferred = $q.defer();

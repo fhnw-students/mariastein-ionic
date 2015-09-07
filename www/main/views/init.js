@@ -22,53 +22,19 @@
       });
   }
 
-  function InitController($q, $ionicPlatform, Logger, typo3Service, objectsSqlService, roomsSqlService, imagesSqlService, historySqlService, $state) {
+  function InitController($rootScope, $state, Logger /*, $q, $ionicPlatform, typo3Service, objectsSqlService, roomsSqlService, imagesSqlService, historySqlService*/) {
     var vm = this; // view-model
     var log = new Logger('kmsscan.views.Init');
-    vm.typo3Data = {};
-    log.info('start');
 
-    $ionicPlatform.ready(function () {
-      if (window.cordova) {
-        log.info('$ionicPlatform is ready');
-        typo3Service.load()
-          .then(function (typo3Data) {
-            vm.typo3Data = typo3Data;
-            log.info('typo3Data', typo3Data);
-            return $q.all([
-              historySqlService.sync(),
-              objectsSqlService.sync(typo3Data.objects),
-              roomsSqlService.sync(typo3Data.rooms),
-              imagesSqlService.sync(typo3Data.images)
-            ]);
-          })
-          .then(function (results) {
-            $state.go('menu.welcome');
-            log.info('done', results);
-          })
-          .catch(function (err) {
-            log.error('stop -> catch', err);
-            // TODO
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
-          });
-      } else {
-        log.warn('stop ->', 'Cordova Plugins are unreachable');
-        $state.go('menu.welcome');
-      }
+    $rootScope.$on('kmsscan.run.activate.succeed', function () {
+      log.info('kmsscan.run.activate.succeed');
+      $state.go('menu.welcome');
     });
 
-    //function imageTest() {
-    //  var smallImage = document.getElementById('test');
-    //  imagesSqlService.get(42)
-    //    .then(function (image) {
-    //      smallImage.src = image.path;
-    //      log.info('imageTest.done', image);
-    //    })
-    //    .catch(function (err) {
-    //      log.error('imageTest.catch', err);
-    //    });
-    //}
+    $rootScope.$on('kmsscan.run.activate.failed', function () {
+      log.error('kmsscan.run.activate.failed');
+      // TODO
+    });
 
   }
 

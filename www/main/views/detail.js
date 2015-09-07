@@ -1,6 +1,9 @@
 (function() {
   'use strict';
 
+  // TODO
+  // smallImage.src = image.path;
+
   angular.module('kmsscan.views.Detail', [
   ])
     .config(StateConfig)
