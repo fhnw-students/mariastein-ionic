@@ -16,7 +16,7 @@
    */
   ObjectsSqlService.TABLENAME = {
     OBJECTS: 'objects',
-    OBJECTS_HAS_IMAGES: 'objects_has_media'
+    OBJECTS_HAS_IMAGES: 'objects_has_images'
   };
 
   /**
@@ -56,17 +56,17 @@
       var deferred = $q.defer();
       $q.all([
         _selectAllObjects(),
-        _selectAllObjectsHasMedia()
+        _selectAllObjectsHasImages()
       ])
         .then(function (results) {
           var data = results[0];
           data.map(function (item) {
-            item.media = results[1]
-              .filter(function (media) {
-                return media.uid === item.uid;
+            item.images = results[1]
+              .filter(function (image) {
+                return image.uid === item.uid;
               })
-              .map(function (media) {
-                return media.mediaId;
+              .map(function (image) {
+                return image.imageId;
               });
             return item;
           });
@@ -119,7 +119,7 @@
      * @returns {deferred.promise|{then, always}}
      * @private
      */
-    function _selectAllObjectsHasMedia() {
+    function _selectAllObjectsHasImages() {
       return sqlLiteUtilsService.selectAll(db, ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES);
     }
 
@@ -132,7 +132,7 @@
     function _insert(data) {
       return $q.all([
         _insertObjects(data),
-        _insertMedia(data)
+        _insertImages(data)
       ]);
     }
 
@@ -142,8 +142,8 @@
      * @returns {Promise}
      * @private
      */
-    function _insertMedia(data) {
-      var query = 'INSERT INTO ' + ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES + ' (uid, mediaId) VALUES (?,?)';
+    function _insertImages(data) {
+      var query = 'INSERT INTO ' + ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES + ' (uid, imageId) VALUES (?,?)';
       var queue = [];
       for (var i = 0; i < data.length; i++) {
         for (var n = 0; n < data[i].image.length; n++) {
@@ -202,7 +202,7 @@
     function _create() {
       return $q.all([
         sqlLiteUtilsService.createTable(db, ObjectsSqlService.TABLENAME.OBJECTS, '(uid integer primary key, title text, content text, teaser text, roomId integer, qrcode text)'),
-        sqlLiteUtilsService.createTable(db, ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES, '(uid integer, mediaId integer)')
+        sqlLiteUtilsService.createTable(db, ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES, '(uid integer, imageId integer)')
       ]);
     }
 

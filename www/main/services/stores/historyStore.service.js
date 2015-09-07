@@ -56,7 +56,7 @@
     }
 
     function getAll() {
-      return storage;
+      return historySqlService.getAll();
     }
 
     function get(uid) {

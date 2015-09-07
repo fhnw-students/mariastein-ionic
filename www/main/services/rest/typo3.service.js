@@ -12,14 +12,12 @@
     log.info('init');
     var service = {
       load: load,
-      downloadImage: downloadImage,
-      getImageBlob: getImageBlob
+      downloadImage: downloadImage
     };
 
     return service;
 
-    ////////////////
-
+    // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
     function downloadImage(url, id) {
       var deferred = $q.defer();
       url = 'http://localhost:3000/' + url;
@@ -36,44 +34,6 @@
           deferred.reject(err);
         });
       return deferred.promise;
-    }
-
-    function getImageBlob(url, params) {
-      var deferred = $q.defer();
-      // Simulate a call to Dropbox or other service that can
-      // return an image as an ArrayBuffer.
-      var xhr = new XMLHttpRequest();
-      // Use JSFiddle logo as a sample image to avoid complicating
-      // this example with cross-domain issues.
-      xhr.open('GET', 'http://localhost:3000/' + url, true);
-      // Ask for the result as an ArrayBuffer.
-      xhr.responseType = 'arraybuffer';
-      xhr.onload = function (e) {
-        // Obtain a blob: URL for the image data.
-        var arrayBufferView = new Uint8Array(this.response);
-        var blob = new Blob([arrayBufferView], {type: "image/jpeg"});
-        deferred.resolve({
-          response: this.response,
-          arrayBufferView: arrayBufferView,
-          blob: blob
-        });
-      };
-      xhr.send();
-      return deferred.promise;
-
-
-      //var deferred = $q.defer();
-      //log.info('getImageBlob', 'http://localhost:3000/' + url);
-      //$http.get('http://localhost:3000/' + url, params, {
-      //  responseType: 'arraybuffer'
-      //})
-      //  .success(function (response) {
-      //    var arrayBufferView = new Uint8Array(response);
-      //    var blob = new Blob([arrayBufferView], {type: "image/jpeg"});
-      //    deferred.resolve(blob);
-      //  })
-      //  .error(deferred.reject);
-      //return deferred.promise;
     }
 
     function load() {
@@ -102,6 +62,7 @@
       return deferred.promise;
     }
 
+    // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
     function _parseRooms(data) {
       var rooms = data.map(function (item) {
         return item.room;

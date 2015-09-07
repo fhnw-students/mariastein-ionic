@@ -6,6 +6,7 @@
       'kmsscan.utils.Logger',
       'kmsscan.utils.SqlLite',
 
+      'kmsscan.services.stores.Images',
       'kmsscan.services.rest.Typo3'
     ])
     .factory('imagesSqlService', ImagesSqlService);
@@ -18,13 +19,10 @@
 
   /**
    * Service Class
-   * @param $q
-   * @param $cordovaSQLite
-   * @param $ionicPlatform
    * @returns {{}}
    * @constructor
    */
-  function ImagesSqlService($q, $cordovaSQLite, $ionicPlatform, Logger, sqlLiteUtilsService, typo3Service) {
+  function ImagesSqlService($q, $cordovaSQLite, $ionicPlatform, Logger, sqlLiteUtilsService, typo3Service, imagesStoreService) {
     var log = new Logger('kmsscan.services.sql.Images');
     log.info('init');
 
@@ -52,6 +50,10 @@
           return _inserts(data);
         })
         .then(function () {
+          return getAll();
+        })
+        .then(function (data) {
+          imagesStoreService.set(data);
           deferred.resolve();
         })
         .catch(function (err) {
@@ -63,6 +65,10 @@
 
     function get(uid) {
       return _select(uid);
+    }
+
+    function getAll() {
+      return sqlLiteUtilsService.selectAll(db, ImagesSqlService.TABLENAME);
     }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////

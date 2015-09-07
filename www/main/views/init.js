@@ -22,7 +22,7 @@
       });
   }
 
-  function InitController($rootScope, $state, Logger /*, $q, $ionicPlatform, typo3Service, objectsSqlService, roomsSqlService, imagesSqlService, historySqlService*/) {
+  function InitController($rootScope, $state, Logger) {
     var vm = this; // view-model
     var log = new Logger('kmsscan.views.Init');
 
@@ -33,6 +33,7 @@
 
     $rootScope.$on('kmsscan.run.activate.failed', function () {
       log.error('kmsscan.run.activate.failed');
+      $state.go('menu.welcome');
       // TODO
     });
 
