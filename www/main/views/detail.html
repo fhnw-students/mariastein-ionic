@@ -14,20 +14,32 @@
         
         <div class="padding">
             <h3>{{detail.item.data.Name}}</h3>
-            <ion-scroll zooming="true" min-zoom="{{zoomMin}}" direction="xy" style="width: 100%;" delegate-handle="scrollHandle1" on-double-tap="zoom(1)">
+            <ion-scroll ng-if="zooming" zooming="{{zooming}}" min-zoom="{{zoomMin}}" direction="xy" style="width: 100%;" delegate-handle="scrollHandle1"
+                        on-double-tap="zoom(1)">
                 <div>{{detail.item.data.Text}}</div>
+                <button ng-if="!detail.more" class="button button-clear button-positive" on-tap="detail.showMore()">
+                    {{'LABEL.MORE'|translate}}
+                </button>
+                <p ng-if="detail.more">{{detail.item.data.LongText}}</p>
+
+                <button ng-if="detail.more" class="button button-clear button-positive" on-tap="detail.showLess()">
+                    {{'LABEL.LESS'|translate}}
+                </button>
             </ion-scroll>
 
+            <div ng-if="!zooming">
+                <div>{{detail.item.data.Text}}</div>
+                <button ng-if="!detail.more" class="button button-clear button-positive" on-tap="detail.showMore()">
+                    {{'LABEL.MORE'|translate}}
+                </button>
+                <p ng-if="detail.more">{{detail.item.data.LongText}}</p>
+
+                <button ng-if="detail.more" class="button button-clear button-positive" on-tap="detail.showLess()">
+                    {{'LABEL.LESS'|translate}}
+                </button>
+            </div>
 
 
-            <button ng-if="!detail.more" class="button button-clear button-positive" on-tap="detail.showMore()">
-                {{'LABEL.MORE'|translate}}
-            </button>
-            <p ng-if="detail.more">{{detail.item.data.LongText}}</p>
-
-            <button ng-if="detail.more" class="button button-clear button-positive" on-tap="detail.showLess()">
-                {{'LABEL.LESS'|translate}}
-            </button>
         </div>
 
     </ion-content>

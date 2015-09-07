@@ -21,8 +21,10 @@
       });
   }
 
-  function DetailController($window, $stateParams, historyService, $ionicModal, $ionicSlideBoxDelegate, $scope, $ionicBackdrop, $ionicScrollDelegate) {
+  function DetailController($q, $window, $stateParams, historyService, $ionicModal, $ionicSlideBoxDelegate, $scope, $ionicBackdrop, $ionicScrollDelegate, SETTINGS_STORAGE_KEY, $localForage, $rootScope) {
     var vm = this; // view-model
+    init();
+
     vm.item = {};
     vm.more = false;
 
@@ -51,7 +53,7 @@
     }];
 
     $scope.zoomMin = 1;
-
+    $scope.zooming = $rootScope.settings.zooming;
     $scope.hgt = $window.innerHeight-50;
 
     $scope.showImages = function(index) {
@@ -89,6 +91,22 @@
       } else {
         $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).zoomTo(1, true);
       }
+    }
+
+    function init() {
+      var deferred = $q.defer();
+      $localForage.getItem(SETTINGS_STORAGE_KEY)
+          .then(function (result) {
+            if (result !== null) {
+              $rootScope.settings = _.assign($rootScope.settings,  JSON.parse(result));
+            }
+            deferred.resolve($rootScope.settings);
+          })
+          .catch(function (err) {
+            $log.error(err);
+            deferred.reject(err);
+          });
+      return deferred.promise;
     }
 
   }
