@@ -111,8 +111,10 @@
             deferred.reject(err);
           });
       } else {
-        log.warn('Cordova is not available!');
-        deferred.resolve({});
+        setTimeout(function () {
+          log.warn('Cordova is not available!');
+          deferred.resolve({});
+        },500);
       }
       return deferred.promise;
     }

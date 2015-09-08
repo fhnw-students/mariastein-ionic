@@ -16,6 +16,10 @@
   function run($rootScope, $translate, $timeout, $q, $ionicPlatform, Logger,
                typo3Service, pagesStoreService, settingsStoreService, imagesStoreService) {
 
+    $rootScope.getImagePath = function (imageId) {
+      return imagesStoreService.getPath(imageId);
+    };
+
     var log = new Logger('kmsscan.run');
     $rootScope.syncIsActive = true;
     log.info('start');

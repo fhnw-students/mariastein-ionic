@@ -1,18 +1,20 @@
 <ion-view view-title="{{welcome.page.title}}">
+
     <ion-content class="padding">
 
         <kms-spinner ng-hide="welcome.isReady()"></kms-spinner>
 
         <div class="row responsive-sm" ng-if="welcome.isReady()">
-            <img ng-src="{{welcome.imagePath}}" alt="{{welcome.page.title}}" width="100%">
-            <img ng-if="welcome.imagePath" src="{{welcome.imagePath}}" alt="{{welcome.page.title}}" width="100%">
+
+            <kms-image image-id="welcome.page.image[0]" width="100%"></kms-image>
             <br>
             <p>{{welcome.page.content}}</p>
-            <p>{{welcome.imagePath}}</p>
+
         </div>
 
     </ion-content>
     <ion-footer-bar class="footer-button">
         <kms-scan-button></kms-scan-button>
     </ion-footer-bar>
+
 </ion-view>

@@ -57,14 +57,15 @@
         .then(function (page) {
           log.info('activate() -> succeed', page);
           vm.page = page;
-          return imagesStoreService.getPath(page.image[0]);
-        })
-        .then(function (imagePath) {
-          log.info('activate() -> succeed', imagePath);
-          vm.imagePath = imagePath;
           vm.isPending = false;
+          //return imagesStoreService.getPath(page.image[0]);
+        //})
+        //.then(function (imagePath) {
+        //  log.info('activate() -> succeed', imagePath);
+        //  vm.imagePath = imagePath;
+        //  vm.isPending = false;
           //file:///Users/hirsch-2/Library/Developer/CoreSimulator/Devices/5663B31C-EBF5-447D-B1B1-31D7F5E6DC70/data/Containers/Data/Application/97338C3C-344F-4C79-85FB-81A38D601509/Documents/52.png
-        })
+        });
     }
 
     function isReady() {

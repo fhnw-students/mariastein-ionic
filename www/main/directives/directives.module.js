@@ -5,7 +5,8 @@
 
     'kmsscan.directives.NavMenuButton',
     'kmsscan.directives.ScanButton',
-    'kmsscan.directives.Spinner'
+    'kmsscan.directives.Spinner',
+    'kmsscan.directives.Image'
 
   ]);
 
