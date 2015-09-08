@@ -2,13 +2,7 @@
   'use strict';
 
   angular.module('kmsscan.views.Init', [
-    'kmsscan.utils.Logger',
-
-    'kmsscan.services.rest.Typo3',
-    'kmsscan.services.sql.Objects',
-    'kmsscan.services.sql.Images',
-    'kmsscan.services.sql.Rooms',
-    'kmsscan.services.sql.History'
+    'kmsscan.utils.Logger'
   ])
     .config(StateConfig)
     .controller('InitCtrl', InitController);

@@ -5,12 +5,8 @@
 
   angular.module(namespace, [
     namespace + '.rest',
-    namespace + '.sql',
-    namespace + '.stores',
+    namespace + '.stores'
 
-    namespace + '.History',
-    namespace + '.News',
-    namespace + '.Map'
   ]);
 
 }());

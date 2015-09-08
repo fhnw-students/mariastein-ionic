@@ -33,6 +33,8 @@
       if (window.cordova) {
         db = $cordovaSQLite.openDB({name: 'kmsscan'});
         _create();
+      }else{
+        db = new SQL.Database();
       }
     });
 
@@ -165,12 +167,14 @@
      * @private
      */
     function _insertObjects(data) {
-      var query = 'INSERT INTO ' + ObjectsSqlService.TABLENAME.OBJECTS + ' (uid, title, content, teaser, roomId, qrcode) VALUES (?,?,?,?,?,?)';
+      var query = 'INSERT INTO ' + ObjectsSqlService.TABLENAME.OBJECTS + ' (uid, langKey, type, title, content, teaser, roomId, qrcode) VALUES (?,?,?,?,?,?,?,?)';
       var queue = [];
       for (var i = 0; i < data.length; i++) {
         queue.push(
           $cordovaSQLite.execute(db, query, [
             data[i].uid,
+            data[i].langKey || 'DE',
+            data[i].type || 'content',
             data[i].title || '',
             data[i].content || '',
             data[i].teaser || '',
@@ -189,8 +193,8 @@
      */
     function _truncateTables() {
       return $q.all([
-        sqlLiteUtilsService.truncateTable(db,ObjectsSqlService.TABLENAME.OBJECTS),
-        sqlLiteUtilsService.truncateTable(db,ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES)
+        sqlLiteUtilsService.truncateTable(db, ObjectsSqlService.TABLENAME.OBJECTS),
+        sqlLiteUtilsService.truncateTable(db, ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES)
       ]);
     }
 
@@ -201,7 +205,7 @@
      */
     function _create() {
       return $q.all([
-        sqlLiteUtilsService.createTable(db, ObjectsSqlService.TABLENAME.OBJECTS, '(uid integer primary key, title text, content text, teaser text, roomId integer, qrcode text)'),
+        sqlLiteUtilsService.createTable(db, ObjectsSqlService.TABLENAME.OBJECTS, '(uid integer primary key, langKey text, type text, title text, content text, teaser text, roomId integer, qrcode text)'),
         sqlLiteUtilsService.createTable(db, ObjectsSqlService.TABLENAME.OBJECTS_HAS_IMAGES, '(uid integer, imageId integer)')
       ]);
     }

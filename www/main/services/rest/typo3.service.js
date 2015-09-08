@@ -9,8 +9,8 @@
 
   Typo3Service.BACKENDS = {
     PROD: {
-      PAGES: 'http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000',
-      ROOMS: 'http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000',
+      PAGES: 'http://kloster-mariastein.business-design.ch/index.php',
+      ROOMS: 'http://kloster-mariastein.business-design.ch/index.php',
       FILES: 'http://kloster-mariastein.business-design.ch/'
     },
     DEV: {
@@ -18,13 +18,6 @@
       ROOMS: 'http://localhost:3000/rooms',
       FILES: 'http://localhost:3000/'
     }
-  };
-
-  Typo3Service.LANGUAGES = {
-    DE: 0,
-    FR: 1,
-    EN: 2,
-    IT: 3
   };
 
   /**
@@ -45,31 +38,25 @@
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
-    function downloadImage(url, id) {
-      var deferred = $q.defer();
-      url = 'http://localhost:3000/' + url;
-      var targetPath = cordova.file.documentsDirectory + id + '.png';
-      var trustHosts = true;
-      var options = {};
-      $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
-        .then(function (result) {
-          deferred.resolve({
-            targetPath: targetPath,
-            image: result
-          });
-        }, function (err) {
-          deferred.reject(err);
-        });
-      return deferred.promise;
-    }
 
-    function loadPages() {
-      log.info('load()');
+
+    /**
+     *
+     * @returns {deferred.promise|{then, always}}
+     */
+    function loadPages(langKey) {
+      // TODO Languages
+      log.info('loadPages()', langKey);
       var deferred = $q.defer();
       $http({
         url: Typo3Service.BACKENDS[env].PAGES,
         type: 'GET',
-        dataType: 'json'
+        dataType: 'json',
+        params: {
+          type: 5000,
+          id: 136,
+          L: langKey || 0
+        }
       })
         .success(function (response) {
           log.info('then()', response);
@@ -96,15 +83,51 @@
      * @returns {deferred.promise|{then}}
      */
     function loadRooms() {
+      // TODO
+    }
 
+
+    /**
+     *
+     * @param url
+     * @param id
+     * @returns {deferred.promise|{then, always}}
+     */
+    function downloadImage(url, id) {
+      var deferred = $q.defer();
+      url = Typo3Service.BACKENDS[env].FILES + url;
+      var targetPath = cordova.file.documentsDirectory + id + '.png';
+      var trustHosts = true;
+      var options = {};
+      $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
+        .then(function (result) {
+          log.info('download()', result);
+          deferred.resolve({
+            targetPath: targetPath,
+            image: result
+          });
+        }, function (err) {
+          deferred.reject(err);
+        });
+      return deferred.promise;
     }
 
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     *
+     * @param data
+     * @returns {Array}
+     * @private
+     */
     function _parseRooms(data) {
-      var rooms = data.map(function (item) {
-        return item.room;
-      });
+      var rooms = data
+        .map(function (item) {
+          return item.room;
+        })
+        .filter(function (item) {
+          return _.isObject(item);
+        });
       return _.uniq(rooms, function (item) {
         return item.uid;
       });
@@ -174,7 +197,6 @@
       }
       return a;
     }
-
 
 
     //function getImageBlob(url, params) {

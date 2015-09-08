@@ -1,35 +1,14 @@
-<ion-view view-title="{{ 'LABEL.WELCOME' | translate }}">
+<ion-view view-title="{{welcome.page.title}}">
     <ion-content class="padding">
-        <!-- image (responsive width) -->
-        <div class="row responsive-sm">
 
-            <img src="./img/welcome.jpg" alt="welcome" width="100%">
+        <kms-spinner ng-hide="welcome.isReady()"></kms-spinner>
+
+        <div class="row responsive-sm" ng-show="welcome.isReady()">
+            <img src="{{welcome.image.path}}" alt="{{welcome.page.title}}" width="100%">
             <br>
-
-            <!-- welcome text -->
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-                et
-                dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                Stet
-                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-                amet,
-                consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-                erat,
-                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-                no
-                sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
-                elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-                voluptua. At
-                vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
-                est
-                Lorem ipsum dolor sit amet.Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie
-                consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim
-                qui
-                blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor
-                sit
-                amet,
-            </p>
+            <p>{{welcome.page.content}}</p>
         </div>
+
     </ion-content>
     <ion-footer-bar class="footer-button">
         <kms-scan-button></kms-scan-button>
