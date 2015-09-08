@@ -2,7 +2,6 @@
   'use strict';
 
   angular.module('kmsscan.views.Detail', [
-    'kmsscan.services.History'
   ])
     .config(StateConfig)
     .controller('DetailCtrl', DetailController);
@@ -21,6 +20,7 @@
       });
   }
 
+
   function DetailController($q, $timeout, $window, $stateParams, historyService, $ionicModal, $ionicSlideBoxDelegate, $scope, $ionicBackdrop, $ionicScrollDelegate, SETTINGS_STORAGE_KEY, $localForage, $rootScope) {
     var vm = this; // view-model
     init();
@@ -35,6 +35,7 @@
         });
       }
     };
+
     vm.showLess = function(){
       if (vm.more){
         $timeout(function () {
@@ -43,12 +44,12 @@
       }
     };
 
-    historyService.get($stateParams.id)
-      .then(function(result) {
-        vm.item = result;
-      });
+    //historyService.get($stateParams.id)
+    //  .then(function(result) {
+    //    vm.item = result;
+    //  });
 
-    $scope.allImages = [{
+    vm.allImages = [{
       src: 'img/init.png'
     }, {
       src: 'img/welcome.jpg'
@@ -56,41 +57,41 @@
       src: 'img/init.png'
     }];
 
-    $scope.zoomMin = 1;
-    $scope.zooming = $rootScope.settings.zooming;
-    $scope.enableZoom = false;
-    $scope.hgt = $window.innerHeight-50;
-    $scope.hgt2 = $window.innerHeight-145;
+    vm.zoomMin = 1;
+    vm.zooming = $rootScope.settings.zooming;
+    vm.enableZoom = false;
+    vm.hgt = $window.innerHeight-50;
+    vm.hgt2 = $window.innerHeight-145;
 
-    $scope.showImages = function(index) {
-      $scope.activeSlide = index;
-      $scope.showModal('main/views/modalPreview.html');
+    vm.showImages = function(index) {
+      vm.activeSlide = index;
+      vm.showModal('main/views/modalPreview.html');
     };
 
-    $scope.showModal = function(templateUrl) {
+    vm.showModal = function(templateUrl) {
       $ionicModal.fromTemplateUrl(templateUrl, {
-        scope: $scope
+        scope: vm
       }).then(function(modal) {
-        $scope.modal = modal;
-        $scope.modal.show();
+        vm.modal = modal;
+        vm.modal.show();
       });
-    }
-
-    $scope.closeModal = function() {
-      $scope.modal.hide();
-      $scope.modal.remove()
     };
 
-    $scope.updateSlideStatus = function(slide) {
+    vm.closeModal = function() {
+      vm.modal.hide();
+      vm.modal.remove()
+    };
+
+    vm.updateSlideStatus = function(slide) {
       var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).getScrollPosition().zoom;
-      if (zoomFactor == $scope.zoomMin) {
+      if (zoomFactor == vm.zoomMin) {
         $ionicSlideBoxDelegate.enableSlide(true);
       } else {
         $ionicSlideBoxDelegate.enableSlide(false);
       }
     };
 
-    $scope.zoom = function(slide){
+    vm.zoom = function(slide){
       var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).getScrollPosition().zoom;
       if (zoomFactor == $scope.zoomMin) {
         $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).zoomBy(2, true);
@@ -99,7 +100,7 @@
       }
     };
 
-    $scope.scrollTop = function() {
+    vm.scrollTop = function() {
       if ($rootScope.settings.zooming){
         $scope.enableZoom = true;
         $ionicScrollDelegate.$getByHandle('scrollMain').scrollTo(0,200,true);
@@ -121,6 +122,7 @@
           });
       return deferred.promise;
     }
+
 
   }
 

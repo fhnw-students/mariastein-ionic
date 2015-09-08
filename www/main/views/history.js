@@ -2,7 +2,6 @@
   'use strict';
 
   angular.module('kmsscan.views.History', [
-    'kmsscan.services.History'
   ])
     .config(StateConfig)
     .controller('HistoryCtrl', HistoryController);
@@ -22,14 +21,14 @@
   }
 
 
-  function HistoryController(historyService) {
+  function HistoryController() {
     var vm = this; // view-model
 
     vm.list = [];
-    historyService.get()
-      .then(function (result) {
-        vm.list = _.map(_.sortByOrder(result, ['stamp'], ['desc']), _.values);
-      });
+    //historyService.get()
+    //  .then(function (result) {
+    //    vm.list = _.map(_.sortByOrder(result, ['stamp'], ['desc']), _.values);
+    //  });
 
 
   }

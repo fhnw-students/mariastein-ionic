@@ -16,6 +16,7 @@
     <script src="lib/papaparse/papaparse.min.js"></script>
     <script src="lib/localforage/dist/localforage.min.js"></script>
     <script src="lib/angular-localForage/dist/angular-localForage.min.js"></script>
+    <script src="lib/moment/min/moment.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
@@ -24,20 +25,42 @@
 
     <!-- your app's js -->
     <script src="main/app.js"></script>
+
     <script src="main/services/services.module.js"></script>
+    <script src="main/services/rest/rest.module.js"></script>
+    <script src="main/services/sql/sql.module.js"></script>
+    <script src="main/services/stores/stores.module.js"></script>
+
     <script src="main/directives/directives.module.js"></script>
     <script src="main/views/views.module.js"></script>
+
+    <script src="main/utils/utils.module.js"></script>
+    <script src="main/utils/logger.js"></script>
+    <script src="main/utils/sqllite.js"></script>
+
     <script src="main/core/ionicPlatform.js"></script>
     <script src="main/core/routerConfig.js"></script>
     <script src="main/core/translateConfig.js"></script>
-    <script src="main/services/data.service.js"></script>
-    <script src="main/services/history.service.js"></script>
-    <script src="main/services/news.service.js"></script>
+
+    <!--<script src="main/services/history.service.js"></script>-->
+    <!--<script src="main/services/news.service.js"></script>-->
+    <script src="main/services/rest/typo3.service.js"></script>
+    <script src="main/services/sql/objectsSql.service.js"></script>
+    <script src="main/services/sql/roomsSql.service.js"></script>
+    <script src="main/services/sql/imagesSql.service.js"></script>
+    <script src="main/services/sql/historySql.service.js"></script>
+
+    <script src="main/services/stores/objectsStore.service.js"></script>
+    <script src="main/services/stores/roomsStore.service.js"></script>
+    <script src="main/services/stores/imagesStore.service.js"></script>
+    <script src="main/services/stores/historyStore.service.js"></script>
+
     <script src="main/services/map.service.js"></script>
-    <script src="main/services/typo3.service.js"></script>
     <script src="main/directives/navMenuButton.js"></script>
     <script src="main/directives/scanButton.js"></script>
+
     <script src="main/app.run.js"></script>
+
     <script src="main/views/init.js"></script>
     <script src="main/views/tutorial.js"></script>
     <script src="main/views/detail.js"></script>
@@ -55,13 +78,6 @@
 
 </head>
 <body ng-app="kmsscan">
-
-    <!--<ion-nav-bar class="bar-positive">-->
-        <!--<ion-nav-back-button>-->
-        <!--</ion-nav-back-button>-->
-    <!--</ion-nav-bar>-->
-
-    <ion-nav-view></ion-nav-view>
-
+<ion-nav-view></ion-nav-view>
 </body>
 </html>
