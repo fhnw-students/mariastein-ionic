@@ -7,39 +7,56 @@
     ])
     .factory('typo3Service', Typo3Service);
 
+
+  Typo3Service.BACKENDS = {
+    PROD: {
+      PAGES: 'http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000',
+      ROOMS: 'http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000',
+      FILES: 'http://kloster-mariastein.business-design.ch/'
+    },
+    DEV: {
+      PAGES: 'http://localhost:3000/pages',
+      ROOMS: 'http://localhost:3000/rooms',
+      FILES: 'http://localhost:3000/'
+    }
+  };
+
+  Typo3Service.LANGUAGES = {
+    DE: 0,
+    FR: 1,
+    EN: 2,
+    IT: 3
+  };
+
+  /**
+   * Service Class
+   * @constructor
+   */
   function Typo3Service($q, $http, Logger) {
     var log = new Logger('kmsscan.services.rest.Typo3');
+    var env = 'PROD';
+
     log.info('init');
     var service = {
-      load: load,
-      getImageBlob: getImageBlob
+      loadPages: loadPages,
+      loadRooms: loadRooms
     };
 
     return service;
 
     ////////////////
 
-    function getImageBlob(url, params) {
-      var deferred = $q.defer();
-      $http.get('http://localhost:3000/' + url, params, {
-        responseType: 'arraybuffer'
-      })
-        .success(function (response) {
-          var file = new Blob([response], {type: 'image/jpeg'});
-          var fileURL = URL.createObjectURL(file);
-          log.info('fileURL', fileURL);
-          deferred.resolve(file);
-        })
-        .error(deferred.reject);
-      return deferred.promise;
-    }
-
-    function load() {
+    /**
+     * @description
+     * Request all the pages from the typo3 backend
+     *
+     * @returns {deferred.promise|{then}}
+     */
+    function loadPages() {
       log.info('load()');
       var deferred = $q.defer();
       $http({
-        //http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000
-        url: 'http://localhost:3000/data',
+        url: Typo3Service.BACKENDS[env].PAGES,
         type: 'GET',
         dataType: 'json'
       })
@@ -60,6 +77,22 @@
       return deferred.promise;
     }
 
+    /**
+     * @description
+     * Request all the rooms from the typo3 backend
+     *
+     * @returns {deferred.promise|{then}}
+     */
+    function loadRooms() {
+
+    }
+
+    /**
+     *
+     * @param data
+     * @returns {Array}
+     * @private
+     */
     function _parseRooms(data) {
       var rooms = data.map(function (item) {
         return item.room;
@@ -69,6 +102,12 @@
       });
     }
 
+    /**
+     *
+     * @param data
+     * @returns {Array}
+     * @private
+     */
     function _parseImages(data) {
       var images = [];
       for (var i = 0; i < data.length; i++) {
@@ -83,6 +122,12 @@
       });
     }
 
+    /**
+     *
+     * @param data
+     * @returns {Array|*}
+     * @private
+     */
     function _parseObjects(data) {
       data = data.map(function (item) {
         var newItem = _getObject(item.content);
@@ -93,6 +138,12 @@
       return data;
     }
 
+    /**
+     *
+     * @param obj
+     * @returns {*}
+     * @private
+     */
     function _getObject(obj) {
       for (var key in obj) {
         if (angular.isObject(obj)) {
@@ -102,6 +153,12 @@
       return {};
     }
 
+    /**
+     *
+     * @param images
+     * @returns {Array}
+     * @private
+     */
     function _parseImage(images) {
       var a = [];
       for (var key in images) {
@@ -109,6 +166,23 @@
       }
       return a;
     }
+
+
+
+    //function getImageBlob(url, params) {
+    //  var deferred = $q.defer();
+    //  $http.get(Typo3Service.BACKENDS[env].FILES + url, params, {
+    //    responseType: 'arraybuffer'
+    //  })
+    //    .success(function (response) {
+    //      var file = new Blob([response], {type: 'image/jpeg'});
+    //      var fileURL = URL.createObjectURL(file);
+    //      log.info('fileURL', fileURL);
+    //      deferred.resolve(file);
+    //    })
+    //    .error(deferred.reject);
+    //  return deferred.promise;
+    //}
 
   }
 })();
