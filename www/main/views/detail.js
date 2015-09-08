@@ -20,20 +20,27 @@
       });
   }
 
-  function DetailController($window, $stateParams, $ionicModal, $ionicSlideBoxDelegate, $ionicBackdrop, $ionicScrollDelegate) {
-    var vm = this; // view-model or $scope
+
+  function DetailController($q, $timeout, $window, $stateParams, historyService, $ionicModal, $ionicSlideBoxDelegate, $scope, $ionicBackdrop, $ionicScrollDelegate, SETTINGS_STORAGE_KEY, $localForage, $rootScope) {
+    var vm = this; // view-model
+    init();
+
     vm.item = {};
     vm.more = false;
 
     vm.showMore = function(){
       if (!vm.more){
-        vm.more = true;
+        $timeout(function () {
+          vm.more = true;
+        });
       }
     };
 
     vm.showLess = function(){
       if (vm.more){
-        vm.more = false;
+        $timeout(function () {
+          vm.more = false;
+        });
       }
     };
 
@@ -51,8 +58,10 @@
     }];
 
     vm.zoomMin = 1;
-
+    vm.zooming = $rootScope.settings.zooming;
+    vm.enableZoom = false;
     vm.hgt = $window.innerHeight-50;
+    vm.hgt2 = $window.innerHeight-145;
 
     vm.showImages = function(index) {
       vm.activeSlide = index;
@@ -90,6 +99,30 @@
         $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).zoomTo(1, true);
       }
     };
+
+    vm.scrollTop = function() {
+      if ($rootScope.settings.zooming){
+        $scope.enableZoom = true;
+        $ionicScrollDelegate.$getByHandle('scrollMain').scrollTo(0,200,true);
+      }
+    };
+
+    function init() {
+      var deferred = $q.defer();
+      $localForage.getItem(SETTINGS_STORAGE_KEY)
+          .then(function (result) {
+            if (result !== null) {
+              $rootScope.settings = _.assign($rootScope.settings,  JSON.parse(result));
+            }
+            deferred.resolve($rootScope.settings);
+          })
+          .catch(function (err) {
+            $log.error(err);
+            deferred.reject(err);
+          });
+      return deferred.promise;
+    }
+
 
   }
 

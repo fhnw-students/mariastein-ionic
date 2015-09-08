@@ -20,7 +20,7 @@
   }
 
 
-  function TutorialController($translate, $rootScope) {
+  function TutorialController($translate, $rootScope, $state) {
     var vm = this; // view-model
     vm.language=angular.uppercase($rootScope.settings.language);
     $rootScope.$broadcast('onLanguageChange', vm.language.toLowerCase());
@@ -32,7 +32,19 @@
     vm.onLanguageChange = function () {
       $rootScope.$broadcast('onLanguageChange', vm.language.toLowerCase());
     };
+
+    vm.historyGoBack = function(){
+      if($rootScope.settings.isFirstStart){
+        $state.go('menu.welcome');
+      }else {
+        window.history.back();
+      }
+
+
+    }
   }
+
+
 
 
 }());

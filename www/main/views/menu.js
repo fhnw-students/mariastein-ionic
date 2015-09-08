@@ -28,12 +28,14 @@
           sysLang="en";
           vm.language = angular.uppercase(sysLang);
         }
+
     $rootScope.settings = {
 
       language: vm.language,
       vibration: 0,
       music: 0,
-      isFirstStart: true
+      isFirstStart: true,
+      zooming: true
     };
 
     init()
@@ -50,6 +52,7 @@
           } else {
             vm.music = false;
           }
+          vm.zooming = $rootScope.settings.zooming;
         });
 
 
@@ -91,6 +94,15 @@
     };
     vm.getIsFirstStart = function(){
       return isFirstStart;
+    };
+
+    vm.onZoomChange = function(){
+      if ($rootScope.settings.zooming){
+        $rootScope.settings.zooming = false;
+      } else {
+        $rootScope.settings.zooming = true;
+      }
+      saveSettings();
     };
 
     function init() {

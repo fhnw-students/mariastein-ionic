@@ -78,6 +78,16 @@
                 </ion-item>
 
                 <ion-item type="item-text-wrap" class="item item-toggle">
+                    {{ 'LABEL.ZOOM' | translate }}
+                    <label class="toggle">
+                        <input type="checkbox" ng-model="menu.zooming" ng-checked="menu.zooming" ng-change="menu.onZoomChange()">
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                    </label>
+                </ion-item>
+
+                <ion-item type="item-text-wrap" class="item item-toggle">
                     {{ 'LABEL.MUSIC' | translate }}
                     <label class="toggle">
                         <input type="checkbox" ng-model="menu.music" ng-checked="menu.music" ng-change="menu.onMusicChange()">
@@ -86,6 +96,7 @@
                         </div>
                     </label>
                 </ion-item>
+
 
                 <!--
                 <ion-item class="item-select" type="item-text-wrap">

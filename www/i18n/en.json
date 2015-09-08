@@ -28,7 +28,8 @@
     "MAPS": "Show on Google Maps",
     "SUBMIT_BUTTON": "Submit",
     "VIBRATION": "Vibration",
-    "MUSIC": "Music"
+    "MUSIC": "Music",
+    "ZOOM": "Text Zooming"
   },
   "MESSAGE": {
     "NOT_FOUND": "No item was found. Please try again!",
