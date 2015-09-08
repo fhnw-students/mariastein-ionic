@@ -10,27 +10,27 @@
   function StateConfig($stateProvider) {
     $stateProvider
       .state('menu', {
-        url:         '/menu',
-        abstract:    true,
+        url: '/menu',
+        abstract: true,
         templateUrl: 'main/views/menu.html',
-        controller:  'MenuCtrl as menu'
+        controller: 'MenuCtrl as menu'
       });
   }
 
 
   function MenuController($translate, $q, $log, SETTINGS_STORAGE_KEY, $localForage, $rootScope) {
     var vm = this;
-    var sysLang = navigator.language.substring(0,2);
+    var sysLang = navigator.language.substring(0, 2);
 
-     if(sysLang=="de"|| sysLang=="fr" || sysLang=="it"){
-          vm.language = angular.uppercase(sysLang);
-        }else{
-          sysLang="en";
-          vm.language = angular.uppercase(sysLang);
-        }
+
+    if (sysLang == "de" || sysLang == "fr" || sysLang == "it") {
+      vm.language = angular.uppercase(sysLang);
+    } else {
+      sysLang = "en";
+      vm.language = angular.uppercase(sysLang);
+    }
 
     $rootScope.settings = {
-
       language: vm.language,
       vibration: 0,
       music: 0,
@@ -55,10 +55,9 @@
           vm.zooming = $rootScope.settings.zooming;
         });
 
-
     vm.onLanguageChange = function () {
       $rootScope.$broadcast('onLanguageChange', vm.language.toLowerCase());
-      $rootScope.$on('onLanguageChange', function(event, langKey){
+      $rootScope.$on('onLanguageChange', function (event, langKey) {
         vm.language = angular.uppercase(langKey);
       });
 
@@ -66,8 +65,8 @@
       saveSettings();
     };
 
-    vm.onVibraChange = function(){
-      if ($rootScope.settings.vibration != 0){
+    vm.onVibraChange = function () {
+      if ($rootScope.settings.vibration != 0) {
         $rootScope.settings.vibration = 0;
       } else {
         $rootScope.settings.vibration = 100;
@@ -75,8 +74,8 @@
       saveSettings();
     };
 
-    vm.onMusicChange = function(){
-      if ($rootScope.settings.music != 0){
+    vm.onMusicChange = function () {
+      if ($rootScope.settings.music != 0) {
         $rootScope.settings.music = 0;
       } else {
         $rootScope.settings.music = 1;
@@ -84,15 +83,15 @@
       saveSettings();
     };
 
-    vm.onIsFirstStartChange = function(){
-       if ($rootScope.settings.isFirstStart == false){
+    vm.onIsFirstStartChange = function () {
+      if ($rootScope.settings.isFirstStart == false) {
         $rootScope.settings.isFirstStart = true;
-       }else {
+      } else {
         $rootScope.settings.isFirstStart = false;
-       }
-       saveSettings();
+      }
+      saveSettings();
     };
-    vm.getIsFirstStart = function(){
+    vm.getIsFirstStart = function () {
       return isFirstStart;
     };
 
@@ -108,20 +107,20 @@
     function init() {
       var deferred = $q.defer();
       $localForage.getItem(SETTINGS_STORAGE_KEY)
-          .then(function (result) {
-            if (result !== null) {
-             $rootScope.settings = _.assign($rootScope.settings,  JSON.parse(result));
-            }
-            deferred.resolve($rootScope.settings);
-          })
-          .catch(function (err) {
-            $log.error(err);
-            deferred.reject(err);
-          });
+        .then(function (result) {
+          if (result !== null) {
+            $rootScope.settings = _.assign($rootScope.settings, JSON.parse(result));
+          }
+          deferred.resolve($rootScope.settings);
+        })
+        .catch(function (err) {
+          $log.error(err);
+          deferred.reject(err);
+        });
       return deferred.promise;
     }
 
-    function saveSettings(){
+    function saveSettings() {
       $localForage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify($rootScope.settings));
     }
 

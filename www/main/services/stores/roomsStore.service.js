@@ -38,10 +38,10 @@
       return storage;
     }
 
-    function get(id) {
+    function get(uid) {
       return storage.filter(function (item) {
-          return item.uid === id;
-        })[0] || {};
+          return item.uid === parseInt(uid, 10);
+        })[0];
     }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////

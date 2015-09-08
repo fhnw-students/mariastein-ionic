@@ -10,6 +10,7 @@
     "angular-localForage": "~1.2.3",
     "angular-translate": "~2.7.2",
     "angular-translate-loader-static-files": "~2.7.2",
+    "js-base64": "~2.1.9",
     "lodash": "~3.10.0",
     "moment": "~2.10.6",
     "ngCordova": "~0.1.17-alpha",

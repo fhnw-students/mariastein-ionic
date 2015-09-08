@@ -2,6 +2,8 @@
   'use strict';
 
   angular.module('kmsscan.views.Scan', [
+    'kmsscan.services.stores.Objects',
+    'kmsscan.services.stores.History'
   ])
     .config(StateConfig)
     .controller('ScanCtrl', ScanController);
@@ -10,18 +12,17 @@
   function StateConfig($stateProvider) {
     $stateProvider
       .state('menu.scan', {
-        url:   '/scan',
+        url: '/scan',
         views: {
           'menuContent': {
             templateUrl: 'main/views/scan.html',
-            controller:  'ScanCtrl as scan'
+            controller: 'ScanCtrl as scan'
           }
         }
       });
   }
 
-
-  function ScanController($cordovaBarcodeScanner, $cordovaVibration, $state, $rootScope) {
+  function ScanController($cordovaBarcodeScanner, $cordovaVibration, $state, $rootScope, historyStoreService, objectsStoreService) {
     var vm = this; // view-model
     vm.isReady = false;
     vm.barcodeText = "";
@@ -34,8 +35,10 @@
     }
 
     document.addEventListener("deviceready", function () {
-      vm.isReady = true;
-      vm.scan();
+      if (cordova.barcodeScanner) {
+        vm.isReady = true;
+        vm.scan();
+      }
     }, false);
 
     //////////////////////////////////////////
@@ -65,22 +68,21 @@
         });
     }
 
-    function afterScan(barcodeData) {
-      //historyService.add(barcodeData)
-      //  .then(function (result) {
-      //    $state.go('menu.detail', {
-      //      id: result.data.ID
-      //    }, {
-      //      location: "replace"
-      //    })
-      //  })
-      //  .catch(function (error) {
-      //    if (error === 'NotFound') {
-      //      $state.go('menu.notFound', {}, {
-      //        location: "replace"
-      //      })
-      //    }
-      //  });
+    function afterScan(uid) {
+      if (objectsStoreService.has(uid)) {
+        historyStoreService.visited(uid)
+          .then(function () {
+            $state.go('menu.detail', {
+              id: uid
+            }, {
+              location: "replace"
+            });
+          });
+      } else {
+        $state.go('menu.notFound', {}, {
+          location: "replace"
+        });
+      }
     }
 
     function submit() {

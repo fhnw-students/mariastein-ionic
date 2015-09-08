@@ -7,7 +7,6 @@
     ])
     .factory('typo3Service', Typo3Service);
 
-
   Typo3Service.BACKENDS = {
     PROD: {
       PAGES: 'http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000',
@@ -32,26 +31,38 @@
    * Service Class
    * @constructor
    */
-  function Typo3Service($q, $http, Logger) {
+  function Typo3Service($q, $http, $cordovaFileTransfer, Logger) {
     var log = new Logger('kmsscan.services.rest.Typo3');
     var env = 'PROD';
 
     log.info('init');
     var service = {
       loadPages: loadPages,
-      loadRooms: loadRooms
+      loadRooms: loadRooms,
+      downloadImage: downloadImage
     };
 
     return service;
 
-    ////////////////
+    // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
+    function downloadImage(url, id) {
+      var deferred = $q.defer();
+      url = 'http://localhost:3000/' + url;
+      var targetPath = cordova.file.documentsDirectory + id + '.png';
+      var trustHosts = true;
+      var options = {};
+      $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
+        .then(function (result) {
+          deferred.resolve({
+            targetPath: targetPath,
+            image: result
+          });
+        }, function (err) {
+          deferred.reject(err);
+        });
+      return deferred.promise;
+    }
 
-    /**
-     * @description
-     * Request all the pages from the typo3 backend
-     *
-     * @returns {deferred.promise|{then}}
-     */
     function loadPages() {
       log.info('load()');
       var deferred = $q.defer();
@@ -77,6 +88,7 @@
       return deferred.promise;
     }
 
+
     /**
      * @description
      * Request all the rooms from the typo3 backend
@@ -87,12 +99,8 @@
 
     }
 
-    /**
-     *
-     * @param data
-     * @returns {Array}
-     * @private
-     */
+
+    // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
     function _parseRooms(data) {
       var rooms = data.map(function (item) {
         return item.room;
