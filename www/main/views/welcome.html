@@ -3,10 +3,12 @@
 
         <kms-spinner ng-hide="welcome.isReady()"></kms-spinner>
 
-        <div class="row responsive-sm" ng-show="welcome.isReady()">
-            <img src="{{welcome.image.path}}" alt="{{welcome.page.title}}" width="100%">
+        <div class="row responsive-sm" ng-if="welcome.isReady()">
+            <img ng-src="{{welcome.imagePath}}" alt="{{welcome.page.title}}" width="100%">
+            <img ng-if="welcome.imagePath" src="{{welcome.imagePath}}" alt="{{welcome.page.title}}" width="100%">
             <br>
             <p>{{welcome.page.content}}</p>
+            <p>{{welcome.imagePath}}</p>
         </div>
 
     </ion-content>

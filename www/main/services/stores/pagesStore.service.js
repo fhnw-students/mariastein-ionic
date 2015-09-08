@@ -62,10 +62,6 @@
       return get(PagesStoreService.WELCOME_PAGE_UID, langKey);
     }
 
-    /**
-     *
-     * @returns {deferred.promise|{then, always}}
-     */
     function sync(langKey, data) {
       var deferred = $q.defer();
       log.info('sync', data);

@@ -12,6 +12,7 @@
       PAGES: 'http://kloster-mariastein.business-design.ch/index.php',
       ROOMS: 'http://kloster-mariastein.business-design.ch/index.php',
       FILES: 'http://kloster-mariastein.business-design.ch/'
+      //http://kloster-mariastein.business-design.ch/fileadmin/redaktion/benediktinerkloster/bilder/app/others/welcome.JPG
     },
     DEV: {
       PAGES: 'http://localhost:3000/pages',
@@ -38,8 +39,6 @@
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
-
-
     /**
      *
      * @returns {deferred.promise|{then, always}}
@@ -95,20 +94,26 @@
      */
     function downloadImage(url, id) {
       var deferred = $q.defer();
-      url = Typo3Service.BACKENDS[env].FILES + url;
-      var targetPath = cordova.file.documentsDirectory + id + '.png';
-      var trustHosts = true;
-      var options = {};
-      $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
-        .then(function (result) {
-          log.info('download()', result);
-          deferred.resolve({
-            targetPath: targetPath,
-            image: result
+      if (window.cordova) {
+        url = Typo3Service.BACKENDS[env].FILES + url;
+        var targetPath = cordova.file.documentsDirectory + id + '.png';
+        var trustHosts = true;
+        var options = {};
+        log.info('downloadImage()', url);
+        $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
+          .then(function (result) {
+            log.info('downloadImage()', result);
+            deferred.resolve({
+              targetPath: targetPath,
+              image: result
+            });
+          }, function (err) {
+            deferred.reject(err);
           });
-        }, function (err) {
-          deferred.reject(err);
-        });
+      } else {
+        log.warn('Cordova is not available!');
+        deferred.resolve({});
+      }
       return deferred.promise;
     }
 
