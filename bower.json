@@ -8,7 +8,6 @@
     "platform.js": "platform#~1.3.0"
   },
   "dependencies": {
-    "angular-localForage": "~1.2.3",
     "angular-pouchdb": "~3.0.0",
     "angular-translate": "~2.7.2",
     "angular-translate-loader-static-files": "~2.7.2",
