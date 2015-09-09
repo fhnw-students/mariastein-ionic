@@ -2,18 +2,19 @@
   'use strict';
 
   angular
-    .module('kmsscan.services.stores.History', [
+    .module('kmsscan.services.stores.Rooms', [
       'kmsscan.utils.Logger'
     ])
-    .factory('historyStoreService', HistoryStoreService);
+    .factory('roomsStoreService', RoomsStoreService);
 
   /**
    * Service Class
+   * @param $q
    * @returns {{sync: sync, getAll: getAll}}
    * @constructor
    */
-  function HistoryStoreService(Logger) {
-    var log = new Logger('kmsscan.services.stores.History');
+  function RoomsStoreService(Logger) {
+    var log = new Logger('kmsscan.services.stores.Rooms');
     log.info('init');
     var storage;
 
@@ -21,7 +22,6 @@
     // Public API
     var service = {
       set: set,
-      visited: visited,
       getAll: getAll,
       get: get
     };
@@ -29,10 +29,6 @@
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
-    function visited(id) {
-      // TODO
-    }
-
     function set(data) {
       storage = data;
       log.info('set()', data);
@@ -42,10 +38,10 @@
       return storage;
     }
 
-    function get(id) {
+    function get(uid) {
       return storage.filter(function (item) {
-          return item.uid === id;
-        })[0] || {};
+          return item.uid === parseInt(uid, 10);
+        })[0];
     }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////

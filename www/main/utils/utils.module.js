@@ -6,6 +6,7 @@
   angular
     .module(namespace, [
       namespace + '.Logger',
+      namespace + '.Helpers',
       namespace + '.SqlLite'
     ]);
 

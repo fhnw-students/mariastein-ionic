@@ -1,39 +1,20 @@
-<ion-view view-title="{{ 'LABEL.WELCOME' | translate }}">
+<ion-view view-title="{{welcome.page.title}}">
+
     <ion-content class="padding">
-        <!-- image (responsive width) -->
-        <div class="row responsive-sm">
 
-            <button class="button button-royal" ui-sref="init">Test!!!</button>
+        <kms-spinner ng-hide="welcome.isReady()"></kms-spinner>
 
-            <img src="./img/welcome.jpg" alt="welcome" width="100%">
+        <div class="row responsive-sm" ng-if="welcome.isReady()">
+
+            <kms-image image-id="welcome.page.image[0]" width="100%"></kms-image>
             <br>
+            <p>{{welcome.page.content}}</p>
 
-            <!-- welcome text -->
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-                et
-                dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                Stet
-                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-                amet,
-                consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-                erat,
-                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-                no
-                sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
-                elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-                voluptua. At
-                vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
-                est
-                Lorem ipsum dolor sit amet.Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie
-                consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim
-                qui
-                blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor
-                sit
-                amet,
-            </p>
         </div>
+
     </ion-content>
     <ion-footer-bar class="footer-button">
         <kms-scan-button></kms-scan-button>
     </ion-footer-bar>
+
 </ion-view>

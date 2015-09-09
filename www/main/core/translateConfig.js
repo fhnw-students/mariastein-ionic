@@ -5,8 +5,8 @@
     .config(TranslateConfig);
 
   function TranslateConfig($translateProvider) {
-//    $translateProvider.useSanitizeValueStrategy('sanitize');
     $translateProvider.preferredLanguage('en');
+    $translateProvider.useSanitizeValueStrategy(null);
     $translateProvider.useStaticFilesLoader({
       prefix: './i18n/',
       suffix: '.json'

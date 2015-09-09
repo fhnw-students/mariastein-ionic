@@ -4,10 +4,13 @@
   var namespace = 'kmsscan.services.stores';
 
   angular.module(namespace, [
-    namespace + '.Objects',
-    namespace + '.Images',
-    namespace + '.Rooms',
-    namespace + '.History'
+    namespace + '.Settings',
+    namespace + '.Pages',
+    namespace + '.Images'
+
+
+    //namespace + '.Rooms',
+    //namespace + '.History'
   ]);
 
 }());

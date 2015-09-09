@@ -2,22 +2,20 @@
   'use strict';
 
   angular
-    .module('kmsscan.services.stores.Objects', [
+    .module('kmsscan.services.stores.Images', [
       'kmsscan.utils.Logger'
     ])
-    .factory('objectsStoreService', ObjectsStoreService);
+    .factory('imagesStoreService', ImagesStoreService);
 
   /**
    * Service Class
    * @param $q
-   * @param $cordovaSQLite
-   * @param $ionicPlatform
    * @returns {{sync: sync, getAll: getAll}}
    * @constructor
    */
-  function ObjectsStoreService(Logger) {
-    var log = new Logger('kmsscan.services.stores.Objects');
-    log.info('init');
+  function ImagesStoreService(Logger) {
+    var log = new Logger('kmsscan.services.stores.Images', false);
+    log.debug('init');
     var storage;
 
 
@@ -25,15 +23,14 @@
     var service = {
       set: set,
       getAll: getAll,
-      get: get,
-      visited: visited
+      get: get
     };
 
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
     function set(data) {
-      log.info('set()', data);
+      log.debug('set()', data);
       storage = data;
     }
 
@@ -41,14 +38,10 @@
       return storage;
     }
 
-    function get(id) {
+    function get(uid) {
       return storage.filter(function (item) {
-          return item.uid === id;
-        })[0] || {};
-    }
-
-    function visited(id) {
-      // TODO
+          return item.uid === parseInt(uid, 10);
+        })[0];
     }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////

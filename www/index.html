@@ -13,10 +13,9 @@
     <script src="lib/angular-sanitize/angular-sanitize.js"></script>
     <script src="lib/angular-translate/angular-translate.min.js"></script>
     <script src="lib/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
-    <script src="lib/papaparse/papaparse.min.js"></script>
-    <script src="lib/localforage/dist/localforage.min.js"></script>
-    <script src="lib/angular-localForage/dist/angular-localForage.min.js"></script>
     <script src="lib/moment/min/moment.min.js"></script>
+    <script src="lib/pouchdb/dist/pouchdb.js"></script>
+    <script src="lib/angular-pouchdb/angular-pouchdb.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
@@ -28,7 +27,6 @@
 
     <script src="main/services/services.module.js"></script>
     <script src="main/services/rest/rest.module.js"></script>
-    <script src="main/services/sql/sql.module.js"></script>
     <script src="main/services/stores/stores.module.js"></script>
 
     <script src="main/directives/directives.module.js"></script>
@@ -37,6 +35,7 @@
     <script src="main/utils/utils.module.js"></script>
     <script src="main/utils/logger.js"></script>
     <script src="main/utils/sqllite.js"></script>
+    <script src="main/utils/helpers.js"></script>
 
     <script src="main/core/ionicPlatform.js"></script>
     <script src="main/core/routerConfig.js"></script>
@@ -44,20 +43,16 @@
 
     <!--<script src="main/services/history.service.js"></script>-->
     <!--<script src="main/services/news.service.js"></script>-->
+
     <script src="main/services/rest/typo3.service.js"></script>
-    <script src="main/services/sql/objectsSql.service.js"></script>
-    <script src="main/services/sql/roomsSql.service.js"></script>
-    <script src="main/services/sql/imagesSql.service.js"></script>
-    <script src="main/services/sql/historySql.service.js"></script>
-
-    <script src="main/services/stores/objectsStore.service.js"></script>
-    <script src="main/services/stores/roomsStore.service.js"></script>
+    <script src="main/services/stores/settingsStore.service.js"></script>
+    <script src="main/services/stores/pagesStore.service.js"></script>
     <script src="main/services/stores/imagesStore.service.js"></script>
-    <script src="main/services/stores/historyStore.service.js"></script>
 
-    <script src="main/services/map.service.js"></script>
     <script src="main/directives/navMenuButton.js"></script>
     <script src="main/directives/scanButton.js"></script>
+    <script src="main/directives/spinner.js"></script>
+    <script src="main/directives/image.js"></script>
 
     <script src="main/app.run.js"></script>
 

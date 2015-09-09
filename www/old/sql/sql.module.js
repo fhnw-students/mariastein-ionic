@@ -4,10 +4,10 @@
   var namespace = 'kmsscan.services.sql';
 
   angular.module(namespace, [
-    namespace + '.Objects',
-    namespace + '.Rooms',
-    namespace + '.Images',
-    namespace + '.History'
+    //namespace + '.Objects',
+    //namespace + '.Rooms',
+    //namespace + '.Images',
+    //namespace + '.History'
   ]);
 
 }());

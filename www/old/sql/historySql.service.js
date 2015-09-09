@@ -4,9 +4,7 @@
   angular
     .module('kmsscan.services.sql.History', [
       'kmsscan.utils.Logger',
-      'kmsscan.utils.SqlLite',
-
-      'kmsscan.services.stores.History'
+      'kmsscan.utils.SqlLite'
     ])
     .factory('historySqlService', HistorySqlService);
 
@@ -21,7 +19,7 @@
    * @returns {{}}
    * @constructor
    */
-  function HistorySqlService($q, $cordovaSQLite, $ionicPlatform, Logger, historyStoreService, sqlLiteUtilsService) {
+  function HistorySqlService($q, $cordovaSQLite, $ionicPlatform, Logger, sqlLiteUtilsService) {
     var log = new Logger('kmsscan.services.sql.History');
     log.info('init');
 
@@ -35,6 +33,7 @@
     var service = {
       sync: sync,
       getAll: getAll,
+      select: select,
       create: create,
       update: update
     };
@@ -42,6 +41,10 @@
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
+    function select(uid) {
+      return sqlLiteUtilsService.select(db, HistorySqlService.TABLENAME, 'uid = ' + uid);
+    }
+
     /**
      *
      * @returns {deferred.promise|{then, always}}
@@ -56,14 +59,12 @@
      */
     function sync() {
       var deferred = $q.defer();
-
       _create()
         .then(function () {
           return getAll();
         })
         .then(function (res) {
-          historyStoreService.set(res);
-          deferred.resolve();
+          deferred.resolve(res);
         })
         .catch(function (err) {
           log.error('sync()', err);
@@ -105,30 +106,6 @@
      */
     function _selectAll() {
       return sqlLiteUtilsService.selectAll(db, HistorySqlService.TABLENAME);
-    }
-
-    /**
-     *
-     * @param data
-     * @returns {Promise}
-     * @private
-     */
-    function _insert(data) {
-      var query = 'INSERT INTO ' + HistorySqlService.TABLENAME + ' (uid, date) VALUES (?,?)';
-      var queue = [];
-      for (var i = 0; i < data.length; i++) {
-        queue.push(
-          $cordovaSQLite.execute(db, query, [
-            data[i].uid,
-            data[i].date || ''
-          ])
-        );
-      }
-      return $q.all(queue);
-    }
-
-    function _update(uid) {
-
     }
 
     /**

@@ -6,8 +6,8 @@
       'kmsscan.utils.Logger',
       'kmsscan.utils.SqlLite',
 
-      'kmsscan.services.rest.Typo3',
-      'kmsscan.services.stores.Images'
+      'kmsscan.services.stores.Images',
+      'kmsscan.services.rest.Typo3'
     ])
     .factory('imagesSqlService', ImagesSqlService);
 
@@ -19,9 +19,6 @@
 
   /**
    * Service Class
-   * @param $q
-   * @param $cordovaSQLite
-   * @param $ionicPlatform
    * @returns {{}}
    * @constructor
    */
@@ -53,6 +50,10 @@
           return _inserts(data);
         })
         .then(function () {
+          return getAll();
+        })
+        .then(function (data) {
+          imagesStoreService.set(data);
           deferred.resolve();
         })
         .catch(function (err) {
@@ -66,14 +67,21 @@
       return _select(uid);
     }
 
+    function getAll() {
+      return sqlLiteUtilsService.selectAll(db, ImagesSqlService.TABLENAME);
+    }
+
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
     function _select(uid) {
-      var self = this;
       var deferred = $q.defer();
       var query = 'SELECT * FROM ' + ImagesSqlService.TABLENAME + ' WHERE uid = ' + uid;
       $cordovaSQLite.execute(db, query).then(function (res) {
         log.info('select', res);
-        deferred.resolve(self.parseRawSqlObjects(res));
+        var image;
+        if (res.rows.length > 0) {
+          image = res.rows.item(0);
+        }
+        deferred.resolve(image);
       }, function (err) {
         deferred.reject(err);
       });
@@ -94,12 +102,13 @@
 
     function _insert(imageId, imageUrl) {
       var deferred = $q.defer();
-      var query = 'INSERT INTO ' + ImagesSqlService.TABLENAME + ' (uid, data) VALUES (?,?)';
-      typo3Service.getImageBlob(imageUrl)
-        .then(function (blob) {
+      var query = 'INSERT INTO ' + ImagesSqlService.TABLENAME + ' (uid, path) VALUES (?,?)';
+      typo3Service.downloadImage(imageUrl, imageId)
+        .then(function (image) {
+          console.log(image);
           return $cordovaSQLite.execute(db, query, [
             imageId,
-            blob
+            image.targetPath
           ])
         })
         .then(function (result) {
@@ -110,7 +119,6 @@
         });
       return deferred.promise;
     }
-
 
     /**
      *
@@ -127,43 +135,8 @@
      * @private
      */
     function _create() {
-      return sqlLiteUtilsService.createTable(db, ImagesSqlService.TABLENAME, '(uid integer primary key, data blob)');
+      return sqlLiteUtilsService.createTable(db, ImagesSqlService.TABLENAME, '(uid integer primary key, path text)');
     }
 
   }
 })();
-//function _getBlob(url) {
-//  var deferred = $q.defer();
-//
-//
-//  deferred.resolve();
-//  deferred.reject();
-//
-//  return deferred.promise;
-//
-//
-//  //url = "http://kloster-mariastein.business-design.ch/"+url;
-//  //// Simulate a call to Dropbox or other service that can
-//  //// return an image as an ArrayBuffer.
-//  //var xhr = new XMLHttpRequest();
-//  //
-//  //// Use JSFiddle logo as a sample image to avoid complicating
-//  //// this example with cross-domain issues.
-//  //xhr.open( "GET", url, true );
-//  //
-//  //// Ask for the result as an ArrayBuffer.
-//  //xhr.responseType = "arraybuffer";
-//  //
-//  //xhr.onload = function( e ) {
-//  //  // Obtain a blob: URL for the image data.
-//  //  var arrayBufferView = new Uint8Array( this.response );
-//  //  var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
-//  //  return blob;
-//  //  //var urlCreator = window.URL || window.webkitURL;
-//  //  //var imageUrl = urlCreator.createObjectURL( blob );
-//  //  //var img = document.querySelector( "#photo" );
-//  //  //img.src = imageUrl;
-//  //};
-//  //
-//  //xhr.send();
-//}
