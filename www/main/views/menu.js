@@ -1,6 +1,11 @@
 (function() {
   'use strict';
-  angular.module('kmsscan.views.Menu', ['kmsscan.utils.Logger', 'kmsscan.services.stores.Settings']).config(StateConfig).controller('MenuCtrl', MenuController);
+  angular.module('kmsscan.views.Menu', [
+      'kmsscan.utils.Logger',
+      'kmsscan.services.stores.Settings'
+    ])
+    .config(StateConfig)
+    .controller('MenuCtrl', MenuController);
 
   function StateConfig($stateProvider) {
     $stateProvider.state('menu', {
