@@ -1,7 +1,9 @@
 (function () {
   'use strict';
 
-  angular.module('kmsscan.views.Menu', [])
+  angular.module('kmsscan.views.Menu', [
+    'kmsscan.services.stores.Settings'
+    ])
     .config(StateConfig)
     .controller('MenuCtrl', MenuController);
 
@@ -16,10 +18,40 @@
   }
 
 
-  function MenuController($translate, $q, $log, $rootScope) {
+  function MenuController($translate, $q, Logger, $rootScope, settingsStoreService, $scope) {
     var vm = this;
+    var log = Logger('kmsscan.views.Menu');
+
+    vm.settings = {};
+    vm.saveSettings = saveSettings;
+    vm.onLanguageChange = onLanguageChange;
+    activate();
 
 
+    ///////////////////////////////
+    function activate () {
+        settingsStoreService.get()
+        .then(function(settings){
+            log.warn(settings);
+            vm.settings = settings;
+        });
+    }
+
+    function saveSettings() {
+        return settingsStoreService.set(vm.settings)
+        .then(function(settings){
+            log.warn(settings);
+            vm.settings = settings;
+            return settings;
+        });
+    }
+
+    function onLanguageChange() {
+        saveSettings(vm.settings)
+        .then(function(){
+            // $rootScope.$broadcast('onLanguageChange', vm.settings.language);
+        });
+    }
 
 
 

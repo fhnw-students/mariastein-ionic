@@ -58,7 +58,7 @@
                     <i class=""></i>
                     {{ 'LABEL.LANGUAGE' | translate }}
                     <span class="item-note">
-                        <select ng-model="menu.language" ng-change="menu.onLanguageChange()" selected="menu.language">
+                        <select ng-model="menu.settings.language" ng-change="menu.onLanguageChange()" selected="menu.settings.language">
                             <option>DE</option>
                             <option>EN</option>
                             <option>FR</option>
@@ -67,20 +67,30 @@
                     </span>
                 </ion-item>
 
-                <ion-item type="item-text-wrap" class="item item-toggle">
+                <ion-toggle ng-model="menu.settings.vibration" ng-change="menu.saveSettings()" 
+                    toggle-class="toggle-calm">{{ 'LABEL.VIBRATION' | translate }}</ion-toggle>
+
+                <ion-toggle ng-model="menu.settings.zooming" ng-change="menu.saveSettings()" 
+                    toggle-class="toggle-calm">{{ 'LABEL.ZOOM' | translate }}</ion-toggle>
+                
+                <ion-toggle ng-model="menu.settings.music" ng-change="menu.saveSettings()" 
+                    toggle-class="toggle-calm">{{ 'LABEL.MUSIC' | translate }}</ion-toggle>   
+          
+
+    <!--             <ion-item type="item-text-wrap" class="item item-toggle">
                     {{ 'LABEL.VIBRATION' | translate }}
                     <label class="toggle">
-                        <input type="checkbox" ng-model="menu.vibration" ng-checked="menu.vibration" ng-change="menu.onVibraChange()">
+                        <input type="checkbox" ng-model="menu.settings.vibration" ng-checked="menu.settings.vibration" ng-change="menu.saveSettings()">
                         <div class="track">
                             <div class="handle"></div>
                         </div>
                     </label>
-                </ion-item>
+                </ion-item> -->
 
-                <ion-item type="item-text-wrap" class="item item-toggle">
+<!--                 <ion-item type="item-text-wrap" class="item item-toggle">
                     {{ 'LABEL.ZOOM' | translate }}
                     <label class="toggle">
-                        <input type="checkbox" ng-model="menu.zooming" ng-checked="menu.zooming" ng-change="menu.onZoomChange()">
+                        <input type="checkbox" ng-model="menu.settings.zooming" ng-checked="menu.settings.zooming" ng-change="menu.saveSettings()">
                         <div class="track">
                             <div class="handle"></div>
                         </div>
@@ -90,27 +100,13 @@
                 <ion-item type="item-text-wrap" class="item item-toggle">
                     {{ 'LABEL.MUSIC' | translate }}
                     <label class="toggle">
-                        <input type="checkbox" ng-model="menu.music" ng-checked="menu.music" ng-change="menu.onMusicChange()">
+                        <input type="checkbox" ng-model="menu.settings.music" ng-checked="menu.settings.music" ng-change="menu.saveSettings()">
                         <div class="track">
                             <div class="handle"></div>
                         </div>
                     </label>
-                </ion-item>
+                </ion-item> -->
 
-
-                <!--
-                <ion-item class="item-select" type="item-text-wrap">
-                <i class=""></i>
-                {{ 'LABEL.FONT_SIZE' | translate }}
-                <span class="item-note">
-                <select>
-                <option>12</option>
-                <option>16</option>
-                <option>20</option>
-                </select>
-                </span>
-                </ion-item>
-                -->
 
             </ion-list>
         </ion-content>
@@ -134,78 +130,4 @@
 </ion-side-menus>
 
 
-<!--<ion-view view-title="{{ 'LABEL.MENU' | translate }}">-->
-<!--<ion-nav-bar class="bar-positive">-->
-<!--</ion-nav-bar>-->
-<!--<ion-content>-->
-<!--<ion-list>-->
 
-<!--<ion-item class="item-icon-left item-icon-right" type="item-text-wrap" ng-click="scan()">-->
-<!--<i class="icon ion-qr-scanner"></i>-->
-<!--{{ 'LABEL.SCAN' | translate }}-->
-<!--<i class="icon ion-chevron-right icon-accessory"></i>-->
-<!--</ion-item>-->
-
-<!--<ion-item class="item-icon-left item-icon-right" type="item-text-wrap" href="#/history">-->
-<!--<i class="icon ion-clock"></i>-->
-<!--{{ 'LABEL.HISTORY' | translate }}-->
-<!--<i class="icon ion-chevron-right icon-accessory"></i>-->
-<!--</ion-item>-->
-
-<!--<ion-item class="item-icon-left item-icon-right" type="item-text-wrap" href="#/news">-->
-<!--<i class="icon ion-chatbox"></i>-->
-<!--{{ 'LABEL.NEWS' | translate }}-->
-<!--<i class="icon ion-chevron-right icon-accessory"></i>-->
-<!--</ion-item>-->
-
-<!--<ion-item class="item-icon-left item-icon-right" type="item-text-wrap" href="#/welcome">-->
-<!--<i class="icon ion-home"></i>-->
-<!--{{ 'LABEL.WELCOME' | translate }}-->
-<!--<i class="icon ion-chevron-right icon-accessory"></i>-->
-<!--</ion-item>-->
-
-<!--<ion-item class="item-icon-left item-icon-right" type="item-text-wrap" href="#/tutorial">-->
-<!--<i class="icon ion-university"></i>-->
-<!--{{ 'LABEL.TUTORIAL' | translate }}-->
-<!--<i class="icon ion-chevron-right icon-accessory"></i>-->
-<!--</ion-item>-->
-
-<!--<ion-item class="item-icon-left item-icon-left item-icon-right" type="item-text-wrap" href="#/contact">-->
-<!--<i class="icon ion-person"></i>-->
-<!--{{ 'LABEL.CONTACT' | translate }}-->
-<!--<i class="icon ion-chevron-right icon-accessory"></i>-->
-<!--</ion-item>-->
-
-<!--&lt;!&ndash; SETTINGS &ndash;&gt;-->
-<!--<ion-item class="item item-divider">-->
-<!--{{ 'LABEL.SETTINGS' | translate }}-->
-<!--</ion-item>-->
-
-<!--<ion-item class="item-select" type="item-text-wrap">-->
-<!--<i class=""></i>-->
-<!--{{ 'LABEL.LANGUAGE' | translate }}-->
-<!--<span class="item-note">-->
-<!--<select ng-model="menu.language" ng-change="menu.onLanguageChange()">-->
-<!--<option>DE</option>-->
-<!--<option>EN</option>-->
-<!--<option>FR</option>-->
-<!--</select>-->
-<!--</span>-->
-<!--</ion-item>-->
-<!--&lt;!&ndash;-->
-<!--<ion-item class="item-select" type="item-text-wrap">-->
-<!--<i class=""></i>-->
-<!--{{ 'LABEL.FONT_SIZE' | translate }}-->
-<!--<span class="item-note">-->
-<!--<select>-->
-<!--<option>12</option>-->
-<!--<option>16</option>-->
-<!--<option>20</option>-->
-<!--</select>-->
-<!--</span>-->
-<!--</ion-item>-->
-<!--&ndash;&gt;-->
-
-<!--</ion-list>-->
-<!--</ion-content>-->
-<!--</ion-view>-->

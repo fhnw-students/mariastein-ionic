@@ -121,11 +121,20 @@
 
     function _parseSettings(newSettings, settings) {
       settings.language = newSettings.language || settings.language || SettingsStoreService.DEFAULTS.language;
-      settings.music = newSettings.language || settings.music || SettingsStoreService.DEFAULTS.music;
-      settings.zooming = newSettings.language || settings.zooming || SettingsStoreService.DEFAULTS.zooming;
-      settings.vibration = newSettings.language || settings.vibration || SettingsStoreService.DEFAULTS.vibration;
-      settings.isPristine = newSettings.language || settings.isPristine || SettingsStoreService.DEFAULTS.isPristine;
+      // settings.music = newSettings.music || settings.music || SettingsStoreService.DEFAULTS.music;
+      // settings.zooming = newSettings.zooming || settings.zooming || SettingsStoreService.DEFAULTS.zooming;
+      // settings.vibration = newSettings.vibration || settings.vibration || SettingsStoreService.DEFAULTS.vibration;
+      // settings.isPristine = newSettings.isPristine || settings.isPristine || SettingsStoreService.DEFAULTS.isPristine;
+
+      settings.music = _parseBoolean(newSettings.music);
+      settings.zooming = _parseBoolean(newSettings.zooming);
+      settings.vibration = _parseBoolean(newSettings.vibration);
+      settings.isPristine = _parseBoolean(newSettings.isPristine);
       return settings;
+    }
+
+    function _parseBoolean(val) {
+      return val === true;
     }
 
     function _init() {
