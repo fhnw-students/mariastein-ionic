@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular.module('kmsscan.run', [
@@ -12,14 +12,14 @@
     .run(run);
 
   function run($rootScope, $translate, $timeout, $q, $ionicPlatform, Logger,
-               typo3Service, pagesStoreService, settingsStoreService, imagesStoreService) {
+    typo3Service, pagesStoreService, settingsStoreService, imagesStoreService) {
 
     var log = new Logger('kmsscan.run');
     $rootScope.syncIsActive = true;
-    log.info('start');
+    log.debug('start');
 
     $rootScope.onLine = window.navigator.onLine;
-    $rootScope.getImagePath = function (imageId) {
+    $rootScope.getImagePath = function(imageId) {
       return imagesStoreService.getPath(imageId);
     };
 
@@ -28,40 +28,41 @@
 
     /////////////////////////////////////////
     function onLanguageChange() {
-      $rootScope.$on('onLanguageChange', function (event, langKey) {
+      $rootScope.$on('onLanguageChange', function(event, langKey) {
         $translate.use(langKey);
       });
     }
 
     function activate() {
-      $ionicPlatform.ready(function () {
-        log.info('$ionicPlatform is ready');
+      $ionicPlatform.ready(function() {
+        log.debug('$ionicPlatform is ready');
 
-        if(window.navigator.onLine){
-        $q.all([
-          initSettings(),
-          syncPage(0),  // DE
-          syncPage(1),  // FR
-          syncPage(2),  // EN
-          syncPage(3)   // IT
-        ])
+        if (window.navigator.onLine) {
+          log.debug('Has internet connection');
+          $q.all([
+            initSettings(),
+            syncPage(0), // DE
+            syncPage(1), // FR
+            syncPage(2), // EN
+            syncPage(3)  // IT
+          ])
           .then(imagesStoreService.sync)
-          .then(function (results) {
-            $timeout(function () {
+          .then(function(results) {
+            $timeout(function() {
               $rootScope.syncIsActive = false;
               $rootScope.$broadcast('kmsscan.run.activate.succeed');
             });
-            log.info('done', results);
+            log.debug('done', results);
           })
-          .catch(function (err) {
+          .catch(function(err) {
             log.error('stop -> catch', err);
-            $timeout(function () {
+            $timeout(function() {
               $rootScope.syncIsActive = false;
               $rootScope.$broadcast('kmsscan.run.activate.failed');
             });
           });
-        }else{
-          $timeout(function () {
+        } else {
+          $timeout(function() {
             $rootScope.$broadcast('kmsscan.run.offline');
           });
         }
@@ -70,7 +71,7 @@
 
     function syncPage(langKey) {
       return typo3Service.loadPages(langKey)
-        .then(function (typo3Data) {
+        .then(function(typo3Data) {
           return pagesStoreService.sync(langKey, typo3Data.objects);
         })
     }
@@ -78,7 +79,6 @@
     function initSettings() {
       return settingsStoreService.init()
     }
-
 
   }
 

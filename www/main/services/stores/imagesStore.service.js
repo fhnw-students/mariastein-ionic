@@ -17,8 +17,8 @@
    * @constructor
    */
   function ImagesStoreService($q, Logger, typo3Service) {
-    var log = new Logger('kmsscan.services.stores.Images');
-    log.info('init');
+    var log = new Logger('kmsscan.services.stores.Images', false);
+    log.debug('init');
 
     // Public API
     var service = {
@@ -64,10 +64,10 @@
         }
       }
 
-      log.info('sync', images);
+      log.debug('sync', images);
       _download(images)
         .then(function (responses) {
-          log.info('success', responses);
+          log.debug('success', responses);
           deferred.resolve(images);
         })
         .catch(function (err) {

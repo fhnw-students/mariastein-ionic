@@ -14,8 +14,8 @@
    * @constructor
    */
   function ImagesStoreService(Logger) {
-    var log = new Logger('kmsscan.services.stores.Images');
-    log.info('init');
+    var log = new Logger('kmsscan.services.stores.Images', false);
+    log.debug('init');
     var storage;
 
 
@@ -30,7 +30,7 @@
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
     function set(data) {
-      log.info('set()', data);
+      log.debug('set()', data);
       storage = data;
     }
 

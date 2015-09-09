@@ -28,9 +28,9 @@
    * @constructor
    */
   function PagesStoreService($q, Logger, pouchDB) {
-    var log = new Logger('kmsscan.services.stores.Pages');
+    var log = new Logger('kmsscan.services.stores.Pages', false);
     var pagesDb;
-    log.info('init');
+    log.debug('init');
 
 
     // Public API
@@ -64,13 +64,13 @@
 
     function sync(langKey, data) {
       var deferred = $q.defer();
-      log.info('sync', data);
+      log.debug('sync', data);
       _activate()
         .then(function () {
           return _sync(langKey, data);
         })
         .then(function () {
-          log.info('success');
+          log.debug('success');
           deferred.resolve(data);
         })
         .catch(function (err) {
@@ -99,16 +99,16 @@
       var id = _id(record.uid, PagesStoreService.LANGUAGES[langKey]);
 
       pagesDb.get(id).then(function (doc) {
-        log.info('get()', doc);
+        log.debug('get()', doc);
         return pagesDb.put(_parsePage(record, doc.visited), doc._id, doc._rev);
       }).then(function (response) {
-        log.info('update() -> success', response);
+        log.debug('update() -> success', response);
         deferred.resolve(response);
       }).catch(function (err) {
         if (err.status === 404) {
           pagesDb.put(_parsePage(record), id)
             .then(function (response) {
-              log.info('add() -> success', response);
+              log.debug('add() -> success', response);
               deferred.resolve(response);
             })
             .catch(function (err) {

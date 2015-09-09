@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('kmsscan.views.Map', [
-    'kmsscan.services.Map'
+    //TODO: Waiting of external company
   ])
     .config(StateConfig)
     .controller('MapCtrl', MapController);
@@ -22,9 +22,9 @@
   }
 
 
-  function MapController(mapService) {
+  function MapController() {
     var vm = this;  // view-model
-    vm.list = mapService.get();
+    vm.list = [];
 
   }
 

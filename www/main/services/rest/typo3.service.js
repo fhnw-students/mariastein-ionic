@@ -26,10 +26,10 @@
    * @constructor
    */
   function Typo3Service($q, $http, $cordovaFileTransfer, Logger) {
-    var log = new Logger('kmsscan.services.rest.Typo3');
+    var log = new Logger('kmsscan.services.rest.Typo3', false);
     var env = 'PROD';
 
-    log.info('init');
+    log.debug('init');
     var service = {
       loadPages: loadPages,
       loadRooms: loadRooms,
@@ -44,8 +44,7 @@
      * @returns {deferred.promise|{then, always}}
      */
     function loadPages(langKey) {
-      // TODO Languages
-      log.info('loadPages()', langKey);
+      log.debug('loadPages()', langKey);
       var deferred = $q.defer();
       $http({
         url: Typo3Service.BACKENDS[env].PAGES,
@@ -58,7 +57,7 @@
         }
       })
         .success(function (response) {
-          log.info('then()', response);
+          log.debug('loadPages() - success', response);
           var objects = _parseObjects(response);
 
           deferred.resolve({
@@ -68,7 +67,7 @@
           });
         })
         .error(function (err) {
-          log.error('error()', err);
+          log.error('loadPages() - failed', err);
           deferred.reject(err);
         });
       return deferred.promise;
@@ -82,7 +81,7 @@
      * @returns {deferred.promise|{then}}
      */
     function loadRooms() {
-      // TODO
+      // TODO: waiting for external company
     }
 
 
@@ -99,15 +98,16 @@
         var targetPath = cordova.file.documentsDirectory + id + '.png';
         var trustHosts = true;
         var options = {};
-        log.info('downloadImage()', url);
+        log.debug('downloadImage()', url);
         $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
           .then(function (result) {
-            log.info('downloadImage()', result);
+            log.debug('downloadImage() - success', result);
             deferred.resolve({
               targetPath: targetPath,
               image: result
             });
           }, function (err) {
+            log.error('downloadImage() - failed', err);
             deferred.reject(err);
           });
       } else {
@@ -172,7 +172,7 @@
         newItem.image = _parseImage(newItem.image);
         return newItem;
       });
-      log.info('_parseObjects()', data);
+      log.debug('_parseObjects()', data);
       return data;
     }
 
@@ -204,22 +204,6 @@
       }
       return a;
     }
-
-
-    //function getImageBlob(url, params) {
-    //  var deferred = $q.defer();
-    //  $http.get(Typo3Service.BACKENDS[env].FILES + url, params, {
-    //    responseType: 'arraybuffer'
-    //  })
-    //    .success(function (response) {
-    //      var file = new Blob([response], {type: 'image/jpeg'});
-    //      var fileURL = URL.createObjectURL(file);
-    //      log.info('fileURL', fileURL);
-    //      deferred.resolve(file);
-    //    })
-    //    .error(deferred.reject);
-    //  return deferred.promise;
-    //}
 
   }
 })();

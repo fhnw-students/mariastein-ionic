@@ -32,7 +32,7 @@
     function activate () {
         settingsStoreService.get()
         .then(function(settings){
-            log.warn(settings);
+            log.debug('activate() - success', settings);
             vm.settings = settings;
         });
     }
@@ -40,7 +40,7 @@
     function saveSettings() {
         return settingsStoreService.set(vm.settings)
         .then(function(settings){
-            log.warn(settings);
+            log.debug('saveSettings() - success', settings);
             vm.settings = settings;
             return settings;
         });

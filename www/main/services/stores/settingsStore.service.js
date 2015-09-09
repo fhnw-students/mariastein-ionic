@@ -31,10 +31,10 @@
    * @constructor
    */
   function SettingsStoreService($q, Logger, pouchDB) {
-    var log = new Logger('kmsscan.services.stores.Settings');
+    var log = new Logger('kmsscan.services.stores.Settings', false);
     var callbacks = [];
     var settingsDb;
-    log.info('init');
+    log.debug('init');
 
 
     // Public API
@@ -54,7 +54,7 @@
       var deferred = $q.defer();
       settingsDb.get(SettingsStoreService.TABLENAME)
         .then(function (doc) {
-          log.info('init()', doc);
+          log.debug('init()', doc);
           deferred.resolve(doc);
         })
         .catch(function (err) {
@@ -77,7 +77,7 @@
       var deferred = $q.defer();
       settingsDb.get(SettingsStoreService.TABLENAME)
         .then(function (doc) {
-          log.info('get()', doc);
+          log.debug('get()', doc);
           deferred.resolve(doc);
         })
         .catch(function (err) {
@@ -95,7 +95,7 @@
         })
         .then(get)
         .then(function (doc) {
-          log.info('update() -> success', doc);
+          log.debug('update() -> success', doc);
           _fireOnChange(doc);
           deferred.resolve(doc);
         })
@@ -137,7 +137,7 @@
       settingsDb.put(SettingsStoreService.DEFAULTS, SettingsStoreService.TABLENAME)
         .then(get)
         .then(function (doc) {
-          log.info('add() -> success', doc);
+          log.debug('add() -> success', doc);
           _fireOnChange(doc);
           deferred.resolve(doc);
         })

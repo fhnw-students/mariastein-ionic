@@ -7,9 +7,16 @@
 
   function LoggerService($log) {
 
-    function Logger(name) {
+    function Logger(name, enabled) {
       this.name = name;
+      this.enabled = enabled !== false;
     }
+
+    Logger.prototype.debug = function (text, object) {
+      if(this.enabled){
+        this._log('log', text, object);
+      }
+    };
 
     Logger.prototype.info = function (text, object) {
       this._log('info', text, object);
@@ -47,8 +54,8 @@
 
     ////////////////////////////////////
 
-    return function (options) {
-      return new Logger(options);
+    return function (name, enabled) {
+      return new Logger(name, enabled);
     };
 
     function getTimestamp() {
