@@ -1,7 +1,10 @@
-(function () {
+(function() {
   'use strict';
 
-  angular.module('kmsscan.views.Tutorial', [])
+  angular.module('kmsscan.views.Tutorial', [
+      'kmsscan.utils.Logger',
+      'kmsscan.services.stores.Settings'
+    ])
     .config(StateConfig)
     .controller('TutorialCtrl', TutorialController);
 
@@ -9,42 +12,72 @@
   function StateConfig($stateProvider) {
     $stateProvider
       .state('menu.tutorial', {
-        url:         '/tutorial',
+        url: '/tutorial',
         views: {
-                  'menuContent': {
-                    templateUrl: 'main/views/tutorial.html',
-                    controller:  'TutorialCtrl as tutorial'
-                  }
-               }
+          'menuContent': {
+            templateUrl: 'main/views/tutorial.html',
+            controller: 'TutorialCtrl as tutorial'
+          }
+        }
       });
   }
 
 
-  function TutorialController($translate, $rootScope, $state) {
+
+  function TutorialController($translate, $rootScope, $state, settingsStoreService, Logger) {
     var vm = this; // view-model
-    vm.language=angular.uppercase($rootScope.settings.language);
-    $rootScope.$broadcast('onLanguageChange', vm.language.toLowerCase());
+    var log = Logger('kmsscan.views.Tutorial');
 
-    $rootScope.$on('onLanguageChange', function(event, langKey){
-        vm.language = angular.uppercase(langKey);
-    });
+    vm.settings = {};
 
-    vm.onLanguageChange = function () {
-      $rootScope.$broadcast('onLanguageChange', vm.language.toLowerCase());
-    };
+    vm.onLanguageChange = onLanguageChange;
+    vm.historyGoBack = historyGoBack;
 
-    vm.historyGoBack = function(){
-      if($rootScope.settings.isFirstStart){
+    activate();
+    //////////////////////////////
+    function activate() {
+      log.debug('activate');
+      $rootScope.$on('onLanguageChange', function(event, langKey) {
+        vm.settings.language = angular.uppercase(langKey);
+      });
+
+      settingsStoreService.get()
+        .then(function(settings) {
+          log.debug('activate() - success', settings);
+          vm.settings = settings;
+        });
+    }
+
+    function saveSettings() {
+      return settingsStoreService.set(vm.settings)
+        .then(function(settings) {
+          log.debug('saveSettings() - success', settings);
+          vm.settings = settings;
+          return settings;
+        });
+    }
+
+    function onLanguageChange() {
+      saveSettings(vm.settings)
+        .then(function() {
+          $rootScope.$broadcast('onLanguageChange', vm.settings.language);
+        });
+    }
+
+    function historyGoBack() {
+      if ($rootScope.settings.isFirstStart) {
         $state.go('menu.welcome');
-      }else {
+      } else {
         window.history.back();
       }
-
-
     }
+
+    // vm.language=angular.uppercase($rootScope.settings.language);
+    // $rootScope.$broadcast('onLanguageChange', vm.language.toLowerCase());
+
+
+
   }
-
-
 
 
 }());
