@@ -121,11 +121,6 @@
 
     function _parseSettings(newSettings, settings) {
       settings.language = newSettings.language || settings.language || SettingsStoreService.DEFAULTS.language;
-      // settings.music = newSettings.music || settings.music || SettingsStoreService.DEFAULTS.music;
-      // settings.zooming = newSettings.zooming || settings.zooming || SettingsStoreService.DEFAULTS.zooming;
-      // settings.vibration = newSettings.vibration || settings.vibration || SettingsStoreService.DEFAULTS.vibration;
-      // settings.isPristine = newSettings.isPristine || settings.isPristine || SettingsStoreService.DEFAULTS.isPristine;
-
       settings.music = _parseBoolean(newSettings.music);
       settings.zooming = _parseBoolean(newSettings.zooming);
       settings.vibration = _parseBoolean(newSettings.vibration);

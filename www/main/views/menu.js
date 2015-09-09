@@ -49,7 +49,7 @@
     function onLanguageChange() {
         saveSettings(vm.settings)
         .then(function(){
-            // $rootScope.$broadcast('onLanguageChange', vm.settings.language);
+            $rootScope.$broadcast('onLanguageChange', vm.settings.language);
         });
     }
 
