@@ -1,16 +1,17 @@
 <ion-view view-title="{{ 'LABEL.HISTORY' | translate }}">
     <ion-content>
-        <ion-list>
-            <!--href="#/menu/detail/{{item[0].ID}}"-->
-            <ion-list>
-                <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="item in history.list">
-                    <img src="{{item.images[0].path}}">
-                    <h2>{{item.title}}</h2>
-                    <p>{{item.scanedAt.getDay()}}-{{item.scanedAt.getMonth()+1}}-{{item.scanedAt.getFullYear()}}</p>
-                    <i class="icon ion-chevron-right icon-accessory"></i>
-                </ion-item>
-            </ion-list>
-        </ion-list>
+
+        <pre>{{history|json}}</pre>
+
+<!--         <ion-list>
+            <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="item in history.list">
+                <img src="{{item.images[0].path}}">
+                <h2>{{item.title}}</h2>
+                <p>{{item.scanedAt.getDay()}}-{{item.scanedAt.getMonth()+1}}-{{item.scanedAt.getFullYear()}}</p>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+
+        </ion-list>  -->
 
     </ion-content>
 </ion-view>

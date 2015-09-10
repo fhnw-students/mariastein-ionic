@@ -15,7 +15,6 @@
         //Old:  http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000
         //Page: http://kloster-mariastein.business-design.ch/routing/klomaapp/page/json
         //Room: http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json
-
     },
     DEV: {
       PAGES: 'http://localhost:3000/pages',
