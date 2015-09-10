@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -10,9 +10,12 @@
   Typo3Service.BACKENDS = {
     PROD: {
       PAGES: 'http://kloster-mariastein.business-design.ch/index.php',
-      ROOMS: 'http://kloster-mariastein.business-design.ch/index.php',
+      ROOMS: 'http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json',
       FILES: 'http://kloster-mariastein.business-design.ch/'
-      //http://kloster-mariastein.business-design.ch/fileadmin/redaktion/benediktinerkloster/bilder/app/others/welcome.JPG
+        //Old:  http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000
+        //Page: http://kloster-mariastein.business-design.ch/routing/klomaapp/page/json
+        //Room: http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json
+
     },
     DEV: {
       PAGES: 'http://localhost:3000/pages',
@@ -47,32 +50,30 @@
       log.debug('loadPages()', langKey);
       var deferred = $q.defer();
       $http({
-        url: Typo3Service.BACKENDS[env].PAGES,
-        type: 'GET',
-        dataType: 'json',
-        params: {
-          type: 5000,
-          id: 136,
-          L: langKey || 0
-        }
-      })
-        .success(function (response) {
+          url: Typo3Service.BACKENDS[env].PAGES,
+          type: 'GET',
+          dataType: 'json',
+          params: {
+            L: langKey || 0,
+            id: 136,
+            type: 5000
+          }
+        })
+        .success(function(response) {
           log.debug('loadPages() - success', response);
           var objects = _parseObjects(response);
 
           deferred.resolve({
             objects: objects,
-            rooms: _parseRooms(objects),
             images: _parseImages(objects)
           });
         })
-        .error(function (err) {
+        .error(function(err) {
           log.error('loadPages() - failed', err);
           deferred.reject(err);
         });
       return deferred.promise;
     }
-
 
     /**
      * @description
@@ -80,10 +81,30 @@
      *
      * @returns {deferred.promise|{then}}
      */
-    function loadRooms() {
-      // TODO: waiting for external company
+    function loadRooms(langKey) {
+      log.debug('loadRooms()', langKey);
+      var deferred = $q.defer();
+      $http({
+          url: Typo3Service.BACKENDS[env].ROOMS,
+          type: 'GET',
+          dataType: 'json',
+          params: {
+            L: langKey || 0
+          }
+        })
+        .success(function(response) {
+          log.debug('loadRooms() - success', response);
+          deferred.resolve({
+            images: _parseImagesFromRooms(response),
+            rooms: _parseRooms(response)
+          });
+        })
+        .error(function(err) {
+          log.error('loadRooms() - failed', err);
+          deferred.reject(err);
+        });
+      return deferred.promise;
     }
-
 
     /**
      *
@@ -100,25 +121,24 @@
         var options = {};
         log.debug('downloadImage()', url);
         $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
-          .then(function (result) {
+          .then(function(result) {
             log.debug('downloadImage() - success', result);
             deferred.resolve({
               targetPath: targetPath,
               image: result
             });
-          }, function (err) {
+          }, function(err) {
             log.error('downloadImage() - failed', err);
             deferred.reject(err);
           });
       } else {
-        setTimeout(function () {
+        setTimeout(function() {
           log.warn('Cordova is not available!');
           deferred.resolve({});
-        },500);
+        }, 500);
       }
       return deferred.promise;
     }
-
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
     /**
@@ -129,15 +149,25 @@
      */
     function _parseRooms(data) {
       var rooms = data
-        .map(function (item) {
-          return item.room;
+        .map(function(room){
+          room.image = _parseImage(room.image);
+          return room;
         })
-        .filter(function (item) {
-          return _.isObject(item);
+        .map(function(room) {
+          room.previewImageUid = _getPreviewImage(room.image);
+          room.mapImageUid = _getMapImage(room.image);
+          delete room.images;
+          return room;
         });
-      return _.uniq(rooms, function (item) {
-        return item.uid;
-      });
+      return rooms;
+    }
+
+    function _getPreviewImage(images) {
+      return images && _.isArray(images) && images.length>0 && images[0].uid;
+    }
+
+    function _getMapImage(images) {
+      return images && _.isArray(images) && images.length>0 && images[1].uid;
     }
 
     /**
@@ -155,9 +185,21 @@
           }
         }
       }
-      return _.uniq(images, function (item) {
+      return _.uniq(images, function(item) {
         return item.uid;
       });
+    }
+
+    function _parseImagesFromRooms (data) {
+      var images = [];
+      images = data.map(function  (obj) {
+        return obj.image;
+      })
+      .map(function  (image) {
+        return _parseImage(image);
+      })
+
+      return images;
     }
 
     /**
@@ -167,7 +209,7 @@
      * @private
      */
     function _parseObjects(data) {
-      data = data.map(function (item) {
+      data = data.map(function(item) {
         var newItem = _getObject(item.content);
         newItem.image = _parseImage(newItem.image);
         return newItem;

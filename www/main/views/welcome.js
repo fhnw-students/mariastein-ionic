@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular.module('kmsscan.views.Welcome', [
@@ -8,7 +8,6 @@
   ])
     .config(StateConfig)
     .controller('WelcomeCtrl', WelcomeController);
-
 
   function StateConfig($stateProvider) {
     $stateProvider
@@ -23,13 +22,14 @@
       });
   }
 
-//syncIsActive
+  //syncIsActive
   function WelcomeController(Logger, $rootScope, pagesStoreService, imagesStoreService, settingsStoreService) {
-    var vm = this;  // view-model
+    var vm = this; // view-model
     var log = new Logger('kmsscan.views.Welcome');
     vm.page = {};
     vm.imagePath = '';
     vm.isPending = true;
+    vm.hasFailed = false;
     vm.promise = {};
 
     vm.isReady = isReady;
@@ -41,22 +41,27 @@
       activate();
     }
 
-    settingsStoreService.onChange(function () {
+    settingsStoreService.onChange(function() {
       activate();
     });
-
 
     ////////////////////////////////
     function activate() {
       log.info('activate()');
       vm.promise = settingsStoreService.get()
-        .then(function (settings) {
+        .then(function(settings) {
           return pagesStoreService.getWelcomePage(settings.language)
         })
-        .then(function (page) {
+        .then(function(page) {
           log.info('activate() -> succeed', page);
           vm.page = page;
           vm.isPending = false;
+          vm.hasFailed = false;
+        })
+        .catch(function(err) {
+          log.error('Failed to load welcome page!', err)
+          vm.isPending = false;
+          vm.hasFailed = true;
         });
     }
 
@@ -64,8 +69,6 @@
       return !$rootScope.syncIsActive && !vm.isPending;
     }
 
-
   }
-
 
 }());

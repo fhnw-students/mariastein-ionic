@@ -47,6 +47,10 @@
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
+    function getWelcomePage(langKey) {
+      return get(PagesStoreService.WELCOME_PAGE_UID, langKey);
+    }
+
     function get(uid, langKey) {
       return pagesDb.get(_id(uid, langKey))
         .then(function(page) {
@@ -88,10 +92,6 @@
         });
 
       return deferred.promise;
-    }
-
-    function getWelcomePage(langKey) {
-      return get(PagesStoreService.WELCOME_PAGE_UID, langKey);
     }
 
     function sync(langKey, data) {
