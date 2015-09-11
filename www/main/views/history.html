@@ -1,17 +1,16 @@
 <ion-view view-title="{{ 'LABEL.HISTORY' | translate }}">
     <ion-content>
 
-        <pre>{{history|json}}</pre>
+        <kms-spinner ng-hide="history.isReady()"></kms-spinner>
 
-<!--         <ion-list>
-            <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="item in history.list">
-                <img src="{{item.images[0].path}}">
-                <h2>{{item.title}}</h2>
-                <p>{{item.scanedAt.getDay()}}-{{item.scanedAt.getMonth()+1}}-{{item.scanedAt.getFullYear()}}</p>
+        <ion-list ng-if="history.isReady()">
+            <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="doc in history.pages">
+                <kms-image image-id="doc.image[0].path" width="100%"></kms-image>
+                <h2>{{doc.title}}</h2>
+                <p>{{doc.scanedAt.format('DD.MM.YYYY HH:MM')}}</p>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </ion-item>
-
-        </ion-list>  -->
+        </ion-list> 
 
     </ion-content>
 </ion-view>

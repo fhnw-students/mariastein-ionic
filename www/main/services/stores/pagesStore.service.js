@@ -72,30 +72,15 @@
             include_docs: true
           })
         ])
+        .then(_parseDocs)
         .then(function(results) {
-          results[0] = results[0].rows.map(function(item) {
-            return item.doc;
-          });
-          results[1] = results[1].rows.map(function(item) {
-            return item.doc;
-          });
-          return results;
-        })
-        .then(function(results) {
-          var ids = results[1].map(function(doc) {
-            return doc._id;
-          });
-          return results[0]
-            .filter(function(doc) {
-              return langkey === doc.langkey;
-            })
-            .filter(function(doc) {
-              if (doc.uid) {
-                return ids.indexOf(doc.uid.toString()) >= 0;
-              }
-              return false;
-            })
-            .map(function  (doc) {
+          var ids = _parseDocIds(results[1]);
+          var docs = _filterDocsWithSameLangKey(results[0], langkey);
+          docs = _filterVisitedDocs(docs, ids);
+          docs = _appendScanedDate(docs, results[1]);
+
+          return docs
+            .map(function(doc) {
               doc.image = JSON.parse(doc.image);
               return doc;
             });
@@ -147,6 +132,58 @@
     }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
+    function _appendScanedDate(docs, visited) {
+      return docs.map(function(doc) {
+        doc.scanedAt = visited
+          .filter(function(item) {
+            return item._id === doc.uid.toString();
+          })
+          .map(function(item) {
+            return item.scanedAt;
+          });  
+        if(doc.scanedAt && doc.scanedAt.length > 0){
+          doc.scanedAt = moment(doc.scanedAt[0]);
+        }else{
+          doc.scanedAt = undefined;
+        } 
+        return doc;
+      });
+    }
+
+    function _filterVisitedDocs(docs, visitedIds) {
+      return docs.filter(function(doc) {
+        if (doc.uid) {
+          return visitedIds.indexOf(doc.uid.toString()) >= 0;
+        }
+        return false;
+      })
+    }
+
+    function _filterDocsWithSameLangKey(array, langkey) {
+      return array.filter(function(doc) {
+        return langkey === doc.langkey;
+      });
+    }
+
+    function _parseDocIds(array) {
+      return array.map(function(doc) {
+        return doc._id;
+      });
+    }
+
+    function _parseDocs(array) {
+      for (var i = 0; i < array.length; i++) {
+        array[i] = _parseDoc(array[i]);
+      };
+      return array;
+    }
+
+    function _parseDoc(array) {
+      return array.rows.map(function(item) {
+        return item.doc;
+      });
+    }
+
     function _visited(response) {
       var docs = response.docs;
       var id = docs[0].uid.toString();

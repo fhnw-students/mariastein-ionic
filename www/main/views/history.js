@@ -3,7 +3,8 @@
 
   angular.module('kmsscan.views.History', [
       'kmsscan.utils.Logger',
-      'kmsscan.services.stores.Pages'
+      'kmsscan.services.stores.Pages',
+      'kmsscan.services.stores.Settings'
     ])
     .config(StateConfig)
     .controller('HistoryCtrl', HistoryController);
@@ -21,19 +22,45 @@
       });
   }
 
-  function HistoryController($q, Logger, pagesStoreService) {
+  function HistoryController($q, $rootScope, Logger, pagesStoreService, settingsStoreService) {
     var log = new Logger('kmsscan.views.History');
     var vm = this; // view-model
+    vm.isPending = true;
+    vm.hasFailed = false;
+    vm.pages = [];
 
-    vm.list = [];
+    vm.isReady = isReady;
 
-    activate();
+    if ($rootScope.syncIsActive) {
+      $rootScope.$on('kmsscan.run.activate.succeed', activate);
+    } else {
+      activate();
+    }
+
+    settingsStoreService.onChange(function() {
+      activate();
+    });
     /////////////////////////////
     function activate() {
-      pagesStoreService.getVisited('DE')
-        .then(function(res) {
-          vm.list = res;
+      settingsStoreService.get()
+        .then(function(settings) {
+          return pagesStoreService.getVisited(settings.language);
         })
+        .then(function(pages) {
+          log.debug('activate() -> succeed', pages);
+          vm.pages = pages;
+          vm.isPending = false;
+          vm.hasFailed = false;
+        })
+        .catch(function(err) {
+          log.error('Failed to load visited pages!', err)
+          vm.isPending = false;
+          vm.hasFailed = true;
+        });
+    }
+
+    function isReady() {
+      return !$rootScope.syncIsActive && !vm.isPending;
     }
 
     // $q.all([
