@@ -30,7 +30,6 @@
     vm.imagePath = '';
     vm.isPending = true;
     vm.hasFailed = false;
-    vm.promise = {};
 
     vm.isReady = isReady;
 
@@ -48,12 +47,12 @@
     ////////////////////////////////
     function activate() {
       log.info('activate()');
-      vm.promise = settingsStoreService.get()
+      settingsStoreService.get()
         .then(function(settings) {
-          return pagesStoreService.getWelcomePage(settings.language)
+          return pagesStoreService.getWelcomePage(settings.language);
         })
         .then(function(page) {
-          log.info('activate() -> succeed', page);
+          log.debug('activate() -> succeed', page);
           vm.page = page;
           vm.isPending = false;
           vm.hasFailed = false;
