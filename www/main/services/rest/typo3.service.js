@@ -29,7 +29,7 @@
    */
   function Typo3Service($q, $http, $cordovaFileTransfer, Logger) {
     var log = new Logger('kmsscan.services.rest.Typo3');
-    var env = 'DEV'; //'PROD';
+    var env = 'PROD';
 
     log.debug('init');
     var service = {
