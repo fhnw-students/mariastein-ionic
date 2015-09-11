@@ -16,7 +16,7 @@
 
     'kmsscan.views.Scan',
     //'kmsscan.views.Detail',
-    //'kmsscan.views.History',
+    'kmsscan.views.History',
 
   ]);
 

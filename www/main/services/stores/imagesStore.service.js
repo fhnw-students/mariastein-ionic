@@ -46,21 +46,12 @@
       results = results
         .filter(function (item) {
           return _.isArray(item);
-        })
-        .map(function (items) {
-          return items.map(function (item) {
-            return item.image;
-          })
         });
-
+        
       var images = {};
       for (var l = 0; l < results.length; l++) {
         for (var c = 0; c < results[l].length; c++) {
-          for (var i = 0; i < results[l][c].length; i++) {
-            if (results[l][c][i] && results[l][c][i].uid && results[l][c][i].originalResource && results[l][c][i].originalResource.publicUrl) {
-              images[results[l][c][i].uid] = results[l][c][i].originalResource.publicUrl;
-            }
-          }
+          images[results[l][c].uid] = results[l][c].originalResource.publicUrl;
         }
       }
 

@@ -4,16 +4,26 @@
 
         <kms-spinner ng-hide="welcome.isReady()"></kms-spinner>
 
-        <div class="row responsive-sm" ng-if="welcome.isReady()">
+        <div class="row responsive-sm" ng-if="welcome.isReady() && welcome.hasFailed">
+            <div class="card">
+              <div class="item item-divider">
+                Error
+              </div>
+              <div class="item item-text-wrap">
+                Not Found!!!
+              </div>
+            </div>
+        </div>
 
+        <div class="row responsive-sm" ng-if="welcome.isReady() && !welcome.hasFailed">
             <kms-image image-id="welcome.page.image[0]" width="100%"></kms-image>
             <br>
             <p>{{welcome.page.content}}</p>
-
         </div>
 
     </ion-content>
-    <ion-footer-bar class="footer-button">
+    
+    <ion-footer-bar class="footer-button" ng-show="welcome.isReady()">
         <kms-scan-button></kms-scan-button>
     </ion-footer-bar>
 
