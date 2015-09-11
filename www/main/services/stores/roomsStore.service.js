@@ -49,7 +49,6 @@
     function get(uid, langkey) {
       return roomsDb.get(_id(uid, langkey))
         .then(function(page) {
-          page.image = JSON.parse(page.image);
           return page;
         });
     }
