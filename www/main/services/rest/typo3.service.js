@@ -28,8 +28,8 @@
    * @constructor
    */
   function Typo3Service($q, $http, $cordovaFileTransfer, Logger) {
-    var log = new Logger('kmsscan.services.rest.Typo3', false);
-    var env = 'PROD';
+    var log = new Logger('kmsscan.services.rest.Typo3');
+    var env = 'DEV'; //'PROD';
 
     log.debug('init');
     var service = {
@@ -148,25 +148,25 @@
      */
     function _parseRooms(data) {
       var rooms = data
-        .map(function(room){
+        .map(function(room) {
           room.image = _parseImage(room.image);
           return room;
         })
         .map(function(room) {
-          room.previewImageUid = _getPreviewImage(room.image);
-          room.mapImageUid = _getMapImage(room.image);
-          delete room.images;
+          room.previewImageUid = _getImageByTitle(room.image, 'preview');
+          room.mapImageUid = _getImageByTitle(room.image, 'map');
+          delete room.image;
           return room;
         });
       return rooms;
     }
 
-    function _getPreviewImage(images) {
-      return images && _.isArray(images) && images.length>0 && images[0].uid;
-    }
-
-    function _getMapImage(images) {
-      return images && _.isArray(images) && images.length>0 && images[1].uid;
+    function _getImageByTitle(images, title) {
+      images = images.filter(function(image) {
+        return image.originalResource.title === title;
+      });
+      var image = (images.length > 0) ? images[0] : undefined;
+      return (image) ? image.uid : image;
     }
 
     /**
@@ -189,16 +189,25 @@
       });
     }
 
-    function _parseImagesFromRooms (data) {
-      var images = [];
-      images = data.map(function  (obj) {
-        return obj.image;
-      })
-      .map(function  (image) {
-        return _parseImage(image);
-      })
+    function _parseImagesFromRooms(data) {
+      var roomsWithImages = [];
+      roomsWithImages = data.map(function(obj) {
+          return obj.image;
+        })
+        .map(function(image) {
+          return _parseImage(image);
+        });
 
-      return images;
+      var images = [];
+      for (var r = roomsWithImages.length - 1; r >= 0; r--) {
+        for (var i = roomsWithImages[r].length - 1; i >= 0; i--) {
+          images.push(roomsWithImages[r][i]);
+        };
+      };
+
+      return _.uniq(images, function(item) {
+        return item.uid;
+      });
     }
 
     /**

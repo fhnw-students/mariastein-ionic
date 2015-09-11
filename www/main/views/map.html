@@ -1,6 +1,9 @@
 <ion-view view-title="{{ 'LABEL.MAP' | translate }}">
     <ion-content class="padding">
-        <h1>{{ 'LABEL.MAP' | translate }}</h1>
+
+        <pre>{{map.rooms|json}}</pre>
+
+<!--         <h1>{{ 'LABEL.MAP' | translate }}</h1>
         <p>Content</p>
         <div class="list">
             <a ng-repeat="item in map.list" href="#/menu/mapPage/{{item.id}}" class="item item-thumbnail-left">
@@ -8,6 +11,6 @@
                 <h2>{{item.title}}</h2>
                 <h4>{{item.scanned}} gescannt</h4>
             </a>
-        </div>
+        </div> -->
     </ion-content>
 </ion-view>
