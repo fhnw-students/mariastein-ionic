@@ -30,6 +30,7 @@
 
     vm.settings = {};
 
+    vm.isReady = isReady;
     vm.onLanguageChange = onLanguageChange;
     vm.historyGoBack = historyGoBack;
 
@@ -65,17 +66,16 @@
     }
 
     function historyGoBack() {
-      if ($rootScope.settings.isFirstStart) {
+      if (vm.settings.isFirstStart) {
         $state.go('menu.welcome');
       } else {
         window.history.back();
       }
     }
-
-    // vm.language=angular.uppercase($rootScope.settings.language);
-    // $rootScope.$broadcast('onLanguageChange', vm.language.toLowerCase());
-
-
+    
+    function isReady() {
+      return !$rootScope.syncIsActive && !vm.isPending;
+    }
 
   }
 
