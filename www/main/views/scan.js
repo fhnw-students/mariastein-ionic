@@ -78,7 +78,7 @@
       pagesStoreService.visited(qrCode)
         .then(function(uid) {
           $state.go('menu.detail', {
-            id: uid
+            uid: uid
           }, {
             location: "replace"
           });

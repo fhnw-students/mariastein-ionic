@@ -1,9 +1,6 @@
 (function() {
   'use strict';
 
-  // TODO
-  // smallImage.src = image.path;
-
   angular.module('kmsscan.views.Detail', [
       'kmsscan.utils.Logger',
       'kmsscan.services.stores.Pages',
@@ -26,14 +23,15 @@
       });
   }
 
-  function DetailController($q, $timeout, $window, $stateParams, $ionicModal, $ionicSlideBoxDelegate, 
+  function DetailController($q, $timeout, $window, $stateParams, $ionicModal, $ionicSlideBoxDelegate,
     $ionicBackdrop, $ionicScrollDelegate, $rootScope, Logger, pagesStoreService, settingsStoreService) {
     var vm = this; // view-model
+    var log = new Logger('kmsscan.views.Detail');
     vm.doc = {};
     vm.isPending = true;
     vm.hasFailed = false;
 
-    vm.isReady = vm.isReady;
+    vm.isReady = isReady;
 
     if ($rootScope.syncIsActive) {
       $rootScope.$on('kmsscan.run.activate.succeed', activate);
@@ -66,7 +64,6 @@
     function isReady() {
       return !$rootScope.syncIsActive && !vm.isPending;
     }
-
 
     // init();
 

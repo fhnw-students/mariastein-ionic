@@ -3,21 +3,23 @@
         <ion-nav-back-button></ion-nav-back-button>
     </ion-nav-bar>
     <ion-content delegate-handle="scrollMain">
-        <a class="item item-list-detail detail-image-slider">
+
+        <kms-spinner ng-hide="detail.isReady()"></kms-spinner>
+
+        <a class="item item-list-detail detail-image-slider" ng-if="detail.isReady()">
             <ion-scroll direction="x">
                 <img ng-repeat="image in allImages" ng-src="{{image.src}}" ng-click="showImages($index)" class="image-list-thumb"/>
             </ion-scroll>
         </a>
         
-        <div class="padding">
-            <h3>{{detail.item.data.Name}}</h3>
-            <ion-scroll ng-if="zooming && enableZoom" zooming="{{zooming}}" min-zoom="{{zoomMin}}" direction="xy" style="width: 100%;" delegate-handle="scrollHandle1"
-                        on-double-tap="zoom(1)" ng-style="{height: hgt2+ 'px'}">
-                <p>{{detail.item.data.Text}}</p>
+        <div class="padding" ng-if="detail.isReady()">
+            <h3>{{detail.doc.title}}</h3>
+            <ion-scroll ng-if="zooming && enableZoom" zooming="{{zooming}}" min-zoom="{{zoomMin}}" direction="xy" style="width: 100%;" delegate-handle="scrollHandle1" on-double-tap="zoom(1)" ng-style="{height: hgt2+ 'px'}">
+                <p>{{detail.doc.teaser}}</p>
                 <button ng-if="!detail.more" class="button button-clear button-positive" on-tap="detail.showMore()">
                     {{'LABEL.MORE'|translate}}
                 </button>
-                <p ng-if="detail.more">{{detail.item.data.LongText}}</p>
+                <p ng-if="detail.more">{{detail.doc.content}}</p>
                 <button ng-if="detail.more" class="button button-clear button-positive" on-tap="detail.showLess()">
                     {{'LABEL.LESS'|translate}}
                 </button>
@@ -25,11 +27,11 @@
             </ion-scroll>
 
             <div ng-if="!zooming || !enableZoom" on-tap="scrollTop()">
-                <p>{{detail.item.data.Text}}</p>
+                <p>{{detail.doc.teaser}}</p>
                 <button ng-if="!detail.more" class="button button-clear button-positive" on-tap="detail.showMore()">
                     {{'LABEL.MORE'|translate}}
                 </button>
-                <p ng-if="detail.more">{{detail.item.data.LongText}}</p>
+                <p ng-if="detail.more">{{detail.doc.content}}</p>
 
                 <button ng-if="detail.more" class="button button-clear button-positive" on-tap="detail.showLess()">
                     {{'LABEL.LESS'|translate}}
