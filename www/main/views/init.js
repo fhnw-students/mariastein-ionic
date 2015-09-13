@@ -2,8 +2,8 @@
   'use strict';
 
   angular.module('kmsscan.views.Init', [
-    'kmsscan.utils.Logger'
-  ])
+      'kmsscan.utils.Logger'
+    ])
     .config(StateConfig)
     .controller('InitCtrl', InitController);
 
@@ -16,9 +16,15 @@
       });
   }
 
-  function InitController($rootScope, $state, Logger, $ionicPopup, $translate) {
+  function InitController($rootScope, $timeout, $state, Logger, $ionicPopup, $translate) {
     var vm = this; // view-model
     var log = new Logger('kmsscan.views.Init');
+
+    if (!$rootScope.syncIsActive) {
+      $timeout(function() {
+        $state.go('menu.welcome');
+      }, 200);
+    }
 
     $rootScope.$on('kmsscan.run.activate.succeed', function() {
       log.info('kmsscan.run.activate.succeed');
@@ -34,7 +40,6 @@
     $rootScope.$on('kmsscan.run.offline', function() {
       showOfflinePopup();
     });
-
 
     //////////////////////////////////////////
 

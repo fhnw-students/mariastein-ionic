@@ -8,7 +8,10 @@
     ])
     .factory('pagesStoreService', PagesStoreService);
 
-  PagesStoreService.DBNAME = 'kmsscan.pages';
+  PagesStoreService.DBNAME = {
+    PAGES: 'kmsscan.pages',
+    HISTORY: 'kmsscan.history'
+  };
   PagesStoreService.WELCOME_PAGE_UID = 3;
 
   PagesStoreService.LANGUAGES = {
@@ -29,37 +32,58 @@
    */
   function PagesStoreService($q, Logger, pouchDB) {
     var log = new Logger('kmsscan.services.stores.Pages');
-    var pagesDb;
+    var pagesDb, historyDb;
     log.debug('init');
 
     // Public API
     var service = {
       get: get,
-      visited: visited,
       getWelcomePage: getWelcomePage,
+
+      visited: visited,
       getVisited: getVisited,
 
       sync: sync,
-      destroy: _destroy
+      clean: _cleanPages
     };
 
     _activate();
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
-    function get(uid, langKey) {
-      return pagesDb.get(_id(uid, langKey))
+    function getWelcomePage(langkey) {
+      return get(PagesStoreService.WELCOME_PAGE_UID, langkey);
+    }
+
+    function get(uid, langkey) {
+      return pagesDb.get(_id(uid, langkey))
         .then(function(page) {
           page.image = JSON.parse(page.image);
           return page;
         });
     }
 
-    function getVisited(uid, langKey) {
-      return pagesDb.get(_id(uid, langKey))
-        .then(function(page) {
-          page.image = JSON.parse(page.image);
-          return page;
+    function getVisited(langkey) {
+      return $q.all([
+          pagesDb.allDocs({
+            include_docs: true
+          }),
+          historyDb.allDocs({
+            include_docs: true
+          })
+        ])
+        .then(_parseDocs)
+        .then(function(results) {
+          var ids = _parseDocIds(results[1]);
+          var docs = _filterDocsWithSameLangKey(results[0], langkey);
+          docs = _filterVisitedDocs(docs, ids);
+          docs = _appendScanedDate(docs, results[1]);
+
+          return docs
+            .map(function(doc) {
+              doc.image = JSON.parse(doc.image);
+              return doc;
+            });
         });
     }
 
@@ -75,12 +99,9 @@
           }
         })
         .then(_visited)
-        .then(function(r) {
-          return pagesDb.get(r[0].id);
-        })
-        .then(function(doc) {
-          log.debug('query() - success', doc);
-          deferred.resolve(doc.uid);
+        .then(function(uid) {
+          log.debug('query() - success', uid);
+          deferred.resolve(uid);
         })
         .catch(function(err) {
           log.error('query() - failed', err);
@@ -90,16 +111,12 @@
       return deferred.promise;
     }
 
-    function getWelcomePage(langKey) {
-      return get(PagesStoreService.WELCOME_PAGE_UID, langKey);
-    }
-
-    function sync(langKey, data) {
+    function sync(langkey, data) {
       var deferred = $q.defer();
       log.debug('sync', data);
       _activate()
         .then(function() {
-          return _sync(langKey, data);
+          return _sync(langkey, data);
         })
         .then(_createIndex)
         .then(function() {
@@ -115,24 +132,105 @@
     }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
-    function _visited(docs) {
-      
-      // var queue = [];
-      for (var i = docs.length - 1; i >= 0; i--) {
-        docs[i].visited = true;
-        // queue.push(
-        //   pagesDb.put(docs[i], docs[i]._id, docs[i]._rev)
-        // );
+    function _appendScanedDate(docs, visited) {
+      return docs.map(function(doc) {
+        doc.scanedAt = visited
+          .filter(function(item) {
+            return item._id === doc.uid.toString();
+          })
+          .map(function(item) {
+            return item.scanedAt;
+          });  
+        if(doc.scanedAt && doc.scanedAt.length > 0){
+          doc.scanedAt = moment(doc.scanedAt[0]);
+        }else{
+          doc.scanedAt = undefined;
+        } 
+        return doc;
+      });
+    }
+
+    function _filterVisitedDocs(docs, visitedIds) {
+      return docs.filter(function(doc) {
+        if (doc.uid) {
+          return visitedIds.indexOf(doc.uid.toString()) >= 0;
+        }
+        return false;
+      })
+    }
+
+    function _filterDocsWithSameLangKey(array, langkey) {
+      return array.filter(function(doc) {
+        return langkey === doc.langkey;
+      });
+    }
+
+    function _parseDocIds(array) {
+      return array.map(function(doc) {
+        return doc._id;
+      });
+    }
+
+    function _parseDocs(array) {
+      for (var i = 0; i < array.length; i++) {
+        array[i] = _parseDoc(array[i]);
       };
-      // return $q.all(queue);
-      log.debug('_visited(docs)', docs);
-      return pagesDb.bulkDocs(docs);
+      return array;
+    }
+
+    function _parseDoc(array) {
+      return array.rows.map(function(item) {
+        return item.doc;
+      });
+    }
+
+    function _visited(response) {
+      var docs = response.docs;
+      var id = docs[0].uid.toString();
+      var scanedAt = new Date();
+      var deferred = $q.defer();
+      log.debug('_visited', docs);
+      if (_.isArray(docs) && docs.length > 0) {
+        historyDb.get(id)
+          .then(function(doc) {
+            doc.scanedAt = scanedAt;
+            return historyDb.put(doc);
+          })
+          .then(function() {
+            deferred.resolve(id);
+          })
+          .catch(function(err) {
+            if (err.status === 404) {
+              historyDb.put({
+                  scanedAt: scanedAt
+                }, id)
+                .then(function(response) {
+                  log.debug('add() -> success', response);
+                  deferred.resolve(id);
+                })
+                .catch(function(err) {
+                  log.error('add() -> failed', err);
+                  deferred.reject(err);
+                });
+            } else {
+              log.error('reject() -> failed', err);
+              deferred.reject(err);
+            }
+
+          });
+      } else {
+        deferred.reject({
+          status: 404,
+          data: docs
+        });
+      }
+      return deferred.promise;
     }
 
     function _createIndex() {
       return pagesDb.createIndex({
         index: {
-          fields: ['qrcode', 'visited', 'langkey']
+          fields: ['qrcode', 'langkey']
         }
       });
     }
@@ -141,47 +239,56 @@
       return uid.toString() + '-' + langkey;
     }
 
-    function _sync(langKey, data) {
+    function _sync(langkey, data) {
       var queue = [];
       for (var i = 0; i < data.length; i++) {
-        queue.push(_syncPage(langKey, data[i]));
+        queue.push(_syncPage(langkey, data[i]));
       }
       return $q.all(queue);
     }
 
-    function _syncPage(langKey, record) {
+    function _syncPage(langkey, record) {
       var deferred = $q.defer();
-      var id = _id(record.uid, PagesStoreService.LANGUAGES[langKey]);
-      record.langkey = PagesStoreService.LANGUAGES[langKey];
-      pagesDb.get(id).then(function(doc) {
-        log.debug('get()', doc);
-        return pagesDb.put(_parsePage(record, doc.visited), doc._id, doc._rev);
-      }).then(function(response) {
-        log.debug('update() -> success', response);
-        deferred.resolve(response);
-      }).catch(function(err) {
-        log.debug('catch() -> failed', err);
-        if (err.status === 404) {
-          pagesDb.put(_parsePage(record), id)
-            .then(function(response) {
-              log.debug('add() -> success', response);
-              deferred.resolve(response);
-            })
-            .catch(function(err) {
-              log.error('add() -> failed', err);
-              deferred.reject(err);
-            });
-        } else {
-          log.error('reject() -> failed', err);
+      var id = _id(record.uid, PagesStoreService.LANGUAGES[langkey]);
+      record.langkey = PagesStoreService.LANGUAGES[langkey];
+
+      pagesDb.put(_parsePage(record), id)
+        .then(function(response) {
+          log.debug('add() -> success', response);
+          deferred.resolve(response);
+        })
+        .catch(function(err) {
+          log.error('add() -> failed', err);
           deferred.reject(err);
-        }
-      });
+        });
       return deferred.promise;
+      // pagesDb.get(id).then(function(doc) {
+      //   log.debug('get()', doc);
+      //   return pagesDb.put(_parsePage(record), doc._id, doc._rev);
+      // }).then(function(response) {
+      //   log.debug('update() -> success', response);
+      //   deferred.resolve(response);
+      // }).catch(function(err) {
+      //   log.debug('catch() -> failed', err);
+      //   if (err.status === 404) {
+      //     pagesDb.put(_parsePage(record), id)
+      //       .then(function(response) {
+      //         log.debug('add() -> success', response);
+      //         deferred.resolve(response);
+      //       })
+      //       .catch(function(err) {
+      //         log.error('add() -> failed', err);
+      //         deferred.reject(err);
+      //       });
+      //   } else {
+      //     log.error('reject() -> failed', err);
+      //     deferred.reject(err);
+      //   }
+      // });
     }
 
-    function _parsePage(data, visited) {
+    function _parsePage(data) {
       data = angular.copy(data);
-      data.visited = visited || false;
       data.room = data.room && data.room.uid;
 
       if (data.image) {
@@ -196,15 +303,17 @@
 
     function _activate() {
       var deferred = $q.defer();
-      pagesDb = pouchDB(PagesStoreService.DBNAME, {
+      pagesDb = pouchDB(PagesStoreService.DBNAME.PAGES, {
         adapter: 'websql'
       });
-      //pagesDb.info().then(console.log.bind(console));
+      historyDb = pouchDB(PagesStoreService.DBNAME.HISTORY, {
+        adapter: 'websql'
+      });
       deferred.resolve();
       return deferred.promise;
     }
 
-    function _destroy() {
+    function _cleanPages() {
       return pagesDb.destroy();
     }
 
