@@ -92,6 +92,14 @@
                 <ion-slide>
                     <div class="Tutorial page more"><h1>{{'LABEL.MORELESS' | translate}}</h1>
 
+                        <p>{{'LABEL.TUTORIALMORE' | translate}}</p>
+                        <button ng-if="!detail.more" class="button button-clear button-positive" on-tap="detail.showMore()">
+                            {{'LABEL.MORE'|translate}}
+                        </button>
+                        <p ng-if="detail.more">{{'LABEL.TUTORIALLESS' | translate}}</p>
+                        <button ng-if="detail.more" class="button button-clear button-positive" on-tap="detail.showLess()">
+                            {{'LABEL.LESS'|translate}}
+                        </button>
                     </div>
                 </ion-slide>
             </ion-slide-box>
