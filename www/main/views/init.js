@@ -34,7 +34,7 @@
     $rootScope.$on('kmsscan.run.activate.failed', function() {
       log.error('kmsscan.run.activate.failed');
       $state.go('menu.welcome');
-      // TODO
+      showOfflinePopup();
     });
 
     $rootScope.$on('kmsscan.run.offline', function() {
@@ -44,7 +44,19 @@
     //////////////////////////////////////////
 
     function showOfflinePopup() {
-      // TODO: Use $ionicPopup
+      $ionicPopup.show({
+         title: 'Beim Laden der Daten ist ein Fehler aufgetreten',
+         buttons:
+            [{
+                text:"Neu laden",
+                onTap: function(e) {
+                    document.location = "."; // reload the current page
+                }
+             },
+             {
+                text:"Abbrechen"
+            }]
+      });
     };
 
   }

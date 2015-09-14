@@ -38,7 +38,7 @@
       $ionicPlatform.ready(function() {
         log.debug('$ionicPlatform is ready');
 
-        // if (window.navigator.onLine) {
+        if (window.navigator.onLine) {
           log.debug('Has internet connection');
           var backup = [];
 
@@ -89,11 +89,11 @@
                 $rootScope.$broadcast('kmsscan.run.activate.failed');
               });
             });
-        // } else {
-        //   $timeout(function() {
-        //     $rootScope.$broadcast('kmsscan.run.offline');
-        //   });
-        // }
+        } else {
+           $timeout(function() {
+             $rootScope.$broadcast('kmsscan.run.offline');
+           });
+        }
       });
     }
 
