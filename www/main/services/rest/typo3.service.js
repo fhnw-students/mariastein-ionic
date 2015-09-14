@@ -3,7 +3,8 @@
 
   angular
     .module('kmsscan.services.rest.Typo3', [
-      'kmsscan.utils.Logger'
+      'kmsscan.utils.Logger',
+      'ngCordova'
     ])
     .factory('typo3Service', Typo3Service);
 
