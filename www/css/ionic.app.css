@@ -7770,5 +7770,9 @@ a.button {
 #tutorialbigdiv {
   height: 88%; }
 
+.item-divider-text {
+  font-weight: normal;
+  color: dimgrey; }
+
 /* slider with box */
 /* END: slider with box */
