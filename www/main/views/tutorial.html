@@ -1,7 +1,10 @@
 <ion-view view-title="{{'LABEL.TUTORIAL' | translate}}">
     <!-- <ion-nav-bar class="bar-positive"></ion-nav-bar> /-->
     <ion-content class="padding tutorial-content">
-        <div id="tutorialbigdiv" height=80%>
+
+        <kms-spinner ng-hide="tutorial.isReady()"></kms-spinner>
+
+        <div id="tutorialbigdiv" height="80%" ng-if="tutorial.isReady()">
             <ion-slide-box on-slide-changed="slideHasChanged($index)">
                 <ion-slide>
                     <div class="welcome"><h1>{{'LABEL.WELCOME' | translate}}</h1>
@@ -104,7 +107,7 @@
                 </ion-slide>
             </ion-slide-box>
         </div>
-        <div>
+        <div  ng-if="tutorial.isReady()">
             <a class="button button-block" ng-click="tutorial.historyGoBack()">Tutorial überspringen</a>
         </div>
     </ion-content>
