@@ -23,7 +23,7 @@
       });
   }
 
-  function DetailController($q, $timeout, $window, $stateParams, $ionicModal, $ionicSlideBoxDelegate,
+  function DetailController($q, $timeout, $window, $stateParams, $ionicModal, $ionicSlideBoxDelegate, imagesStoreService,
     $ionicBackdrop, $ionicScrollDelegate, $rootScope, Logger, pagesStoreService, settingsStoreService, $scope) {
     var vm = this; // view-model
     var log = new Logger('kmsscan.views.Detail');
@@ -46,6 +46,7 @@
     vm.scrollTop = scrollTop;
     vm.zoom = zoom;
     vm.updateSlideStatus = updateSlideStatus;
+    vm.getImagePath = getImagePath;
 
     if ($rootScope.syncIsActive) {
       $rootScope.$on('kmsscan.run.activate.succeed', activate);
@@ -131,7 +132,7 @@
       var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide)
         .getScrollPosition()
         .zoom;
-      if (zoomFactor == $scope.zoomMin) {
+      if (zoomFactor == vm.zoomMin) {
         $ionicScrollDelegate.$getByHandle('scrollHandle' + slide)
           .zoomBy(2, true);
       } else {
@@ -139,6 +140,10 @@
           .zoomTo(1, true);
       }
     };
+
+    function getImagePath(imageId){
+      return imagesStoreService.getPath(imageId);
+    }
 
   }
 
