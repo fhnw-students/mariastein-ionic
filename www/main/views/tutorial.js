@@ -73,6 +73,7 @@
       }
     }
     vm.prevSlide = function() {
+      console.log( $ionicSlideBoxDelegate.currentIndex());
       $ionicSlideBoxDelegate.previous();
       $ionicSlideBoxDelegate.update();
     }
