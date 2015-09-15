@@ -2,12 +2,9 @@
     <!-- <ion-nav-bar class="bar-positive"></ion-nav-bar> /-->
     <ion-content class="padding tutorial-content">
         <kms-spinner ng-hide="tutorial.isReady()"></kms-spinner>
-        <div id="tutorialbigdiv">
-            <div class="button-bar button-block">
-                <a class="button" ng-click="tutorial.prevSlide()">{{'LABEL.BACK' | translate}}</a>
-                <a class="button" ng-click="tutorial.nextSlide()">{{'LABEL.CONTINUE' | translate}}</a>
-            </div>
-            <ion-slide-box on-slide-changed="slideHasChanged($index)" id="tutorialslidebox">
+        <div id="tutorial-big-div">
+
+            <ion-slide-box on-slide-changed="slideHasChanged($index)">
                 <ion-slide>
                     <div class="welcome"><h1>{{'LABEL.WELCOME' | translate}}</h1>
 
@@ -114,8 +111,20 @@
                 </ion-slide>
             </ion-slide-box>
         </div>
-        <div  ng-if="tutorial.isReady()">
-            <a class="button button-block" ng-click="tutorial.historyGoBack()">Tutorial überspringen</a>
+        <div  class="bar bar-footer bar-light" ng-if="tutorial.isReady()">
+            <!--a class="button" ng-hide="tutorial.getSlideIndex()==0" ng-click="tutorial.prevSlide()">{{'LABEL.BACK' | translate}}</a>
+            <a class="button" ng-hide="tutorial.getSlideIndex()==tutorial.getSlideMaxIndex()" ng-click="tutorial.nextSlide()">{{'LABEL.CONTINUE' | translate}}</a!-->
+            <a class="button icon-left ion-chevron-left button-clear button-dark"
+               ng-disabled="tutorial.getSlideIndex()==0" ng-click="tutorial.prevSlide()">
+            </a>
+            <a class="button button-large button-clear button-dark" ng-click="tutorial.historyGoBack()" id="tutorial-skip-button">
+                {{'LABEL.SKIPTUTORIAL' | translate}}
+            </a>
+            <a class="button icon-right ion-chevron-right button-clear button-dark"
+               ng-disabled="tutorial.getSlideIndex()==tutorial.getSlideMaxIndex()" ng-click="tutorial.nextSlide()">
+            </a>
+
         </div>
+
     </ion-content>
 </ion-view>
