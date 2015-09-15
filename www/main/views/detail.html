@@ -12,7 +12,7 @@
                 </kms-image>
             </ion-scroll>
         </a>
-        
+
         <div class="detail-single-image">
             <kms-image image-id="detail.doc.image[0]" class="image-list-thumb" ng-if="detail.isReady() && detail.doc.image.length === 1"
         ng-click="detail.showImages($index)"></kms-image>
@@ -20,7 +20,8 @@
         
         <div class="padding" ng-if="detail.isReady()">
             <h3>{{detail.doc.title}}</h3>
-            <ion-scroll ng-if="detail.settings.zooming && enableZoom" zooming="{{detail.settings.zooming}}" min-zoom="{{detail.zoomMin}}" direction="xy" style="width: 100%;" delegate-handle="scrollHandle1" on-double-tap="detail.zoom(1)" ng-style="{height: hgt2+ 'px'}">
+
+            <ion-scroll ng-if="detail.settings.zooming && detail.enableZoom" zooming="{{detail.settings.zooming}}" min-zoom="{{detail.zoomMin}}" direction="xy" style="width: 100%;" delegate-handle="scrollHandle1" on-double-tap="detail.zoom(1)" ng-style="{height: hgt2+ 'px'}">
                 <p>{{detail.doc.teaser}}</p>
                 <button ng-if="!detail.more" class="button button-clear button-positive" on-tap="detail.showMore()">
                     {{'LABEL.MORE'|translate}}
@@ -42,8 +43,7 @@
                     {{'LABEL.LESS'|translate}}
                 </button>
             </div>
-
-
+            
         </div>
 
     </ion-content>
