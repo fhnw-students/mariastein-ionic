@@ -7767,11 +7767,12 @@ a.button {
 .slide-pager-dark .slider-pager .slider-pager-page {
   color: white; }
 
-#tutorialbigdiv {
-  height: 88%; }
-
-#tutorialslidebox {
+#tutorial-big-div {
   height: 90%; }
+
+#tutorial-skip-button {
+  margin: auto;
+  text-align: center; }
 
 .item-divider-text {
   font-weight: normal;
