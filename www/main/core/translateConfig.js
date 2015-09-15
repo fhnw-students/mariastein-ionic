@@ -5,7 +5,7 @@
     .config(TranslateConfig);
 
   function TranslateConfig($translateProvider) {
-    $translateProvider.preferredLanguage('en');
+    $translateProvider.preferredLanguage('EN');
     $translateProvider.useSanitizeValueStrategy(null);
     $translateProvider.useStaticFilesLoader({
       prefix: './i18n/',

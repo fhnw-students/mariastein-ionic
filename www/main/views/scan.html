@@ -28,7 +28,7 @@
             <span ng-if="scan.cancel">{{ 'MESSAGE.SCAN_CANCELLED' | translate }}</span>
         </h3>
     </ion-content>
-    <ion-footer-bar class="footer-button" ng-show="scan.isReady()">
+    <ion-footer-bar class="footer-button" ng-show="scan.isReady() && scan.isBarcodeScannerReady">
         <button class="button button-full button-positive ion-qr-scanner" on-tap="scan.scan()">
             {{ 'LABEL.SCAN' | translate }}
         </button>

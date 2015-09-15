@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -7,7 +7,6 @@
       'kmsscan.utils.Logger'
     ])
     .factory('settingsStoreService', SettingsStoreService);
-
 
   /**
    * STATIC VARS
@@ -18,12 +17,11 @@
   var sysLang = angular.uppercase(navigator.language.substring(0, 2));
   SettingsStoreService.DEFAULTS = {
     language: (sysLang === 'DE' || sysLang === 'FR' || sysLang === 'IT') ? sysLang : 'EN',
-    vibration: 0,
-    music: 0,
+    vibration: true,
+    music: false,
     isPristine: true,
-    zooming: true
+    zooming: false
   };
-
 
   /**
    * Service Class
@@ -31,11 +29,10 @@
    * @constructor
    */
   function SettingsStoreService($q, Logger, pouchDB) {
-    var log = new Logger('kmsscan.services.stores.Settings', false);
+    var log = new Logger('kmsscan.services.stores.Settings');
     var callbacks = [];
     var settingsDb;
     log.debug('init');
-
 
     // Public API
     var service = {
@@ -53,15 +50,15 @@
     function init() {
       var deferred = $q.defer();
       settingsDb.get(SettingsStoreService.TABLENAME)
-        .then(function (doc) {
+        .then(function(doc) {
           log.debug('init()', doc);
           deferred.resolve(doc);
         })
-        .catch(function (err) {
+        .catch(function(err) {
           if (err.status === 404) {
             _init()
               .then(deferred.resolve)
-              .catch(function (err) {
+              .catch(function(err) {
                 log.error('catch() -> failed', err);
                 deferred.reject(err);
               });
@@ -76,11 +73,11 @@
     function get() {
       var deferred = $q.defer();
       settingsDb.get(SettingsStoreService.TABLENAME)
-        .then(function (doc) {
+        .then(function(doc) {
           log.debug('get()', doc);
           deferred.resolve(doc);
         })
-        .catch(function (err) {
+        .catch(function(err) {
           log.error('catch() -> failed', err);
           deferred.reject(err);
         });
@@ -90,16 +87,16 @@
     function set(newSettings) {
       var deferred = $q.defer();
       settingsDb.get(SettingsStoreService.TABLENAME)
-        .then(function (doc) {
+        .then(function(doc) {
           return settingsDb.put(_parseSettings(newSettings, doc), doc._id, doc._rev);
         })
         .then(get)
-        .then(function (doc) {
+        .then(function(doc) {
           log.debug('update() -> success', doc);
           _fireOnChange(doc);
           deferred.resolve(doc);
         })
-        .catch(function (err) {
+        .catch(function(err) {
           log.error('catch() -> failed', err);
           deferred.reject(err);
         });
@@ -109,8 +106,6 @@
     function onChange(fn) {
       callbacks.push(fn);
     }
-
-
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
     function _fireOnChange(doc) {
@@ -136,18 +131,17 @@
       var deferred = $q.defer();
       settingsDb.put(SettingsStoreService.DEFAULTS, SettingsStoreService.TABLENAME)
         .then(get)
-        .then(function (doc) {
+        .then(function(doc) {
           log.debug('add() -> success', doc);
           _fireOnChange(doc);
           deferred.resolve(doc);
         })
-        .catch(function (err) {
+        .catch(function(err) {
           log.error('add() -> failed', err);
           deferred.reject(err);
         });
       return deferred.promise;
     }
-
 
     function _activate() {
       var deferred = $q.defer();
