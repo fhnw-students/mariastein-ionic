@@ -73,17 +73,25 @@
       }
     }
     vm.prevSlide = function() {
-      console.log( $ionicSlideBoxDelegate.currentIndex());
       $ionicSlideBoxDelegate.previous();
-      $ionicSlideBoxDelegate.update();
     }
+
     vm.nextSlide = function() {
       $ionicSlideBoxDelegate.next();
-      $ionicSlideBoxDelegate.update();
     }
     
     function isReady() {
       return !$rootScope.syncIsActive && !vm.isPending;
+    }
+
+    //returns current index of SlideBox
+    vm.getSlideIndex= function() {
+      return $ionicSlideBoxDelegate.currentIndex();
+    }
+
+    //returns biggest index of Slides in SlideBox
+    vm.getSlideMaxIndex= function() {
+      return $ionicSlideBoxDelegate.slidesCount()-1;
     }
 
   }
