@@ -3,6 +3,7 @@
 
 .idea/
 www/lib/
+www/css/
 node_modules/
 platforms/
 plugins/
