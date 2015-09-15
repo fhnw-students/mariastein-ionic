@@ -148,6 +148,18 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   color:dimgrey;
 }
 
+.detail-single-image{
+  background-color: black;
+  width: 100%;
+  text-align: center;
+
+  img{
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+  }
+}
+
 /* slider with box */
 //.slidebox{
 //  background-color: black;
