@@ -24,7 +24,7 @@
 
 
 
-  function TutorialController($translate, $rootScope, $state, settingsStoreService, Logger) {
+  function TutorialController($translate, $rootScope, $state, settingsStoreService, Logger, $ionicSlideBoxDelegate) {
     var vm = this; // view-model
     var log = Logger('kmsscan.views.Tutorial');
 
@@ -71,6 +71,14 @@
       } else {
         window.history.back();
       }
+    }
+    vm.prevSlide = function() {
+      $ionicSlideBoxDelegate.previous();
+      $ionicSlideBoxDelegate.update();
+    }
+    vm.nextSlide = function() {
+      $ionicSlideBoxDelegate.next();
+      $ionicSlideBoxDelegate.update();
     }
     
     function isReady() {

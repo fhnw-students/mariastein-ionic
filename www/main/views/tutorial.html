@@ -1,8 +1,13 @@
 <ion-view view-title="{{'LABEL.TUTORIAL' | translate}}">
     <!-- <ion-nav-bar class="bar-positive"></ion-nav-bar> /-->
     <ion-content class="padding tutorial-content">
-        <div id="tutorialbigdiv" height=80%>
-            <ion-slide-box on-slide-changed="slideHasChanged($index)">
+        <div id="tutorialbigdiv">
+            <div class="button-bar button-block">
+                <a class="button" ng-click="tutorial.prevSlide()">{{'LABEL.BACK' | translate}}</a>
+                <a class="button" ng-click="tutorial.nextSlide()">{{'LABEL.CONTINUE' | translate}}</a>
+            </div>
+            <ion-slide-box on-slide-changed="slideHasChanged($index)" id="tutorialslidebox">
+
                 <ion-slide>
                     <div class="welcome"><h1>{{'LABEL.WELCOME' | translate}}</h1>
 
@@ -27,17 +32,20 @@
                     <div class="Tutorial page settings"><h1>{{'LABEL.SETTINGS' | translate}}</h1>
                         <br>
                         {{'LABEL.TUTORIALSETTINGSVIBRATION' | translate}}
-                        <ion-toggle ng-model="menu.settings.vibration" ng-change="menu.saveSettings()" toggle-class="toggle-calm">
+                        <ion-toggle ng-model="menu.settings.vibration" ng-change="menu.saveSettings()"
+                                    toggle-class="toggle-calm">
                             {{ 'LABEL.VIBRATION' | translate }}
                         </ion-toggle>
                         <br>
                         {{'LABEL.TUTORIALSETTINGSZOOMING' | translate}}
-                        <ion-toggle ng-model="menu.settings.zooming" ng-change="menu.saveSettings()" toggle-class="toggle-calm">
+                        <ion-toggle ng-model="menu.settings.zooming" ng-change="menu.saveSettings()"
+                                    toggle-class="toggle-calm">
                             {{ 'LABEL.ZOOM' | translate }}
                         </ion-toggle>
                         <br>
                         {{'LABEL.TUTORIALSETTINGSMUSIC' | translate}}
-                        <ion-toggle ng-model="menu.settings.music" ng-change="menu.saveSettings()" toggle-class="toggle-calm">
+                        <ion-toggle ng-model="menu.settings.music" ng-change="menu.saveSettings()"
+                                    toggle-class="toggle-calm">
                             {{ 'LABEL.MUSIC' | translate }}
                         </ion-toggle>
                     </div>
@@ -93,11 +101,13 @@
                     <div class="Tutorial page more"><h1>{{'LABEL.MORELESS' | translate}}</h1>
 
                         <p>{{'LABEL.TUTORIALMORE' | translate}}</p>
-                        <button ng-if="!detail.more" class="button button-clear button-positive" on-tap="detail.showMore()">
+                        <button ng-if="!detail.more" class="button button-clear button-positive"
+                                on-tap="detail.showMore()">
                             {{'LABEL.MORE'|translate}}
                         </button>
                         <p ng-if="detail.more">{{'LABEL.TUTORIALLESS' | translate}}</p>
-                        <button ng-if="detail.more" class="button button-clear button-positive" on-tap="detail.showLess()">
+                        <button ng-if="detail.more" class="button button-clear button-positive"
+                                on-tap="detail.showLess()">
                             {{'LABEL.LESS'|translate}}
                         </button>
                     </div>
