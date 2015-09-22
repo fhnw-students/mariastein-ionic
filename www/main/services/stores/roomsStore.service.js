@@ -63,16 +63,20 @@
         });
     }
 
-    function sync(langkey, data) {
+    function sync(langkey, idx, data) {
       var deferred = $q.defer();
-      log.debug('sync', data);
+      var rooms = data[idx].rooms;
+      var countObjectsInRooms = _countObjectsInRooms(data, idx);
+      rooms = _addCounter(rooms, countObjectsInRooms);
+
+      log.debug('sync', rooms);
       _activate()
         .then(function() {
-          return _sync(langkey, data);
+          return _sync(langkey, rooms);
         })
         .then(function() {
           log.debug('success');
-          deferred.resolve(data);
+          deferred.resolve(rooms);
         })
         .catch(function(err) {
           log.error('failed', err);
@@ -124,9 +128,35 @@
 
     function _parseDoc(item) {
       return item.doc;
-      // return array.map(function(item) {
-      //   return item.doc;
-      // });
+    }
+
+    function _addCounter(rooms, countObjectsInRooms){
+      return rooms.map(function  (room) {
+        room.amount = countObjectsInRooms[room.uid] || 0;
+        return room;
+      });
+    }
+
+    function _countObjectsInRooms(data, idx) {
+      var pages = data[idx - data.length / 2].objects;
+      var countObjectsInRooms = {};
+      pages = pages.map(function(page) {
+          if (page.room && page.room.uid) {
+            return page.room.uid;
+          }
+          return undefined;
+        })
+        .filter(function(roomId) {
+          return roomId !== undefined;
+        })
+        .map(function(roomId) {
+          if (roomId in countObjectsInRooms) {
+            countObjectsInRooms[roomId]++;
+          } else {
+            countObjectsInRooms[roomId] = 1;
+          }
+        });
+      return countObjectsInRooms;
     }
 
     function _id(uid, langkey) {
