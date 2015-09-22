@@ -6,7 +6,7 @@
             <a ng-repeat="item in map.rooms" href="#/menu/mapPage/{{item.uid}}" class="item item-thumbnail-left">
                 <kms-image image-id="item.previewImageUid"></kms-image>
                 <h2>{{item.title}}</h2>
-                <h4>{{item.scanned}} gescannt</h4>
+                <h4>{{item.scannedObjects}} / {{item.amount}} gescannt</h4>
             </a>
         </div>
 

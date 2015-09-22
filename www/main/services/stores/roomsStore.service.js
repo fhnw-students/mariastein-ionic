@@ -39,7 +39,9 @@
       getAll: getAll,
 
       sync: sync,
-      clean: _clean
+      clean: _clean,
+      addCounter: addCounter,
+      countObjectsInRooms: countObjectsInRooms
     };
 
     _activate();
@@ -66,8 +68,9 @@
     function sync(langkey, idx, data) {
       var deferred = $q.defer();
       var rooms = data[idx].rooms;
-      var countObjectsInRooms = _countObjectsInRooms(data, idx);
-      rooms = _addCounter(rooms, countObjectsInRooms);
+      var pages = data[idx - data.length / 2].objects;
+      var counterObjectsInRooms = countObjectsInRooms(pages);
+      rooms = addCounter(rooms, counterObjectsInRooms);
 
       log.debug('sync', rooms);
       _activate()
@@ -130,21 +133,20 @@
       return item.doc;
     }
 
-    function _addCounter(rooms, countObjectsInRooms){
+    function addCounter(rooms, counterObjectsInRooms){
       return rooms.map(function  (room) {
-        room.amount = countObjectsInRooms[room.uid] || 0;
+        room.amount = counterObjectsInRooms[room.uid] || 0;
         return room;
       });
     }
 
-    function _countObjectsInRooms(data, idx) {
-      var pages = data[idx - data.length / 2].objects;
+    function countObjectsInRooms(pages) {
       var countObjectsInRooms = {};
-      pages = pages.map(function(page) {
+      pages.map(function(page) {
           if (page.room && page.room.uid) {
             return page.room.uid;
           }
-          return undefined;
+          return page.room;
         })
         .filter(function(roomId) {
           return roomId !== undefined;

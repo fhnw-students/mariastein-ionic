@@ -4,6 +4,7 @@
   angular.module('kmsscan.views.Map', [
       'kmsscan.utils.Logger',
       'kmsscan.services.stores.Pages',
+      'kmsscan.services.stores.Rooms',
       'kmsscan.services.stores.Settings'
     ])
     .config(StateConfig)
@@ -22,7 +23,7 @@
       });
   }
 
-  function MapController($q, $rootScope, Logger, settingsStoreService, roomsStoreService) {
+  function MapController($q, $rootScope, Logger, settingsStoreService, roomsStoreService, pagesStoreService) {
     var log = new Logger('kmsscan.views.Map');
     var vm = this; // view-model
     vm.isPending = true;
@@ -44,11 +45,19 @@
     function activate() {
       settingsStoreService.get()
         .then(function(settings) {
-          return roomsStoreService.getAll(settings.language);
+          return $q.all([
+            roomsStoreService.getAll(settings.language),
+            pagesStoreService.getVisited(settings.language)
+          ]);
         })
-        .then(function(rooms) {
-          log.debug('activate() -> succeed', rooms);
-          vm.rooms = rooms;
+        .then(function(results) {
+          log.debug('activate() -> succeed', results);
+          vm.rooms = results[0];
+          var counterObjectsInRooms = roomsStoreService.countObjectsInRooms(results[1]);
+          vm.rooms = vm.rooms.map(function  (room) {
+            room.scannedObjects = counterObjectsInRooms[room.uid] || 0;
+            return room;
+          });
           vm.isPending = false;
           vm.hasFailed = false;
         })
