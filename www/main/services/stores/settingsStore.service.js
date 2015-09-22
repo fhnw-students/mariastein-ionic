@@ -40,7 +40,8 @@
       set: set,
 
       init: init,
-      onChange: onChange
+      onChange: onChange,
+      offChange: offChange
     };
 
     _activate();
@@ -104,7 +105,11 @@
     }
 
     function onChange(fn) {
-      callbacks.push(fn);
+      return callbacks.push(fn);
+    }
+
+    function offChange(idx) {
+      callbacks.splice(idx, 1);
     }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////

@@ -22,7 +22,7 @@
       });
   }
 
-  function MapController($q, $rootScope, Logger, settingsStoreService, roomsStoreService) {
+  function MapController($q, $scope, $rootScope, Logger, settingsStoreService, roomsStoreService) {
     var log = new Logger('kmsscan.views.Map');
     var vm = this; // view-model
     vm.isPending = true;
@@ -37,8 +37,12 @@
       activate();
     }
 
-    settingsStoreService.onChange(function() {
+    var eventIndexOnChange = settingsStoreService.onChange(function() {
       activate();
+    });
+
+    $scope.$on('$destroy', function  () {
+      settingsStoreService.offChange(eventIndexOnChange);
     });
     /////////////////////////////
     function activate() {

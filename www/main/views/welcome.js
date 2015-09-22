@@ -23,7 +23,7 @@
   }
 
   //syncIsActive
-  function WelcomeController(Logger, $rootScope, pagesStoreService, imagesStoreService, settingsStoreService) {
+  function WelcomeController(Logger, $scope, $rootScope, pagesStoreService, imagesStoreService, settingsStoreService) {
     var vm = this; // view-model
     var log = new Logger('kmsscan.views.Welcome');
     vm.page = {};
@@ -40,8 +40,12 @@
       activate();
     }
 
-    settingsStoreService.onChange(function() {
+    var eventIndexOnChange = settingsStoreService.onChange(function() {
       activate();
+    });
+
+    $scope.$on('$destroy', function  () {
+      settingsStoreService.offChange(eventIndexOnChange);
     });
 
     ////////////////////////////////

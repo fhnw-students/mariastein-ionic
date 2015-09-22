@@ -54,8 +54,12 @@
       activate();
     }
 
-    settingsStoreService.onChange(function() {
+    var eventIndexOnChange = settingsStoreService.onChange(function() {
       activate();
+    });
+
+    $scope.$on('$destroy', function  () {
+      settingsStoreService.offChange(eventIndexOnChange);
     });
     /////////////////////////////
     function activate() {

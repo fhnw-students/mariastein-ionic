@@ -23,7 +23,7 @@
       });
   }
 
-  function MapPageController($q, $timeout, $window, $stateParams, $ionicModal, $ionicSlideBoxDelegate,
+  function MapPageController($q, $scope, $timeout, $window, $stateParams, $ionicModal, $ionicSlideBoxDelegate,
     $ionicBackdrop, $ionicScrollDelegate, $rootScope, Logger, roomsStoreService, settingsStoreService) {
     var vm = this; // view-model
     var log = new Logger('kmsscan.views.Detail');
@@ -39,8 +39,12 @@
       activate();
     }
 
-    settingsStoreService.onChange(function() {
+    var eventIndexOnChange = settingsStoreService.onChange(function() {
       activate();
+    });
+
+    $scope.$on('$destroy', function  () {
+      settingsStoreService.offChange(eventIndexOnChange);
     });
     /////////////////////////////
     function activate() {

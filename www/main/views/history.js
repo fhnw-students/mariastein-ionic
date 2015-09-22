@@ -22,7 +22,7 @@
       });
   }
 
-  function HistoryController($q, $rootScope, Logger, pagesStoreService, settingsStoreService) {
+  function HistoryController($q, $scope, $rootScope, Logger, pagesStoreService, settingsStoreService) {
     var log = new Logger('kmsscan.views.History');
     var vm = this; // view-model
     vm.isPending = true;
@@ -37,8 +37,12 @@
       activate();
     }
 
-    settingsStoreService.onChange(function() {
+    var eventIndexOnChange = settingsStoreService.onChange(function() {
       activate();
+    });
+
+    $scope.$on('$destroy', function  () {
+      settingsStoreService.offChange(eventIndexOnChange);
     });
     /////////////////////////////
     function activate() {
