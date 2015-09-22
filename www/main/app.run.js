@@ -50,9 +50,9 @@
                 loadPages(2), // EN
                 loadPages(3), // IT
                 loadRooms(0), // DE
-                // loadRooms(1), // FR
-                // loadRooms(2), // EN
-                // loadRooms(3), // IT
+                loadRooms(1), // FR
+                loadRooms(2), // EN
+                loadRooms(3), // IT
               ]);
             })
             .then(function(results) {
@@ -68,10 +68,10 @@
                 addPages(1, backup[1]), // FR
                 addPages(2, backup[2]), // EN
                 addPages(3, backup[3]), // IT
-                addRooms(0, backup[4]), // DE
-                // addRooms(1, backup[5]), // DE
-                // addRooms(2, backup[6]), // DE
-                // addRooms(3, backup[7]), // DE
+                addRooms(0, 4, backup), // DE
+                addRooms(1, 5, backup), // DE
+                addRooms(2, 6, backup), // DE
+                addRooms(3, 7, backup), // DE
               ]);
             })
             .then(imagesStoreService.sync)
@@ -112,8 +112,8 @@
         });
     }
 
-    function addRooms(langKey, typo3Data) {
-      return roomsStoreService.sync(langKey, typo3Data.rooms)
+    function addRooms(langKey, idx, typo3Data) {
+      return roomsStoreService.sync(langKey, idx, typo3Data)
         .then(function() {
           return typo3Data.images;
         });
