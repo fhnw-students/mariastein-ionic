@@ -21,12 +21,15 @@
       });
   }
 
-  function ScanController($cordovaBarcodeScanner, $ionicPlatform, $cordovaVibration, $state, $rootScope, Logger, pagesStoreService) {
+  function ScanController($cordovaBarcodeScanner, $ionicPlatform, $rootScope, $cordovaVibration, $state, settingsStoreService, Logger,
+    pagesStoreService) {
     var vm = this; // view-model
     var log = new Logger('kmsscan.views.Scan');
 
     vm.isBarcodeScannerReady = false;
+    vm.isPending = true;
     vm.barcodeText = "";
+    vm.settings = {};
 
     vm.isReady = isReady;
     vm.scan = scan;
@@ -36,15 +39,21 @@
     $ionicPlatform.ready(activate);
     //////////////////////////////////////////
     function activate() {
-      if (window.cordova && window.cordova.barcodeScanner) {
-        vm.isBarcodeScannerReady = true;
-        vm.scan();
-      } else {
-        log.warn('Barcode-Scanner is not available!');
-      }
+      settingsStoreService.get()
+        .then(function(settings) {
+          vm.isPending = false;
+          vm.settings = settings;
+
+          if (window.cordova) {
+            vm.isBarcodeScannerReady = true;
+            vm.scan();
+          } else {
+            log.warn('Barcode-Scanner is not available!');
+          }
+        });
     }
 
-    function destroy () {
+    function destroy() {
       pagesStoreService.destroy();
     }
 
@@ -52,7 +61,12 @@
       $cordovaBarcodeScanner
         .scan()
         .then(function(barcodeData) {
-          $cordovaVibration.vibrate($rootScope.settings.vibration);
+          log.debug('scan()', barcodeData);
+          try {
+            $cordovaVibration.vibrate(vm.settings.vibration ? 100 : 0);
+          } catch (error) {
+            log.error('vibrate()', error);
+          }
           if (barcodeData.cancelled !== 1) {
             if (barcodeData.format == "QR_CODE") {
               afterScan(barcodeData.text);
@@ -68,6 +82,7 @@
           }
           // Success! Barcode data is here
         }, function(error) {
+          log.error('scan()', error);
           //vm.data = error;
           // An error occurred
         });

@@ -24,7 +24,7 @@
 
 
 
-  function TutorialController($translate, $rootScope, $state, settingsStoreService, Logger) {
+  function TutorialController($translate, $rootScope, $state, settingsStoreService, Logger, $ionicSlideBoxDelegate) {
     var vm = this; // view-model
     var log = Logger('kmsscan.views.Tutorial');
 
@@ -72,9 +72,26 @@
         window.history.back();
       }
     }
+    vm.prevSlide = function() {
+      $ionicSlideBoxDelegate.previous();
+    }
+
+    vm.nextSlide = function() {
+      $ionicSlideBoxDelegate.next();
+    }
     
     function isReady() {
       return !$rootScope.syncIsActive && !vm.isPending;
+    }
+
+    //returns current index of SlideBox
+    vm.getSlideIndex= function() {
+      return $ionicSlideBoxDelegate.currentIndex();
+    }
+
+    //returns biggest index of Slides in SlideBox
+    vm.getSlideMaxIndex= function() {
+      return $ionicSlideBoxDelegate.slidesCount()-1;
     }
 
   }

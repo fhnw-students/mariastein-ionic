@@ -1,9 +1,12 @@
 <ion-view view-title="{{ 'LABEL.MAP' | translate }}">
+    <ion-nav-bar class="bar-stable">
+        <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
     <ion-content>
 
         <div class="padding">
-            <h3>{{mapPage.item.title}}</h3>
-            <p>{{mapPage.item.img_plan}}</p>
+            <h3>{{mapPage.doc.title}}</h3>
+            <kms-image image-id="mapPage.doc.mapImageUid" width="100%"></kms-image>
         </div>
 
     </ion-content>

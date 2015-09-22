@@ -9,6 +9,7 @@
     'kmsscan.views.Welcome',
     'kmsscan.views.Tutorial',
     'kmsscan.views.Contact',
+	'kmsscan.views.MapPage',
     'kmsscan.views.Map',
 
     //'kmsscan.views.News',
@@ -17,6 +18,7 @@
     'kmsscan.views.Scan',
     'kmsscan.views.Detail',
     'kmsscan.views.History',
+    'kmsscan.views.Settings'
 
   ]);
 

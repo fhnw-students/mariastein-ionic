@@ -4,8 +4,10 @@
         <kms-spinner ng-hide="history.isReady()"></kms-spinner>
 
         <ion-list ng-if="history.isReady()">
-            <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="doc in history.pages">
-                <kms-image image-id="doc.image[0].path" width="100%"></kms-image>
+            <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="doc in history.pages" ui-sref="menu.detail({uid: doc.uid})">
+                <div class="kms-item-thumbnail-left">
+                    <kms-image image-id="doc.image[0]"></kms-image>
+                </div>
                 <h2>{{doc.title}}</h2>
                 <p>{{doc.scanedAt.format('DD.MM.YYYY HH:MM')}}</p>
                 <i class="icon ion-chevron-right icon-accessory"></i>
