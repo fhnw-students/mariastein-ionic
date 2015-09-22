@@ -4,7 +4,7 @@
         <kms-spinner ng-hide="tutorial.isReady()"></kms-spinner>
         <div id="tutorial-big-div">
 
-            <ion-slide-box on-slide-changed="slideHasChanged($index)">
+            <ion-slide-box active-slide="tutorial.startSlide">
                 <ion-slide>
                     <div class="welcome"><h1>{{'LABEL.WELCOME' | translate}}</h1>
 
@@ -27,23 +27,25 @@
 
                 <ion-slide>
                     <div class="Tutorial page settings"><h1>{{'LABEL.SETTINGS' | translate}}</h1>
-                        <br>
-                        {{'LABEL.TUTORIALSETTINGSVIBRATION' | translate}}
+                        <ion-item class="item item-divider item-divider-text item-text-wrap">
+                            {{'LABEL.TUTORIALSETTINGSVIBRATION' | translate}}
+                        </ion-item>
                         <ion-toggle ng-model="menu.settings.vibration" ng-change="menu.saveSettings()"
-                                    toggle-class="toggle-calm">
-                            {{ 'LABEL.VIBRATION' | translate }}
+                                    toggle-class="toggle-calm">{{ 'LABEL.VIBRATION' | translate }}
                         </ion-toggle>
-                        <br>
-                        {{'LABEL.TUTORIALSETTINGSZOOMING' | translate}}
+
+                        <ion-item class="item item-divider item-divider-text item-text-wrap">
+                            {{'LABEL.TUTORIALSETTINGSZOOMING' | translate}}
+                        </ion-item>
                         <ion-toggle ng-model="menu.settings.zooming" ng-change="menu.saveSettings()"
-                                    toggle-class="toggle-calm">
-                            {{ 'LABEL.ZOOM' | translate }}
+                                    toggle-class="toggle-calm">{{ 'LABEL.ZOOM' | translate }}
                         </ion-toggle>
-                        <br>
-                        {{'LABEL.TUTORIALSETTINGSMUSIC' | translate}}
+
+                        <ion-item class="item item-divider item-divider-text item-text-wrap">
+                            {{'LABEL.TUTORIALSETTINGSMUSIC' | translate}}
+                        </ion-item>
                         <ion-toggle ng-model="menu.settings.music" ng-change="menu.saveSettings()"
-                                    toggle-class="toggle-calm">
-                            {{ 'LABEL.MUSIC' | translate }}
+                                    toggle-class="toggle-calm">{{ 'LABEL.MUSIC' | translate }}
                         </ion-toggle>
                     </div>
                 </ion-slide>
@@ -51,6 +53,7 @@
                 <ion-slide>
                     <div class="Tutorial page menu"><h1>{{'LABEL.MENU' | translate}}</h1>
                         {{'LABEL.TUTORIALMENU' | translate}}
+                        <br>
                         <ion-item class="item-icon-left type=item-text-wrap">
                             <i class="icon ion-navicon"></i>
                         </ion-item>
@@ -97,28 +100,28 @@
                 <ion-slide>
                     <div class="Tutorial page more"><h1>{{'LABEL.MORELESS' | translate}}</h1>
 
-                        <p>{{'LABEL.TUTORIALMORE' | translate}}</p>
-                        <button ng-if="!detail.more" class="button button-clear button-positive"
-                                on-tap="detail.showMore()">
+                        <p ng-if="!tutorial.more" ng-bind-html="'LABEL.TUTORIALMORE' | translate"></p>
+                        <button ng-if="!tutorial.more" class="button button-clear button-positive"
+                                on-tap="tutorial.showMore()">
                             {{'LABEL.MORE'|translate}}
                         </button>
-                        <p ng-if="detail.more">{{'LABEL.TUTORIALLESS' | translate}}</p>
-                        <button ng-if="detail.more" class="button button-clear button-positive"
-                                on-tap="detail.showLess()">
+                        <p ng-if="tutorial.more" ng-bind-html="'LABEL.TUTORIALLESS' | translate"></p>
+                        <button ng-if="tutorial.more" class="button button-clear button-positive"
+                                on-tap="tutorial.showLess()">
                             {{'LABEL.LESS'|translate}}
                         </button>
                     </div>
                 </ion-slide>
             </ion-slide-box>
         </div>
-        <div  class="bar bar-footer bar-light" ng-if="tutorial.isReady()">
-            <!--a class="button" ng-hide="tutorial.getSlideIndex()==0" ng-click="tutorial.prevSlide()">{{'LABEL.BACK' | translate}}</a>
-            <a class="button" ng-hide="tutorial.getSlideIndex()==tutorial.getSlideMaxIndex()" ng-click="tutorial.nextSlide()">{{'LABEL.CONTINUE' | translate}}</a!-->
+        <div class="bar bar-footer bar-light" ng-if="tutorial.isReady()">
             <a class="button icon-left ion-chevron-left button-clear button-dark"
                ng-disabled="tutorial.getSlideIndex()==0" ng-click="tutorial.prevSlide()">
             </a>
-            <a class="button button-large button-clear button-dark" ng-click="tutorial.historyGoBack()" id="tutorial-skip-button">
-                {{'LABEL.SKIPTUTORIAL' | translate}}
+            <a class="button button-large button-clear button-dark" ng-click="tutorial.historyGoBack()"
+               id="tutorial-skip-button">
+                <p ng-if="tutorial.getSlideIndex()!=tutorial.getSlideMaxIndex()">{{'LABEL.SKIPTUTORIAL' | translate}}</p>
+                <p ng-if="tutorial.getSlideIndex()==tutorial.getSlideMaxIndex()">{{'LABEL.TUTORIALFINISH' | translate}}</p>
             </a>
             <a class="button icon-right ion-chevron-right button-clear button-dark"
                ng-disabled="tutorial.getSlideIndex()==tutorial.getSlideMaxIndex()" ng-click="tutorial.nextSlide()">

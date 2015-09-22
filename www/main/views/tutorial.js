@@ -24,17 +24,20 @@
 
 
 
-  function TutorialController($translate, $rootScope, $state, settingsStoreService, Logger, $ionicSlideBoxDelegate) {
+  function TutorialController($translate, $timeout, $rootScope, $state, settingsStoreService, Logger, $ionicSlideBoxDelegate) {
     var vm = this; // view-model
     var log = Logger('kmsscan.views.Tutorial');
 
     vm.settings = {};
-
+    vm.more = false;
+    vm.startSlide = 2;  //start at this slideindex to skip settings for 2nd+ start of tutorial
     vm.isReady = isReady;
     vm.onLanguageChange = onLanguageChange;
     vm.historyGoBack = historyGoBack;
+    //$ionicSlideBoxDelegate.slide(vm.startSlide,0);
 
     activate();
+
     //////////////////////////////
     function activate() {
       log.debug('activate');
@@ -46,6 +49,11 @@
         .then(function(settings) {
           log.debug('activate() - success', settings);
           vm.settings = settings;
+          console.log("isPristine: "+vm.settings.isPristine);
+          if(settings.isPristine){vm.startSlide=0;}
+          $timeout(function(){
+            $ionicSlideBoxDelegate.slide(vm.startSlide);
+          });
         });
     }
 
@@ -66,12 +74,13 @@
     }
 
     function historyGoBack() {
-      if (vm.settings.isFirstStart) {
-        $state.go('menu.welcome');
-      } else {
-        window.history.back();
-      }
+      if(vm.settings.isPristine){
+        vm.settings.isPristine=!vm.settings.isPristine;
+        saveSettings();
+        }
+      window.history.back();
     }
+
     vm.prevSlide = function() {
       $ionicSlideBoxDelegate.previous();
     }
@@ -93,6 +102,14 @@
     vm.getSlideMaxIndex= function() {
       return $ionicSlideBoxDelegate.slidesCount()-1;
     }
+
+    vm.showMore= function() {
+      vm.more = true;
+    };
+
+    vm.showLess= function() {
+      vm.more = false;
+    };
 
   }
 
