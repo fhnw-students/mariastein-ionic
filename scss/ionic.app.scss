@@ -149,6 +149,16 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   color:dimgrey;
 }
 
+.map-list{
+  .item h2 {
+    font-size: 1.2em;
+    overflow: hidden;
+  }
+  .badge{
+    margin-top: 25px;
+  }
+}
+
 .detail-single-image{
   background-color: black;
   width: 100%;

@@ -1,23 +1,13 @@
 <ion-view view-title="{{ 'LABEL.MAP' | translate }}">
-    <ion-content class="padding">
+    <ion-content>
 
-       <!-- <pre>{{map.rooms|json}}</pre>-->
-        <div class="list">
+        <div class="list map-list">
             <a ng-repeat="item in map.rooms" href="#/menu/mapPage/{{item.uid}}" class="item item-thumbnail-left">
                 <kms-image image-id="item.previewImageUid"></kms-image>
                 <h2>{{item.title}}</h2>
-                <h4>{{item.scanned}} gescannt</h4>
+                <span class="badge badge-positive">{{item.scannedObjects}} / {{item.amount}}</span>
             </a>
         </div>
 
-<!--         <h1>{{ 'LABEL.MAP' | translate }}</h1>
-        <p>Content</p>
-        <div class="list">
-            <a ng-repeat="item in map.list" href="#/menu/mapPage/{{item.id}}" class="item item-thumbnail-left">
-                <img ng-src="../img/{{item.img}}">
-                <h2>{{item.title}}</h2>
-                <h4>{{item.scanned}} gescannt</h4>
-            </a>
-        </div> -->
     </ion-content>
 </ion-view>
