@@ -10,19 +10,12 @@
                 <ion-item menu-close  class="item-icon-left" type="item-text-wrap" href="#/menu/scan">
                     <i class="icon ion-qr-scanner"></i>
                     {{ 'LABEL.SCAN' | translate }}
-
                 </ion-item>
 
                 <ion-item menu-close  class="item-icon-left" type="item-text-wrap" href="#/menu/history">
                     <i class="icon ion-clock"></i>
                     {{ 'LABEL.HISTORY' | translate }}
                 </ion-item>
-
-<!--                 <ion-item menu-close  class="item-icon-left item-icon-right" type="item-text-wrap" href="#/menu/news">
-                    <i class="icon ion-chatbox"></i>
-                    {{ 'LABEL.NEWS' | translate }}
-                    <i class="icon ion-chevron-right icon-accessory"></i>
-                </ion-item> -->
 
                 <ion-item menu-close  class="item-icon-left" type="item-text-wrap" href="#/menu/map">
                     <i class="icon ion-map"></i>
@@ -49,33 +42,6 @@
                     {{ 'LABEL.CONTACT' | translate }}
                 </ion-item>
 
-                <!-- SETTINGS -->
-                <!--<ion-item class="item item-divider">-->
-                    <!--{{ 'LABEL.SETTINGS' | translate }}-->
-                <!--</ion-item>-->
-
-                <!--<ion-item class="item-select" type="item-text-wrap">-->
-                    <!--<i class=""></i>-->
-                    <!--{{ 'LABEL.LANGUAGE' | translate }}-->
-                    <!--<span class="item-note">-->
-                        <!--<select ng-model="menu.settings.language" ng-change="menu.onLanguageChange()" selected="menu.settings.language">-->
-                            <!--<option>DE</option>-->
-                            <!--<option>EN</option>-->
-                            <!--<option>FR</option>-->
-                            <!--<option>IT</option>-->
-                        <!--</select>-->
-                    <!--</span>-->
-                <!--</ion-item>-->
-
-                <!--<ion-toggle ng-model="menu.settings.vibration" ng-change="menu.saveSettings()" -->
-                    <!--toggle-class="toggle-calm">{{ 'LABEL.VIBRATION' | translate }}</ion-toggle>-->
-
-                <!--<ion-toggle ng-model="menu.settings.zooming" ng-change="menu.saveSettings()" -->
-                    <!--toggle-class="toggle-calm">{{ 'LABEL.ZOOM' | translate }}</ion-toggle>-->
-                <!-- -->
-                <!--<ion-toggle ng-model="menu.settings.music" ng-change="menu.saveSettings()" -->
-                    <!--toggle-class="toggle-calm">{{ 'LABEL.MUSIC' | translate }}</ion-toggle>   -->
-
             </ion-list>
         </ion-content>
     </ion-side-menu>
@@ -83,8 +49,9 @@
 
     <ion-side-menu-content>
         <ion-nav-bar class="bar-stable">
-            <!--<ion-nav-back-button>-->
-            <!--</ion-nav-back-button>-->
+
+            <ion-nav-back-button>
+            </ion-nav-back-button>
 
             <ion-nav-buttons side="right">
                 <button class="button button-icon button-clear ion-navicon" menu-toggle="right">
