@@ -23,7 +23,6 @@
       });
   }
 
-
   function MapController($q, $scope, $rootScope, Logger, settingsStoreService, roomsStoreService, pagesStoreService) {
     var log = new Logger('kmsscan.views.Map');
     var vm = this; // view-model
@@ -43,7 +42,7 @@
       activate();
     });
 
-    $scope.$on('$destroy', function  () {
+    $scope.$on('$destroy', function() {
       settingsStoreService.offChange(eventIndexOnChange);
     });
     /////////////////////////////
@@ -59,7 +58,7 @@
           log.debug('activate() -> succeed', results);
           vm.rooms = results[0];
           var counterObjectsInRooms = roomsStoreService.countObjectsInRooms(results[1]);
-          vm.rooms = vm.rooms.map(function  (room) {
+          vm.rooms = vm.rooms.map(function(room) {
             room.scannedObjects = counterObjectsInRooms[room.uid] || 0;
             return room;
           });

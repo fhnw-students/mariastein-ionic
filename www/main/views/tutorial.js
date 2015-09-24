@@ -8,7 +8,6 @@
     .config(StateConfig)
     .controller('TutorialCtrl', TutorialController);
 
-
   function StateConfig($stateProvider) {
     $stateProvider
       .state('menu.tutorial', {
@@ -22,22 +21,25 @@
       });
   }
 
-
-
   function TutorialController($translate, $timeout, $rootScope, $state, settingsStoreService, Logger, $ionicSlideBoxDelegate) {
     var vm = this; // view-model
     var log = Logger('kmsscan.views.Tutorial');
 
     vm.settings = {};
     vm.more = false;
-    vm.startSlide = 2;  //start at this slideindex to skip settings for 2nd+ start of tutorial
+    vm.startSlide = 2; //start at this slideindex to skip settings for 2nd+ start of tutorial
+
     vm.isReady = isReady;
     vm.onLanguageChange = onLanguageChange;
     vm.historyGoBack = historyGoBack;
-    //$ionicSlideBoxDelegate.slide(vm.startSlide,0);
+    vm.prevSlide = prevSlide;
+    vm.nextSlide = nextSlide;
+    vm.getSlideIndex = getSlideIndex;
+    vm.getSlideMaxIndex = getSlideMaxIndex;
+    vm.showMore = showMore;
+    vm.showLess = showLess;
 
     activate();
-
     //////////////////////////////
     function activate() {
       log.debug('activate');
@@ -49,9 +51,11 @@
         .then(function(settings) {
           log.debug('activate() - success', settings);
           vm.settings = settings;
-          console.log("isPristine: "+vm.settings.isPristine);
-          if(settings.isPristine){vm.startSlide=0;}
-          $timeout(function(){
+          console.log("isPristine: " + vm.settings.isPristine);
+          if (settings.isPristine) {
+            vm.startSlide = 0;
+          }
+          $timeout(function() {
             $ionicSlideBoxDelegate.slide(vm.startSlide);
           });
         });
@@ -74,44 +78,43 @@
     }
 
     function historyGoBack() {
-      if(vm.settings.isPristine){
-        vm.settings.isPristine=!vm.settings.isPristine;
+      if (vm.settings.isPristine) {
+        vm.settings.isPristine = !vm.settings.isPristine;
         saveSettings();
-        }
+      }
       window.history.back();
     }
 
-    vm.prevSlide = function() {
+    function prevSlide() {
       $ionicSlideBoxDelegate.previous();
     }
 
-    vm.nextSlide = function() {
+    function nextSlide() {
       $ionicSlideBoxDelegate.next();
     }
-    
+
+    //returns current index of SlideBox
+    function getSlideIndex() {
+      return $ionicSlideBoxDelegate.currentIndex();
+    }
+
     function isReady() {
       return !$rootScope.syncIsActive && !vm.isPending;
     }
 
-    //returns current index of SlideBox
-    vm.getSlideIndex= function() {
-      return $ionicSlideBoxDelegate.currentIndex();
-    }
-
     //returns biggest index of Slides in SlideBox
-    vm.getSlideMaxIndex= function() {
-      return $ionicSlideBoxDelegate.slidesCount()-1;
-    }
+    function getSlideMaxIndex() {
+      return $ionicSlideBoxDelegate.slidesCount() - 1;
+    };
 
-    vm.showMore= function() {
+    function showMore() {
       vm.more = true;
     };
 
-    vm.showLess= function() {
+    function showLess() {
       vm.more = false;
     };
 
   }
-
 
 }());

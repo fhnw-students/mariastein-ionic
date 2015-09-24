@@ -43,7 +43,7 @@
       activate();
     });
 
-    $scope.$on('$destroy', function  () {
+    $scope.$on('$destroy', function() {
       settingsStoreService.offChange(eventIndexOnChange);
     });
     /////////////////////////////
@@ -68,8 +68,6 @@
     function isReady() {
       return !$rootScope.syncIsActive && !vm.isPending;
     }
-
-
 
   }
 
