@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "mariastein-ionic: An Ionic project",
   "dependencies": {
-    "lodash": "^3.10.0"
   },
   "devDependencies": {
+    "gulp-sass": "^2.0.4",
+    "lodash": "^3.10.0",
+    "node-sass": "^3.3.3",
     "bower": "^1.3.3",
     "browser-sync": "^2.7.13",
     "gulp": "^3.5.6",
