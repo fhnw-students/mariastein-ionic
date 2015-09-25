@@ -115,7 +115,17 @@
       var deferred = $q.defer();
       if (window.cordova) {
         url = Typo3Service.BACKENDS[env].FILES + url;
-        var targetPath = cordova.file.documentsDirectory + id + '.png';
+
+        var targetPath = '';
+        if (ionic.Platform.isIOS()) {
+          targetPath = cordova.file.documentsDirectory;
+        }
+        if (ionic.Platform.isAndroid()) {
+          targetPath = cordova.file.applicationStorageDirectory;
+        }
+
+        targetPath += id + '.png';
+
         var trustHosts = true;
         var options = {};
         log.debug('downloadImage()', url);

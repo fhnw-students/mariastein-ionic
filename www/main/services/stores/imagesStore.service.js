@@ -33,7 +33,16 @@
     function getPath(uid) {
       if (window.cordova) {
         if (uid) {
-          return cordova.file.documentsDirectory + uid + '.png';
+          var targetPath = '';
+          if (ionic.Platform.isIOS()) {
+            targetPath = cordova.file.documentsDirectory;
+          }
+          if (ionic.Platform.isAndroid()) {
+            targetPath = cordova.file.applicationStorageDirectory;
+          }
+
+          targetPath += uid + '.png';
+          return targetPath;
         } else {
           return '';
         }
