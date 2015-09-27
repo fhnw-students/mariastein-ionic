@@ -1,10 +1,12 @@
-(function() {
+(function () {
   'use strict';
 
-  angular.module('kmsscan.views.Tutorial', [
-      'kmsscan.utils.Logger',
-      'kmsscan.services.stores.Settings'
-    ])
+  var namespace = 'kmsscan.views.Tutorial';
+
+  angular.module(namespace, [
+    'kmsscan.utils.Logger',
+    'kmsscan.services.stores.Settings'
+  ])
     .config(StateConfig)
     .controller('TutorialCtrl', TutorialController);
 
@@ -21,9 +23,9 @@
       });
   }
 
-  function TutorialController($translate, $timeout, $rootScope, $state, settingsStoreService, Logger, $ionicSlideBoxDelegate) {
+  function TutorialController($timeout, $rootScope, settingsStoreService, Logger, $ionicSlideBoxDelegate) {
     var vm = this; // view-model
-    var log = Logger('kmsscan.views.Tutorial');
+    var log = Logger(namespace);
 
     vm.settings = {};
     vm.more = false;
@@ -43,19 +45,19 @@
     //////////////////////////////
     function activate() {
       log.debug('activate');
-      $rootScope.$on('onLanguageChange', function(event, langKey) {
+      $rootScope.$on('onLanguageChange', function (event, langKey) {
         vm.settings.language = angular.uppercase(langKey);
       });
 
       settingsStoreService.get()
-        .then(function(settings) {
+        .then(function (settings) {
           log.debug('activate() - success', settings);
           vm.settings = settings;
           console.log("isPristine: " + vm.settings.isPristine);
           if (settings.isPristine) {
             vm.startSlide = 0;
           }
-          $timeout(function() {
+          $timeout(function () {
             $ionicSlideBoxDelegate.slide(vm.startSlide);
           });
         });
@@ -63,7 +65,7 @@
 
     function saveSettings() {
       return settingsStoreService.set(vm.settings)
-        .then(function(settings) {
+        .then(function (settings) {
           log.debug('saveSettings() - success', settings);
           vm.settings = settings;
           return settings;
@@ -72,7 +74,7 @@
 
     function onLanguageChange() {
       saveSettings(vm.settings)
-        .then(function() {
+        .then(function () {
           $rootScope.$broadcast('onLanguageChange', vm.settings.language);
         });
     }
@@ -105,15 +107,15 @@
     //returns biggest index of Slides in SlideBox
     function getSlideMaxIndex() {
       return $ionicSlideBoxDelegate.slidesCount() - 1;
-    };
+    }
 
     function showMore() {
       vm.more = true;
-    };
+    }
 
     function showLess() {
       vm.more = false;
-    };
+    }
 
   }
 

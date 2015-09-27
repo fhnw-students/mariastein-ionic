@@ -1,10 +1,12 @@
-(function() {
+(function () {
   'use strict';
 
-  angular.module('kmsscan.views.Scan', [
-      'kmsscan.utils.Logger',
-      'kmsscan.services.stores.Pages'
-    ])
+  var namespace = 'kmsscan.views.Scan';
+
+  angular.module(namespace, [
+    'kmsscan.utils.Logger',
+    'kmsscan.services.stores.Pages'
+  ])
     .config(StateConfig)
     .controller('ScanCtrl', ScanController);
 
@@ -22,13 +24,13 @@
   }
 
   function ScanController($cordovaBarcodeScanner, $ionicPlatform, $rootScope, $cordovaVibration, $state, settingsStoreService, Logger,
-    pagesStoreService) {
+                          pagesStoreService) {
     var vm = this; // view-model
-    var log = new Logger('kmsscan.views.Scan');
+    var log = new Logger(namespace);
 
     vm.isBarcodeScannerReady = false;
     vm.isPending = true;
-    vm.barcodeText = "";
+    vm.barcodeText = '';
     vm.settings = {};
 
     vm.isReady = isReady;
@@ -40,7 +42,7 @@
     //////////////////////////////////////////
     function activate() {
       settingsStoreService.get()
-        .then(function(settings) {
+        .then(function (settings) {
           vm.isPending = false;
           vm.settings = settings;
 
@@ -60,7 +62,7 @@
     function scan() {
       $cordovaBarcodeScanner
         .scan()
-        .then(function(barcodeData) {
+        .then(function (barcodeData) {
           log.debug('scan()', barcodeData);
           try {
             $cordovaVibration.vibrate(vm.settings.vibration ? 100 : 0);
@@ -68,7 +70,7 @@
             log.error('vibrate()', error);
           }
           if (barcodeData.cancelled !== 1) {
-            if (barcodeData.format == "QR_CODE") {
+            if (barcodeData.format == 'QR_CODE') {
               afterScan(barcodeData.text);
               vm.format = false;
               vm.cancel = false;
@@ -80,33 +82,28 @@
             vm.cancel = true;
             vm.format = false;
           }
-          // Success! Barcode data is here
-        }, function(error) {
-          log.error('scan()', error);
-          //vm.data = error;
-          // An error occurred
         });
     }
 
     function afterScan(qrCode) {
       log.debug('afterScan()', qrCode);
       pagesStoreService.visited(qrCode)
-        .then(function(uid) {
+        .then(function (uid) {
           $state.go('menu.detail', {
             uid: uid
           }, {
-            location: "replace"
+            location: 'replace'
           });
         })
-        .catch(function() {
+        .catch(function () {
           $state.go('menu.notFound', {}, {
-            location: "replace"
+            location: 'replace'
           });
         });
     }
 
     function submit() {
-      if (vm.barcodeText !== "") {
+      if (vm.barcodeText !== '') {
         afterScan(vm.barcodeText);
       }
     }

@@ -1,24 +1,21 @@
 (function () {
   'use strict';
 
-  angular.module('kmsscan.views', [
+  var namespace = 'kmsscan.views';
 
-    'kmsscan.views.Init',
-    'kmsscan.views.Menu',
-    'kmsscan.views.NotFound',
-    'kmsscan.views.Welcome',
-    'kmsscan.views.Tutorial',
-    'kmsscan.views.Contact',
-	'kmsscan.views.MapPage',
-    'kmsscan.views.Map',
-
-    //'kmsscan.views.News',
-    //'kmsscan.views.NewsPage',
-
-    'kmsscan.views.Scan',
-    'kmsscan.views.Detail',
-    'kmsscan.views.History',
-    'kmsscan.views.Settings'
+  angular.module(namespace, [
+    namespace + '.Init',
+    namespace + '.Menu',
+    namespace + '.NotFound',
+    namespace + '.Welcome',
+    namespace + '.Tutorial',
+    namespace + '.Contact',
+    namespace + '.MapPage',
+    namespace + '.Map',
+    namespace + '.Scan',
+    namespace + '.Detail',
+    namespace + '.History',
+    namespace + '.Settings'
 
   ]);
 

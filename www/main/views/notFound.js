@@ -2,28 +2,18 @@
   'use strict';
 
   angular.module('kmsscan.views.NotFound', [])
-    .config(StateConfig)
-    .controller('NotFoundCtrl', NotFoundController);
-
+    .config(StateConfig);
 
   function StateConfig($stateProvider) {
     $stateProvider
       .state('menu.notFound', {
-        url:   '/not-found',
+        url: '/not-found',
         views: {
           'menuContent': {
-            templateUrl: 'main/views/notFound.html',
-            controller:  'NotFoundCtrl as notFound'
+            templateUrl: 'main/views/notFound.html'
           }
         }
       });
-  }
-
-
-  function NotFoundController() {
-    var vm = this; // view-model
-
-
   }
 
 

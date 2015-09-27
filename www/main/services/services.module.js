@@ -5,7 +5,9 @@
 
   angular.module(namespace, [
     namespace + '.rest',
-    namespace + '.stores'
+    namespace + '.stores',
+
+    namespace + '.Images'
 
   ]);
 

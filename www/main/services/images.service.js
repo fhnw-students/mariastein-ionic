@@ -1,23 +1,25 @@
 (function () {
   'use strict';
 
+  var namespace = 'kmsscan.services.Images';
+
   angular
-    .module('kmsscan.services.stores.Images', [
+    .module(namespace, [
       'pouchdb',
       'kmsscan.utils.Logger',
       'kmsscan.services.rest.Typo3'
     ])
-    .factory('imagesStoreService', ImagesStoreService);
+    .factory('imagesService', ImagesService);
 
-  ImagesStoreService.PLACEHOLDER_IMAGE = 'img/init.png';
+  ImagesService.PLACEHOLDER_IMAGE = 'img/init.png';
 
   /**
    * Service Class
    * @returns {{sync: sync, getAll: getAll}}
    * @constructor
    */
-  function ImagesStoreService($q, Logger, typo3Service) {
-    var log = new Logger('kmsscan.services.stores.Images', false);
+  function ImagesService($q, Logger, typo3Service) {
+    var log = new Logger(namespace, false);
     log.debug('init');
 
     // Public API
@@ -47,7 +49,7 @@
           return '';
         }
       }
-      return ImagesStoreService.PLACEHOLDER_IMAGE;
+      return ImagesService.PLACEHOLDER_IMAGE;
     }
 
     function sync(results) {

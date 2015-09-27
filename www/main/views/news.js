@@ -1,8 +1,10 @@
 (function () {
   'use strict';
 
-  angular.module('kmsscan.views.News', [
-    'kmsscan.services.News'
+  var namespace = 'kmsscan.views.News';
+
+  angular.module(namespace, [
+    'kmsscan.utils.Logger'
   ])
     .config(StateConfig)
     .controller('NewsCtrl', NewsController);
@@ -11,22 +13,23 @@
   function StateConfig($stateProvider) {
     $stateProvider
       .state('menu.news', {
-        url:   '/news',
+        url: '/news',
         views: {
           'menuContent': {
             templateUrl: 'main/views/news.html',
-            controller:  'NewsCtrl as news'
+            controller: 'NewsCtrl as news'
           }
         }
       });
   }
 
 
-  function NewsController(newsService) {
+  function NewsController(Logger) {
     var vm = this;  // view-model
+    var log = new Logger(namespace);
 
-    vm.list = newsService.get();
-    
+
+
   }
 
 

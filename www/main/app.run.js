@@ -8,20 +8,19 @@
     'kmsscan.services.rest.Typo3',
     'kmsscan.services.stores.Pages',
     'kmsscan.services.stores.Rooms',
-    'kmsscan.services.stores.Images'
+    'kmsscan.services.Images'
   ])
     .run(run);
 
   function run($rootScope, $translate, $timeout, $q, $ionicPlatform, Logger,
-               typo3Service, pagesStoreService, roomsStoreService, settingsStoreService, imagesStoreService) {
-
+               typo3Service, pagesStoreService, roomsStoreService, settingsStoreService, imagesService) {
     var log = new Logger('kmsscan.run');
-    $rootScope.syncIsActive = true;
-    log.debug('start');
 
+    // Global Declarations
+    $rootScope.syncIsActive = true;
     $rootScope.onLine = window.navigator.onLine;
     $rootScope.getImagePath = function (imageId) {
-      return imagesStoreService.getPath(imageId);
+      return imagesService.getPath(imageId);
     };
 
     activate();
@@ -68,12 +67,12 @@
               addPages(2, backup[2]), // EN
               addPages(3, backup[3]), // IT
               addRooms(0, 4, backup), // DE
-              addRooms(1, 5, backup), // DE
-              addRooms(2, 6, backup), // DE
-              addRooms(3, 7, backup) // DE
+              addRooms(1, 5, backup), // FR
+              addRooms(2, 6, backup), // EN
+              addRooms(3, 7, backup) // IT
             ]);
           })
-          .then(imagesStoreService.sync)
+          .then(imagesService.sync)
           .then(function (results) {
             $timeout(function () {
               $rootScope.syncIsActive = false;

@@ -1,6 +1,10 @@
 (function () {
   'use strict';
 
+  /**
+   * @description
+   * This configuration sets cordova settings
+   */
   angular.module('kmsscan.ionicPlatform', [])
     .run(function ($ionicPlatform) {
       $ionicPlatform.ready(function () {

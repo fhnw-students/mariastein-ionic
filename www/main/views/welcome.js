@@ -1,9 +1,10 @@
-(function() {
+(function () {
   'use strict';
 
-  angular.module('kmsscan.views.Welcome', [
+  var namespace = 'kmsscan.views.Welcome';
+
+  angular.module(namespace, [
     'kmsscan.services.stores.Pages',
-    'kmsscan.services.stores.Images',
     'kmsscan.services.stores.Settings'
   ])
     .config(StateConfig)
@@ -22,10 +23,10 @@
       });
   }
 
-  //syncIsActive
-  function WelcomeController(Logger, $scope, $rootScope, pagesStoreService, imagesStoreService, settingsStoreService) {
+  function WelcomeController(Logger, $scope, $rootScope, pagesStoreService, settingsStoreService) {
     var vm = this; // view-model
-    var log = new Logger('kmsscan.views.Welcome');
+    var log = new Logger(namespace);
+
     vm.page = {};
     vm.imagePath = '';
     vm.isPending = true;
@@ -40,11 +41,11 @@
       activate();
     }
 
-    var eventIndexOnChange = settingsStoreService.onChange(function() {
+    var eventIndexOnChange = settingsStoreService.onChange(function () {
       activate();
     });
 
-    $scope.$on('$destroy', function  () {
+    $scope.$on('$destroy', function () {
       settingsStoreService.offChange(eventIndexOnChange);
     });
 
@@ -52,16 +53,16 @@
     function activate() {
       log.info('activate()');
       settingsStoreService.get()
-        .then(function(settings) {
+        .then(function (settings) {
           return pagesStoreService.getWelcomePage(settings.language);
         })
-        .then(function(page) {
+        .then(function (page) {
           log.debug('activate() -> succeed', page);
           vm.page = page;
           vm.isPending = false;
           vm.hasFailed = false;
         })
-        .catch(function(err) {
+        .catch(function (err) {
           log.error('Failed to load welcome page!', err)
           vm.isPending = false;
           vm.hasFailed = true;
