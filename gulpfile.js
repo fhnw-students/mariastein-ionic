@@ -61,7 +61,7 @@ var stylish = require('jshint-stylish');
  */
 gulp.task('jshint', function () {
   return gulp
-    .src(projectConfig.path.srcDir + '/' + projectConfig.path.app.scripts)
+    .src('www/main/**/*.js')
     .pipe(jshint())
     .pipe(jshint.reporter(stylish));
 });
