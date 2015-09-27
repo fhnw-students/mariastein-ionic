@@ -57,7 +57,7 @@
 
     function getAll(langkey) {
       return roomsDb.allDocs({
-          include_docs: true
+          'include_docs': true
         })
         .then(_parseDocs)
         .then(function(results) {
@@ -125,7 +125,7 @@
       var array = response.rows;
       for (var i = 0; i < array.length; i++) {
         array[i] = _parseDoc(array[i]);
-      };
+      }
       return array;
     }
 
@@ -141,7 +141,7 @@
     }
 
     function countObjectsInRooms(pages) {
-      var countObjectsInRooms = {};
+      var counter = {};
       pages.map(function(page) {
           if (page.room && page.room.uid) {
             return page.room.uid;
@@ -152,13 +152,13 @@
           return roomId !== undefined;
         })
         .map(function(roomId) {
-          if (roomId in countObjectsInRooms) {
-            countObjectsInRooms[roomId]++;
+          if (roomId in counter) {
+            counter[roomId]++;
           } else {
-            countObjectsInRooms[roomId] = 1;
+            counter[roomId] = 1;
           }
         });
-      return countObjectsInRooms;
+      return counter;
     }
 
     function _id(uid, langkey) {

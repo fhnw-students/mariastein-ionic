@@ -25,7 +25,7 @@
 
   function TutorialController($timeout, $rootScope, settingsStoreService, Logger, $ionicSlideBoxDelegate) {
     var vm = this; // view-model
-    var log = Logger(namespace);
+    var log = new Logger(namespace);
 
     vm.settings = {};
     vm.more = false;
@@ -53,7 +53,7 @@
         .then(function (settings) {
           log.debug('activate() - success', settings);
           vm.settings = settings;
-          console.log("isPristine: " + vm.settings.isPristine);
+          console.log('isPristine: ' + vm.settings.isPristine);
           if (settings.isPristine) {
             vm.startSlide = 0;
           }

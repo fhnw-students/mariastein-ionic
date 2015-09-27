@@ -58,7 +58,7 @@
         .filter(function (item) {
           return _.isArray(item);
         });
-        
+
       var images = {};
       for (var l = 0; l < results.length; l++) {
         for (var c = 0; c < results[l].length; c++) {
@@ -84,7 +84,9 @@
     function _download(images) {
       var queue = [];
       for (var key in images) {
-        queue.push(typo3Service.downloadImage(images[key], key));
+        if (key) {
+          queue.push(typo3Service.downloadImage(images[key], key));
+        }
       }
       return $q.all(queue);
     }

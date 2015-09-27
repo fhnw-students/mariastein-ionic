@@ -25,8 +25,8 @@
       });
   }
 
-  function DetailController($window, $stateParams, $ionicModal, $ionicSlideBoxDelegate,
-                            $ionicScrollDelegate, $rootScope, Logger, pagesStoreService, settingsStoreService, $scope) {
+  function DetailController($window, $stateParams, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,
+                            $rootScope, Logger, pagesStoreService, settingsStoreService, $scope) {
     var vm = this; // view-model
     var log = new Logger(namespace);
     vm.doc = {};
@@ -48,7 +48,6 @@
     vm.scrollTop = scrollTop;
     vm.zoom = zoom;
     vm.updateSlideStatus = updateSlideStatus;
-    vm.getImagePath = getImagePath;
 
     if ($rootScope.syncIsActive) {
       $rootScope.$on('kmsscan.run.activate.succeed', activate);
@@ -77,7 +76,7 @@
           vm.hasFailed = false;
         })
         .catch(function (err) {
-          log.error('Failed to load doc!', err)
+          log.error('Failed to load doc!', err);
           vm.isPending = false;
           vm.hasFailed = true;
         });
@@ -112,7 +111,7 @@
 
     function closeModal() {
       vm.modal.hide();
-      vm.modal.remove()
+      vm.modal.remove();
     }
 
     function scrollTop() {
@@ -127,7 +126,7 @@
       var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide)
         .getScrollPosition()
         .zoom;
-      if (zoomFactor == vm.zoomMin) {
+      if (zoomFactor === vm.zoomMin) {
         $ionicSlideBoxDelegate.enableSlide(true);
       } else {
         $ionicSlideBoxDelegate.enableSlide(false);
@@ -138,7 +137,7 @@
       var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide)
         .getScrollPosition()
         .zoom;
-      if (zoomFactor == vm.zoomMin) {
+      if (zoomFactor === vm.zoomMin) {
         $ionicScrollDelegate.$getByHandle('scrollHandle' + slide)
           .zoomBy(2, true);
       } else {

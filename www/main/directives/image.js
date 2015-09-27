@@ -4,7 +4,7 @@
   angular.module('kmsscan.directives.Image', [
     'kmsscan.services.Images'
   ])
-    .directive('kmsImage', Image);
+    .directive('kmsImage', ImageDirective);
 
   /**
    * @name kmsImage
@@ -14,7 +14,7 @@
    * @example
    * <kms-image image-id="doc.image[0]"></kms-image>
    */
-  function Image(imagesService) {
+  function ImageDirective(imagesService) {
     return {
       restrict: 'E',
       replace: true,

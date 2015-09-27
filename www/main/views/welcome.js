@@ -63,7 +63,7 @@
           vm.hasFailed = false;
         })
         .catch(function (err) {
-          log.error('Failed to load welcome page!', err)
+          log.error('Failed to load welcome page!', err);
           vm.isPending = false;
           vm.hasFailed = true;
         });

@@ -36,8 +36,6 @@
     function activate() {
       $ionicPlatform.ready(function () {
         log.debug('$ionicPlatform is ready');
-
-        log.debug('Has internet connection');
         var backup = [];
 
         initSettings()
@@ -114,7 +112,7 @@
     }
 
     function initSettings() {
-      return settingsStoreService.init()
+      return settingsStoreService.init();
     }
 
   }

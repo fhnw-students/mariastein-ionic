@@ -49,13 +49,13 @@
       $ionicPopup.show({
         title: 'Beim Laden der Daten ist ein Fehler aufgetreten',
         buttons: [{
-          text: "Neu laden",
-          onTap: function (e) {
-            document.location = "."; // reload the current page
+          text: 'Neu laden',
+          onTap: function () {
+            document.location = '.'; // reload the current page
           }
         },
           {
-            text: "Abbrechen"
+            text: 'Abbrechen'
           }]
       });
     }

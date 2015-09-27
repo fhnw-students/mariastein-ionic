@@ -59,7 +59,7 @@
           vm.hasFailed = false;
         })
         .catch(function (err) {
-          log.error('Failed to load visited pages!', err)
+          log.error('Failed to load visited pages!', err);
           vm.isPending = false;
           vm.hasFailed = true;
         });

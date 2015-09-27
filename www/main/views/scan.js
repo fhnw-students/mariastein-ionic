@@ -23,8 +23,8 @@
       });
   }
 
-  function ScanController($cordovaBarcodeScanner, $ionicPlatform, $rootScope, $cordovaVibration, $state, settingsStoreService, Logger,
-                          pagesStoreService) {
+  function ScanController($cordovaBarcodeScanner, $ionicPlatform, $rootScope, $cordovaVibration, $state,
+                          settingsStoreService, Logger, pagesStoreService) {
     var vm = this; // view-model
     var log = new Logger(namespace);
 
@@ -70,7 +70,7 @@
             log.error('vibrate()', error);
           }
           if (barcodeData.cancelled !== 1) {
-            if (barcodeData.format == 'QR_CODE') {
+            if (barcodeData.format === 'QR_CODE') {
               afterScan(barcodeData.text);
               vm.format = false;
               vm.cancel = false;

@@ -21,7 +21,7 @@
 
   function MenuController(Logger, $rootScope, settingsStoreService) {
     var vm = this;
-    var log = Logger(namespace);
+    var log = new Logger(namespace);
 
     vm.settings = {};
     vm.saveSettings = saveSettings;

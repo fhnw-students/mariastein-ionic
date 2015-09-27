@@ -66,10 +66,10 @@
     function getVisited(langkey) {
       return $q.all([
           pagesDb.allDocs({
-            include_docs: true
+            'include_docs': true
           }),
           historyDb.allDocs({
-            include_docs: true
+            'include_docs': true
           })
         ])
         .then(_parseDocs)
@@ -156,7 +156,7 @@
           return visitedIds.indexOf(doc.uid.toString()) >= 0;
         }
         return false;
-      })
+      });
     }
 
     function _filterDocsWithSameLangKey(array, langkey) {
@@ -174,7 +174,7 @@
     function _parseDocs(array) {
       for (var i = 0; i < array.length; i++) {
         array[i] = _parseDoc(array[i]);
-      };
+      }
       return array;
     }
 

@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -12,9 +12,9 @@
       PAGES: 'http://kloster-mariastein.business-design.ch/routing/klomaapp/page/json',
       ROOMS: 'http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json',
       FILES: 'http://kloster-mariastein.business-design.ch/'
-        //Old:  http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000
-        //Page: http://kloster-mariastein.business-design.ch/routing/klomaapp/page/json
-        //Room: http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json
+      //Old:  http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000
+      //Page: http://kloster-mariastein.business-design.ch/routing/klomaapp/page/json
+      //Room: http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json
     },
     DEV: {
       PAGES: 'http://localhost:3000/pages',
@@ -49,16 +49,16 @@
       log.debug('loadPages()', langKey);
       var deferred = $q.defer();
       $http({
-          url: Typo3Service.BACKENDS[env].PAGES,
-          type: 'GET',
-          dataType: 'json',
-          params: {
-            // id: 136,
-            // type: 5000,
-            L: langKey || 0
-          }
-        })
-        .success(function(response) {
+        url: Typo3Service.BACKENDS[env].PAGES,
+        type: 'GET',
+        dataType: 'json',
+        params: {
+          // id: 136,
+          // type: 5000,
+          L: langKey || 0
+        }
+      })
+        .success(function (response) {
           log.debug('loadPages() - success', response);
           var objects = _parseObjects(response);
 
@@ -67,7 +67,7 @@
             images: _parseImages(objects)
           });
         })
-        .error(function(err) {
+        .error(function (err) {
           log.error('loadPages() - failed', err);
           deferred.reject(err);
         });
@@ -84,21 +84,21 @@
       log.debug('loadRooms()', langKey);
       var deferred = $q.defer();
       $http({
-          url: Typo3Service.BACKENDS[env].ROOMS,
-          type: 'GET',
-          dataType: 'json',
-          params: {
-            L: langKey || 0
-          }
-        })
-        .success(function(response) {
+        url: Typo3Service.BACKENDS[env].ROOMS,
+        type: 'GET',
+        dataType: 'json',
+        params: {
+          L: langKey || 0
+        }
+      })
+        .success(function (response) {
           log.debug('loadRooms() - success', response);
           deferred.resolve({
             images: _parseImagesFromRooms(response),
             rooms: _parseRooms(response)
           });
         })
-        .error(function(err) {
+        .error(function (err) {
           log.error('loadRooms() - failed', err);
           deferred.reject(err);
         });
@@ -130,18 +130,18 @@
         var options = {};
         log.debug('downloadImage()', url);
         $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
-          .then(function(result) {
+          .then(function (result) {
             log.debug('downloadImage() - success', result);
             deferred.resolve({
               targetPath: targetPath,
               image: result
             });
-          }, function(err) {
+          }, function (err) {
             log.error('downloadImage() - failed', err);
             deferred.reject(err);
           });
       } else {
-        setTimeout(function() {
+        setTimeout(function () {
           log.warn('Cordova is not available!');
           deferred.resolve({});
         }, 500);
@@ -158,11 +158,11 @@
      */
     function _parseRooms(data) {
       var rooms = data
-        .map(function(room) {
+        .map(function (room) {
           room.image = _parseImage(room.image);
           return room;
         })
-        .map(function(room) {
+        .map(function (room) {
           room.previewImageUid = _getImageByTitle(room.image, 'preview');
           room.mapImageUid = _getImageByTitle(room.image, 'map');
           delete room.image;
@@ -172,7 +172,7 @@
     }
 
     function _getImageByTitle(images, title) {
-      images = images.filter(function(image) {
+      images = images.filter(function (image) {
         return image.originalResource.title === title;
       });
       var image = (images.length > 0) ? images[0] : undefined;
@@ -194,17 +194,17 @@
           }
         }
       }
-      return _.uniq(images, function(item) {
+      return _.uniq(images, function (item) {
         return item.uid;
       });
     }
 
     function _parseImagesFromRooms(data) {
       var roomsWithImages = [];
-      roomsWithImages = data.map(function(obj) {
-          return obj.image;
-        })
-        .map(function(image) {
+      roomsWithImages = data.map(function (obj) {
+        return obj.image;
+      })
+        .map(function (image) {
           return _parseImage(image);
         });
 
@@ -212,10 +212,10 @@
       for (var r = roomsWithImages.length - 1; r >= 0; r--) {
         for (var i = roomsWithImages[r].length - 1; i >= 0; i--) {
           images.push(roomsWithImages[r][i]);
-        };
-      };
+        }
+      }
 
-      return _.uniq(images, function(item) {
+      return _.uniq(images, function (item) {
         return item.uid;
       });
     }
@@ -227,7 +227,7 @@
      * @private
      */
     function _parseObjects(data) {
-      data = data.map(function(item) {
+      data = data.map(function (item) {
         var newItem = _getObject(item.content);
         newItem.image = _parseImage(newItem.image);
         return newItem;
@@ -260,7 +260,9 @@
     function _parseImage(images) {
       var a = [];
       for (var key in images) {
-        a.push(images[key]);
+        if (key) {
+          a.push(images[key]);
+        }
       }
       return a;
     }
