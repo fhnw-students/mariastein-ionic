@@ -57,7 +57,7 @@
     "Module":     true,
     "inject":     true,
     "angular":    false,
-    "Papa":       false,
+    "Promise":    false,
     "__dirname":  false,
     "it":         false,
     "describe":   false,
