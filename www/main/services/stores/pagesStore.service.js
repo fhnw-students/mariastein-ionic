@@ -16,6 +16,13 @@
     PAGES: 'kmsscan.pages',
     HISTORY: 'kmsscan.history'
   };
+
+  PagesStoreService.TYPES = {
+    NEWS: 'news',
+    OBJECT: 'content',
+    SPECIAL: 'special-content'
+  };
+
   PagesStoreService.WELCOME_PAGE_UID = 3;
 
   /**
@@ -32,27 +39,55 @@
     var service = {
       get: get,
       getWelcomePage: getWelcomePage,
+      getNews: getNews,
 
-      visited: visited,
+      visited: visitedByQrCode,
+      visitedByUid: visitedByUid,
       getVisited: getVisited,
 
       sync: sync,
-      clean: _cleanPages
+      clean: clean
     };
 
     _activate();
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
-    function getWelcomePage(langkey) {
-      return get(PagesStoreService.WELCOME_PAGE_UID, langkey);
-    }
-
     function get(uid, langkey) {
       return pagesDb.get(helpersUtilsService.buildDocId(uid, langkey))
         .then(function (page) {
           page.image = JSON.parse(page.image);
           return page;
+        });
+    }
+
+    function getWelcomePage(langkey) {
+      return get(PagesStoreService.WELCOME_PAGE_UID, langkey);
+    }
+
+    function getNews(langkey) {
+      return $q.all([
+        pagesDb.allDocs({
+          'include_docs': true
+        }),
+        historyDb.allDocs({
+          'include_docs': true
+        })
+      ])
+        .then(_parseDocs)
+        .then(function (results) {
+          results[0] = _filterNews(results[0]);
+          return results;
+        })
+        .then(function (results) {
+          var docs = helpersUtilsService.filterDocsWithSameLangKey(results[0], langkey);
+          docs = _appendVisitedDate(docs, results[1]);
+
+          return docs
+            .map(function (doc) {
+              doc.image = JSON.parse(doc.image);
+              return doc;
+            });
         });
     }
 
@@ -70,7 +105,7 @@
           var ids = _parseDocIds(results[1]);
           var docs = helpersUtilsService.filterDocsWithSameLangKey(results[0], langkey);
           docs = _filterVisitedDocs(docs, ids);
-          docs = _appendScanedDate(docs, results[1]);
+          docs = _appendVisitedDate(docs, results[1]);
 
           return docs
             .map(function (doc) {
@@ -80,28 +115,33 @@
         });
     }
 
-    function visited(qrcode) {
-      var deferred = $q.defer();
-      log.debug('visited()', qrcode);
-      //PageQRCode1
-      pagesDb.find({
-        selector: {
-          qrcode: {
-            $eq: qrcode
-          }
-        }
-      })
-        .then(_visited)
-        .then(function (uid) {
-          log.debug('query() - success', uid);
-          deferred.resolve(uid);
-        })
-        .catch(function (err) {
-          log.error('query() - failed', err);
-          deferred.reject(err);
-        });
+    function visitedByUid(uid) {
+      return _visited('uid', uid);
+    }
 
-      return deferred.promise;
+    function visitedByQrCode(qrcode) {
+      return _visited('qrcode', qrcode);
+      //var deferred = $q.defer();
+      //log.debug('visited()', qrcode);
+      ////PageQRCode1
+      //pagesDb.find({
+      //  selector: {
+      //    qrcode: {
+      //      $eq: qrcode
+      //    }
+      //  }
+      //})
+      //  .then(_visited)
+      //  .then(function (uid) {
+      //    log.debug('query() - success', uid);
+      //    deferred.resolve(uid);
+      //  })
+      //  .catch(function (err) {
+      //    log.error('query() - failed', err);
+      //    deferred.reject(err);
+      //  });
+      //
+      //return deferred.promise;
     }
 
     function sync(langkey, data) {
@@ -124,20 +164,34 @@
       return deferred.promise;
     }
 
+    function clean() {
+      return pouchDbUtilsService.destroyDb(pagesDb);
+    }
+
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
-    function _appendScanedDate(docs, visited) {
+    function _filterNews(array) {
+      return _filterByType(array, PagesStoreService.TYPES.NEWS);
+    }
+
+    function _filterByType(array, type) {
+      return array.filter(function (doc) {
+        return doc.type === type;
+      });
+    }
+
+    function _appendVisitedDate(docs, visited) {
       return docs.map(function (doc) {
-        doc.scanedAt = visited
+        doc.visitedAt = visited
           .filter(function (item) {
             return item._id === doc.uid.toString();
           })
           .map(function (item) {
-            return item.scanedAt;
+            return item.visitedAt;
           });
-        if (doc.scanedAt && doc.scanedAt.length > 0) {
-          doc.scanedAt = moment(doc.scanedAt[0]);
+        if (doc.visitedAt && doc.visitedAt.length > 0) {
+          doc.visitedAt = moment(doc.visitedAt[0]);
         } else {
-          doc.scanedAt = undefined;
+          doc.visitedAt = undefined;
         }
         return doc;
       });
@@ -171,16 +225,38 @@
       });
     }
 
-    function _visited(response) {
+    function _visited(key, value) {
+      var deferred = $q.defer();
+      var selector = {};
+      selector[key] = {
+        $eq: value
+      };
+      pagesDb.find({
+        selector: selector
+      })
+        .then(_visited)
+        .then(function (uid) {
+          log.debug('query() - success', uid);
+          deferred.resolve(uid);
+        })
+        .catch(function (err) {
+          log.error('query() - failed', err);
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function _setVisited(response) {
       var docs = response.docs;
       var id = docs[0].uid.toString();
-      var scanedAt = new Date();
+      var visitedAt = new Date();
       var deferred = $q.defer();
       log.debug('_visited', docs);
       if (_.isArray(docs) && docs.length > 0) {
         historyDb.get(id)
           .then(function (doc) {
-            doc.scanedAt = scanedAt;
+            doc.visitedAt = visitedAt;
             return historyDb.put(doc);
           })
           .then(function () {
@@ -189,7 +265,7 @@
           .catch(function (err) {
             if (err.status === 404) {
               historyDb.put({
-                scanedAt: scanedAt
+                visitedAt: visitedAt
               }, id)
                 .then(function (response) {
                   log.debug('add() -> success', response);
@@ -217,7 +293,7 @@
     function _createIndex() {
       return pagesDb.createIndex({
         index: {
-          fields: ['qrcode', 'langkey']
+          fields: ['uid', 'qrcode', 'langkey']
         }
       });
     }
@@ -272,9 +348,6 @@
       return deferred.promise;
     }
 
-    function _cleanPages() {
-      return pouchDbUtilsService.destroyDb(pagesDb);
-    }
 
   }
 })();
