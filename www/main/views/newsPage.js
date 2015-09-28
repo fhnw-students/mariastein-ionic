@@ -31,3 +31,17 @@
   }
 
 }());
+
+
+/**
+
+
+ pagesStoreService.get(uid, langKey)
+ .then(function (result) {
+                log.warn('getNews', result);
+              })
+ .catch(function (err) {
+                log.error('getNews', err);
+              });
+
+ **/
