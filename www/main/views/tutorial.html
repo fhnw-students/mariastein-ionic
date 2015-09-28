@@ -30,6 +30,7 @@
                 <ion-slide>
                     <div class="Tutorial page settings" style="margin: 1px">
                         <h1>{{'LABEL.SETTINGS' | translate}}</h1>
+                        <ion-scroll direction="y" ng-style="{height: tutorial.hgt+ 'px'}">
                         <ion-item class="item item-divider item-divider-text item-text-wrap">
                             {{'LABEL.TUTORIALSETTINGSVIBRATION' | translate}}
                         </ion-item>
@@ -50,6 +51,7 @@
                         <ion-toggle ng-model="menu.settings.music" ng-change="menu.saveSettings()"
                                     toggle-class="toggle-calm">{{ 'LABEL.MUSIC' | translate }}
                         </ion-toggle>
+                        </ion-scroll>
                     </div>
                 </ion-slide>
 
