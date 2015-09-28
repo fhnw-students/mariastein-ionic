@@ -6,6 +6,7 @@
   angular.module(namespace, [
     namespace + '.Settings',
     namespace + '.Pages',
+    namespace + '.News',
     namespace + '.Rooms'
   ]);
 
