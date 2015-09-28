@@ -12,8 +12,8 @@
   ])
     .run(run);
 
-  function run($rootScope, $translate, $timeout, $q, $ionicPlatform, Logger,
-               typo3Service, pagesStoreService, roomsStoreService, settingsStoreService, imagesService) {
+  function run($rootScope, $translate, $timeout, $q, $ionicPlatform, Logger, typo3Service, pagesStoreService,
+               roomsStoreService, settingsStoreService, imagesService) {
     var log = new Logger('kmsscan.run');
 
     // Global Declarations

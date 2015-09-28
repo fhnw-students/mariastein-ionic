@@ -72,3 +72,27 @@
   }
 
 }());
+
+/**
+
+
+
+ pagesStoreService.getNews('DE')
+ .then(function (result) {
+                log.warn('getNews', result);
+              })
+ .catch(function (err) {
+                log.error('getNews', err);
+              });
+
+
+
+ pagesStoreService.visitedByUid(uid)
+ .then(function (result) {
+                log.warn('getNews', result);
+              })
+ .catch(function (err) {
+                log.error('getNews', err);
+              });
+
+ **/
