@@ -1,10 +1,14 @@
-(function() {
+(function () {
   'use strict';
 
+  var namespace = 'kmsscan.services.stores.Rooms';
+
   angular
-    .module('kmsscan.services.stores.Rooms', [
+    .module(namespace, [
       'pouchdb',
-      'kmsscan.utils.Logger'
+      'kmsscan.utils.Logger',
+      'kmsscan.utils.Helpers',
+      'kmsscan.utils.PouchDb'
     ])
     .factory('roomsStoreService', RoomsStoreService);
 
@@ -17,19 +21,8 @@
 
   RoomsStoreService.DBNAME = 'kmsscan.rooms';
 
-  RoomsStoreService.LANGUAGES = {
-    DE: 0,
-    0: 'DE',
-    FR: 1,
-    1: 'FR',
-    EN: 2,
-    2: 'EN',
-    IT: 3,
-    3: 'IT'
-  };
-
-  function RoomsStoreService(Logger, $q, pouchDB) {
-    var log = new Logger('kmsscan.services.stores.Rooms');
+  function RoomsStoreService(Logger, $q, pouchDB, helpersUtilsService, pouchDbUtilsService) {
+    var log = new Logger(namespace);
     var roomsDb;
     log.info('init');
 
@@ -49,19 +42,19 @@
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
     function get(uid, langkey) {
-      return roomsDb.get(_id(uid, langkey))
-        .then(function(page) {
+      return roomsDb.get(helpersUtilsService.buildDocId(uid, langkey))
+        .then(function (page) {
           return page;
         });
     }
 
     function getAll(langkey) {
       return roomsDb.allDocs({
-          'include_docs': true
-        })
+        'include_docs': true
+      })
         .then(_parseDocs)
-        .then(function(results) {
-          return _filterDocsWithSameLangKey(results, langkey);
+        .then(function (results) {
+          return helpersUtilsService.filterDocsWithSameLangKey(results, langkey);
         });
     }
 
@@ -74,14 +67,14 @@
 
       log.debug('sync', rooms);
       _activate()
-        .then(function() {
+        .then(function () {
           return _sync(langkey, rooms);
         })
-        .then(function() {
+        .then(function () {
           log.debug('success');
           deferred.resolve(rooms);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           log.error('failed', err);
           deferred.reject(err);
         });
@@ -100,25 +93,20 @@
 
     function _syncRoom(langkey, record) {
       var deferred = $q.defer();
-      var id = _id(record.uid, RoomsStoreService.LANGUAGES[langkey]);
-      record.langkey = RoomsStoreService.LANGUAGES[langkey];
+
+      record.langkey = helpersUtilsService.getLanguageKeyByValue(langkey);
+      var id = helpersUtilsService.buildDocId(record.uid, record.langkey);
 
       roomsDb.put(record, id)
-        .then(function(response) {
+        .then(function (response) {
           log.debug('add() -> success', response);
           deferred.resolve(response);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           log.error('add() -> failed', err);
           deferred.reject(err);
         });
       return deferred.promise;
-    }
-
-    function _filterDocsWithSameLangKey(array, langkey) {
-      return array.filter(function(doc) {
-        return langkey === doc.langkey;
-      });
     }
 
     function _parseDocs(response) {
@@ -133,8 +121,8 @@
       return item.doc;
     }
 
-    function addCounter(rooms, counterObjectsInRooms){
-      return rooms.map(function  (room) {
+    function addCounter(rooms, counterObjectsInRooms) {
+      return rooms.map(function (room) {
         room.amount = counterObjectsInRooms[room.uid] || 0;
         return room;
       });
@@ -142,16 +130,16 @@
 
     function countObjectsInRooms(pages) {
       var counter = {};
-      pages.map(function(page) {
-          if (page.room && page.room.uid) {
-            return page.room.uid;
-          }
-          return page.room;
-        })
-        .filter(function(roomId) {
+      pages.map(function (page) {
+        if (page.room && page.room.uid) {
+          return page.room.uid;
+        }
+        return page.room;
+      })
+        .filter(function (roomId) {
           return roomId !== undefined;
         })
-        .map(function(roomId) {
+        .map(function (roomId) {
           if (roomId in counter) {
             counter[roomId]++;
           } else {
@@ -161,21 +149,15 @@
       return counter;
     }
 
-    function _id(uid, langkey) {
-      return uid.toString() + '-' + langkey;
-    }
-
     function _activate() {
+      roomsDb = pouchDbUtilsService.createDb(RoomsStoreService.DBNAME);
       var deferred = $q.defer();
-      roomsDb = pouchDB(RoomsStoreService.DBNAME, {
-        adapter: 'websql'
-      });
-      deferred.resolve();
+      deferred.resolve(roomsDb);
       return deferred.promise;
     }
 
     function _clean() {
-      return roomsDb.destroy();
+      return pouchDbUtilsService.destroyDb(roomsDb);
     }
 
   }

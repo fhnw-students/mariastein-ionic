@@ -6,7 +6,8 @@
   angular
     .module(namespace, [
       namespace + '.Logger',
-      namespace + '.Helpers'
+      namespace + '.Helpers',
+      namespace + '.PouchDb'
     ]);
 
 })();

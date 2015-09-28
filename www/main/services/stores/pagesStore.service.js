@@ -1,10 +1,14 @@
-(function() {
+(function () {
   'use strict';
 
+  var namespace = 'kmsscan.services.stores.Pages';
+
   angular
-    .module('kmsscan.services.stores.Pages', [
+    .module(namespace, [
       'pouchdb',
-      'kmsscan.utils.Logger'
+      'kmsscan.utils.Logger',
+      'kmsscan.utils.Helpers',
+      'kmsscan.utils.PouchDb'
     ])
     .factory('pagesStoreService', PagesStoreService);
 
@@ -14,24 +18,13 @@
   };
   PagesStoreService.WELCOME_PAGE_UID = 3;
 
-  PagesStoreService.LANGUAGES = {
-    DE: 0,
-    0: 'DE',
-    FR: 1,
-    1: 'FR',
-    EN: 2,
-    2: 'EN',
-    IT: 3,
-    3: 'IT'
-  };
-
   /**
    * Service Class
    * @returns {{sync: sync, getAll: getAll}}
    * @constructor
    */
-  function PagesStoreService($q, Logger, pouchDB) {
-    var log = new Logger('kmsscan.services.stores.Pages');
+  function PagesStoreService($q, Logger, pouchDB, helpersUtilsService, pouchDbUtilsService) {
+    var log = new Logger(namespace);
     var pagesDb, historyDb;
     log.debug('init');
 
@@ -56,8 +49,8 @@
     }
 
     function get(uid, langkey) {
-      return pagesDb.get(_id(uid, langkey))
-        .then(function(page) {
+      return pagesDb.get(helpersUtilsService.buildDocId(uid, langkey))
+        .then(function (page) {
           page.image = JSON.parse(page.image);
           return page;
         });
@@ -65,22 +58,22 @@
 
     function getVisited(langkey) {
       return $q.all([
-          pagesDb.allDocs({
-            'include_docs': true
-          }),
-          historyDb.allDocs({
-            'include_docs': true
-          })
-        ])
+        pagesDb.allDocs({
+          'include_docs': true
+        }),
+        historyDb.allDocs({
+          'include_docs': true
+        })
+      ])
         .then(_parseDocs)
-        .then(function(results) {
+        .then(function (results) {
           var ids = _parseDocIds(results[1]);
-          var docs = _filterDocsWithSameLangKey(results[0], langkey);
+          var docs = helpersUtilsService.filterDocsWithSameLangKey(results[0], langkey);
           docs = _filterVisitedDocs(docs, ids);
           docs = _appendScanedDate(docs, results[1]);
 
           return docs
-            .map(function(doc) {
+            .map(function (doc) {
               doc.image = JSON.parse(doc.image);
               return doc;
             });
@@ -92,18 +85,18 @@
       log.debug('visited()', qrcode);
       //PageQRCode1
       pagesDb.find({
-          selector: {
-            qrcode: {
-              $eq: qrcode
-            }
+        selector: {
+          qrcode: {
+            $eq: qrcode
           }
-        })
+        }
+      })
         .then(_visited)
-        .then(function(uid) {
+        .then(function (uid) {
           log.debug('query() - success', uid);
           deferred.resolve(uid);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           log.error('query() - failed', err);
           deferred.reject(err);
         });
@@ -115,15 +108,15 @@
       var deferred = $q.defer();
       log.debug('sync', data);
       _activate()
-        .then(function() {
+        .then(function () {
           return _sync(langkey, data);
         })
         .then(_createIndex)
-        .then(function() {
+        .then(function () {
           log.debug('success');
           deferred.resolve(data);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           log.error('failed', err);
           deferred.reject(err);
         });
@@ -133,25 +126,25 @@
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
     function _appendScanedDate(docs, visited) {
-      return docs.map(function(doc) {
+      return docs.map(function (doc) {
         doc.scanedAt = visited
-          .filter(function(item) {
+          .filter(function (item) {
             return item._id === doc.uid.toString();
           })
-          .map(function(item) {
+          .map(function (item) {
             return item.scanedAt;
-          });  
-        if(doc.scanedAt && doc.scanedAt.length > 0){
+          });
+        if (doc.scanedAt && doc.scanedAt.length > 0) {
           doc.scanedAt = moment(doc.scanedAt[0]);
-        }else{
+        } else {
           doc.scanedAt = undefined;
-        } 
+        }
         return doc;
       });
     }
 
     function _filterVisitedDocs(docs, visitedIds) {
-      return docs.filter(function(doc) {
+      return docs.filter(function (doc) {
         if (doc.uid) {
           return visitedIds.indexOf(doc.uid.toString()) >= 0;
         }
@@ -159,14 +152,8 @@
       });
     }
 
-    function _filterDocsWithSameLangKey(array, langkey) {
-      return array.filter(function(doc) {
-        return langkey === doc.langkey;
-      });
-    }
-
     function _parseDocIds(array) {
-      return array.map(function(doc) {
+      return array.map(function (doc) {
         return doc._id;
       });
     }
@@ -179,7 +166,7 @@
     }
 
     function _parseDoc(array) {
-      return array.rows.map(function(item) {
+      return array.rows.map(function (item) {
         return item.doc;
       });
     }
@@ -192,23 +179,23 @@
       log.debug('_visited', docs);
       if (_.isArray(docs) && docs.length > 0) {
         historyDb.get(id)
-          .then(function(doc) {
+          .then(function (doc) {
             doc.scanedAt = scanedAt;
             return historyDb.put(doc);
           })
-          .then(function() {
+          .then(function () {
             deferred.resolve(id);
           })
-          .catch(function(err) {
+          .catch(function (err) {
             if (err.status === 404) {
               historyDb.put({
-                  scanedAt: scanedAt
-                }, id)
-                .then(function(response) {
+                scanedAt: scanedAt
+              }, id)
+                .then(function (response) {
                   log.debug('add() -> success', response);
                   deferred.resolve(id);
                 })
-                .catch(function(err) {
+                .catch(function (err) {
                   log.error('add() -> failed', err);
                   deferred.reject(err);
                 });
@@ -235,10 +222,6 @@
       });
     }
 
-    function _id(uid, langkey) {
-      return uid.toString() + '-' + langkey;
-    }
-
     function _sync(langkey, data) {
       var queue = [];
       for (var i = 0; i < data.length; i++) {
@@ -249,42 +232,20 @@
 
     function _syncPage(langkey, record) {
       var deferred = $q.defer();
-      var id = _id(record.uid, PagesStoreService.LANGUAGES[langkey]);
-      record.langkey = PagesStoreService.LANGUAGES[langkey];
+
+      record.langkey = helpersUtilsService.getLanguageKeyByValue(langkey);
+      var id = helpersUtilsService.buildDocId(record.uid, record.langkey);
 
       pagesDb.put(_parsePage(record), id)
-        .then(function(response) {
+        .then(function (response) {
           log.debug('add() -> success', response);
           deferred.resolve(response);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           log.error('add() -> failed', err);
           deferred.reject(err);
         });
       return deferred.promise;
-      // pagesDb.get(id).then(function(doc) {
-      //   log.debug('get()', doc);
-      //   return pagesDb.put(_parsePage(record), doc._id, doc._rev);
-      // }).then(function(response) {
-      //   log.debug('update() -> success', response);
-      //   deferred.resolve(response);
-      // }).catch(function(err) {
-      //   log.debug('catch() -> failed', err);
-      //   if (err.status === 404) {
-      //     pagesDb.put(_parsePage(record), id)
-      //       .then(function(response) {
-      //         log.debug('add() -> success', response);
-      //         deferred.resolve(response);
-      //       })
-      //       .catch(function(err) {
-      //         log.error('add() -> failed', err);
-      //         deferred.reject(err);
-      //       });
-      //   } else {
-      //     log.error('reject() -> failed', err);
-      //     deferred.reject(err);
-      //   }
-      // });
     }
 
     function _parsePage(data) {
@@ -292,7 +253,7 @@
       data.room = data.room && data.room.uid;
 
       if (data.image) {
-        data.image = data.image.map(function(image) {
+        data.image = data.image.map(function (image) {
           return image.uid;
         });
         data.image = JSON.stringify(data.image);
@@ -302,19 +263,17 @@
     }
 
     function _activate() {
+      pagesDb = pouchDbUtilsService.createDb(PagesStoreService.DBNAME.PAGES);
+      historyDb = pouchDbUtilsService.createDb(PagesStoreService.DBNAME.HISTORY);
       var deferred = $q.defer();
-      pagesDb = pouchDB(PagesStoreService.DBNAME.PAGES, {
-        adapter: 'websql'
-      });
-      historyDb = pouchDB(PagesStoreService.DBNAME.HISTORY, {
-        adapter: 'websql'
-      });
-      deferred.resolve();
+      deferred.resolve([
+        pagesDb, historyDb
+      ]);
       return deferred.promise;
     }
 
     function _cleanPages() {
-      return pagesDb.destroy();
+      return pouchDbUtilsService.destroyDb(pagesDb);
     }
 
   }
