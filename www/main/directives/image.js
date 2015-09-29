@@ -1,3 +1,8 @@
+/**
+ * @name kmsImage
+ * @module kmsscan.directives.Image
+ * @author Gerhard Hirschfeld
+ */
 (function () {
   'use strict';
 
