@@ -46,7 +46,8 @@
       set: set,
       init: init,
       onChange: onChange,
-      offChange: offChange
+      offChange: offChange,
+      clean: _destroy
     };
 
     _activate();
