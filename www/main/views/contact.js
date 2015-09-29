@@ -1,30 +1,27 @@
+/**
+ * @module kmsscan.views.Contact
+ * @author Piotr Halicki
+ *
+ * @description
+ * This view shows the contact information about the monastery mariastein
+ *
+ */
 (function () {
   'use strict';
 
   angular.module('kmsscan.views.Contact', [])
-    .config(StateConfig)
-    .controller('ContactCtrl', ContactController);
-
+    .config(StateConfig);
 
   function StateConfig($stateProvider) {
     $stateProvider
-        .state('menu.contact', {
-          url:   '/contact',
-          views: {
-            'menuContent': {
-              templateUrl: 'main/views/contact.html',
-              controller:  'ContactCtrl as contact'
-            }
+      .state('menu.contact', {
+        url: '/contact',
+        views: {
+          'menuContent': {
+            templateUrl: 'main/views/contact.html'
           }
-        });
-  }
-
-
-  function ContactController() {
-    var vm = this; // view-model
-
-    // Code goes here
-
+        }
+      });
   }
 
 
