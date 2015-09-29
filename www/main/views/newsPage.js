@@ -62,6 +62,7 @@
     });
     /////////////////////////////
     function activate() {
+      pagesStoreService.visitedByUid($stateParams.uid);
       settingsStoreService.get()
           .then(function (settings) {
             vm.settings = settings;

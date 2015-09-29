@@ -273,13 +273,21 @@
     function _visited(key, value) {
       var deferred = $q.defer();
       var selector = {};
+      if (key === 'uid') {
+        value = parseInt(value, 10);
+      }
       selector[key] = {
         $eq: value
       };
       pagesDb.find({
         selector: selector
       })
-        .then(_visited)
+        //pagesDb.find({
+        //  selector: {
+        //    uid: {$eq: parseInt(value,10)}
+        //  }
+        //})
+        .then(_setVisited)
         .then(function (uid) {
           log.debug('query() - success', uid);
           deferred.resolve(uid);

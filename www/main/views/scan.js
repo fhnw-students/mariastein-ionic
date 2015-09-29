@@ -56,7 +56,7 @@
     }
 
     function destroy() {
-      pagesStoreService.destroy();
+      pagesStoreService.clean();
     }
 
     function scan() {
