@@ -20,12 +20,9 @@
 
   Typo3Service.BACKENDS = {
     PROD: {
-      PAGES: 'http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000',
-      ROOMS: 'http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json',
+      PAGES: 'http://kloster-mariastein.business-design.ch/index.php?id=137&type=5000',
+      ROOMS: 'http://kloster-mariastein.business-design.ch/index.php?id=138&type=5000',
       FILES: 'http://kloster-mariastein.business-design.ch/'
-      //Old:  http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000
-      //Page: http://kloster-mariastein.business-design.ch/routing/klomaapp/page/json
-      //Room: http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json
     },
     DEV: {
       PAGES: 'http://localhost:3000/pages',
@@ -62,8 +59,6 @@
         type: 'GET',
         dataType: 'json',
         params: {
-          id: 136,
-          type: 5000,
           L: langKey || 0
         }
       })
