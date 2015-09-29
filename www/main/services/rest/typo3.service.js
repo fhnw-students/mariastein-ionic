@@ -111,20 +111,10 @@
      * @param id
      * @returns {deferred.promise|{then, always}}
      */
-    function downloadImage(url, id) {
+    function downloadImage(url, id, targetPath) {
       var deferred = $q.defer();
       if (window.cordova) {
         url = Typo3Service.BACKENDS[env].FILES + url;
-
-        var targetPath = '';
-        if (ionic.Platform.isIOS()) {
-          targetPath = cordova.file.documentsDirectory;
-        }
-        if (ionic.Platform.isAndroid()) {
-          targetPath = cordova.file.applicationStorageDirectory;
-        }
-
-        targetPath += id + '.png';
 
         var trustHosts = true;
         var options = {};
