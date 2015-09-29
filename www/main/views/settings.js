@@ -36,11 +36,14 @@
     var log = new Logger(namespace);
 
     vm.settings = {};
+    vm.isReady = isReady;
     vm.saveSettings = saveSettings;
     vm.onLanguageChange = onLanguageChange;
 
+
     activate();
 
+    ////////////////////////////////////////
     function activate() {
       $rootScope.$on('onLanguageChange', function (event, langKey) {
         vm.settings.language = angular.uppercase(langKey);
@@ -49,6 +52,10 @@
         log.debug('activate() - success', settings);
         vm.settings = settings;
       });
+    }
+
+    function isReady() {
+      return !$rootScope.syncIsActive && !vm.isPending;
     }
 
     function saveSettings() {

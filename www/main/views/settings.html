@@ -1,25 +1,27 @@
 <ion-view view-title="{{ 'LABEL.SETTINGS' | translate }}">
-    <ion-content
-        <ion-list>
+    <ion-content>
+        <kms-spinner ng-hide="settings.isReady()"></kms-spinner>
+
+        <ion-list ng-show="settings.isReady()">
 
             <ion-item class="item item-divider item-divider-text item-text-wrap">
                 {{'LABEL.TUTORIALSETTINGSVIBRATION' | translate}}
             </ion-item>
-            <ion-toggle ng-model="menu.settings.vibration" ng-change="menu.saveSettings()"
+            <ion-toggle ng-model="settings.settings.vibration" ng-change="settings.saveSettings()"
                         toggle-class="toggle-calm">{{ 'LABEL.VIBRATION' | translate }}
             </ion-toggle>
 
             <ion-item class="item item-divider item-divider-text item-text-wrap">
                 {{'LABEL.TUTORIALSETTINGSZOOMING' | translate}}
             </ion-item>
-            <ion-toggle ng-model="menu.settings.zooming" ng-change="menu.saveSettings()"
+            <ion-toggle ng-model="settings.settings.zooming" ng-change="settings.saveSettings()"
                         toggle-class="toggle-calm">{{ 'LABEL.ZOOM' | translate }}
             </ion-toggle>
 
             <ion-item class="item item-divider item-divider-text item-text-wrap">
                 {{'LABEL.TUTORIALSETTINGSMUSIC' | translate}}
             </ion-item>
-            <ion-toggle ng-model="menu.settings.music" ng-change="menu.saveSettings()"
+            <ion-toggle ng-model="settings.settings.music" ng-change="settings.saveSettings()"
                         toggle-class="toggle-calm">{{ 'LABEL.MUSIC' | translate }}
             </ion-toggle>
 
@@ -31,8 +33,8 @@
                 <i class=""></i>
                 {{ 'LABEL.LANGUAGE' | translate }}
                         <span class="item-note">
-                            <select ng-model="menu.settings.language" ng-change="menu.onLanguageChange()"
-                                    selected="menu.settings.language">
+                            <select ng-model="settings.settings.language" ng-change="settings.onLanguageChange()"
+                                    selected="settings.settings.language">
                                 <option value="DE">Deutsch</option>
                                 <option value="EN">English</option>
                                 <option value="FR">Fran&ccedil;ais</option>
@@ -42,6 +44,7 @@
             </ion-item>
 
         </ion-list>
+    </ion-content>
 
 </ion-view>
 
