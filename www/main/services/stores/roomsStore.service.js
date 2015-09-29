@@ -1,7 +1,7 @@
 /**
  * @name roomsStoreService
- * @module kmsscan.services.stores.stores
- * @author Gery Hirschfeld
+ * @module kmsscan.services.stores.Rooms
+ * @author Gerhard Hirschfeld
  *
  * @description
  * This Service Class handel's the rooms data. It works with the local

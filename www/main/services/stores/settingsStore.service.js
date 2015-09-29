@@ -1,16 +1,27 @@
-(function() {
+/**
+ * @name roomsStoreService
+ * @module kmsscan.services.stores.Settings
+ * @author Gerhard Hirschfeld
+ *
+ * @description
+ * This Service Class handel's the settings data. It works with the local
+ * database pouchDb to store the data.
+ *
+ */
+(function () {
   'use strict';
 
+  var namespace = 'kmsscan.services.stores.Settings';
+
   angular
-    .module('kmsscan.services.stores.Settings', [
+    .module(namespace, [
       'pouchdb',
-      'kmsscan.utils.Logger'
+      'kmsscan.utils.Logger',
+      'kmsscan.utils.Helpers',
+      'kmsscan.utils.PouchDb'
     ])
     .factory('settingsStoreService', SettingsStoreService);
 
-  /**
-   * STATIC VARS
-   */
   SettingsStoreService.DBNAME = 'kmsscan.settings';
   SettingsStoreService.TABLENAME = 'mySettings';
 
@@ -23,13 +34,8 @@
     zooming: false
   };
 
-  /**
-   * Service Class
-   * @returns {{sync: sync, getAll: getAll}}
-   * @constructor
-   */
-  function SettingsStoreService($q, Logger, pouchDB) {
-    var log = new Logger('kmsscan.services.stores.Settings');
+  function SettingsStoreService($q, Logger, pouchDB, pouchDbUtilsService) {
+    var log = new Logger(namespace);
     var callbacks = [];
     var settingsDb;
     log.debug('init');
@@ -38,7 +44,6 @@
     var service = {
       get: get,
       set: set,
-
       init: init,
       onChange: onChange,
       offChange: offChange
@@ -48,18 +53,26 @@
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * @name init
+     * @description
+     * Initials the settings. So it checks if there are any settings. If not than
+     * it fills the database with the default values
+     *
+     * @returns {deferred.promise|{then, always}}
+     */
     function init() {
       var deferred = $q.defer();
       settingsDb.get(SettingsStoreService.TABLENAME)
-        .then(function(doc) {
+        .then(function (doc) {
           log.debug('init()', doc);
           deferred.resolve(doc);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           if (err.status === 404) {
             _init()
               .then(deferred.resolve)
-              .catch(function(err) {
+              .catch(function (err) {
                 log.error('catch() -> failed', err);
                 deferred.reject(err);
               });
@@ -71,43 +84,66 @@
       return deferred.promise;
     }
 
+    /**
+     * @name get
+     * @returns {deferred.promise|{then, always}} Object settings
+     */
     function get() {
       var deferred = $q.defer();
       settingsDb.get(SettingsStoreService.TABLENAME)
-        .then(function(doc) {
+        .then(function (doc) {
           log.debug('get()', doc);
           deferred.resolve(doc);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           log.error('catch() -> failed', err);
           deferred.reject(err);
         });
       return deferred.promise;
     }
 
+    /**
+     * @name set
+     * @param newSettings Object
+     * @returns {deferred.promise|{then, always}} Object settings
+     */
     function set(newSettings) {
       var deferred = $q.defer();
       settingsDb.get(SettingsStoreService.TABLENAME)
-        .then(function(doc) {
+        .then(function (doc) {
           return settingsDb.put(_parseSettings(newSettings, doc), doc._id, doc._rev);
         })
         .then(get)
-        .then(function(doc) {
+        .then(function (doc) {
           log.debug('update() -> success', doc);
           _fireOnChange(doc);
           deferred.resolve(doc);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           log.error('catch() -> failed', err);
           deferred.reject(err);
         });
       return deferred.promise;
     }
 
+    /**
+     * @name onChange
+     * @description
+     * Adds a new on-change listener
+     *
+     * @returns {Number} index
+     */
     function onChange(fn) {
       return callbacks.push(fn);
     }
 
+    /**
+     * @name offChange
+     * @description
+     * Removes a on-change listener with the given index.
+     *
+     * @param idx Number
+     */
     function offChange(idx) {
       callbacks.splice(idx, 1);
     }
@@ -136,12 +172,12 @@
       var deferred = $q.defer();
       settingsDb.put(SettingsStoreService.DEFAULTS, SettingsStoreService.TABLENAME)
         .then(get)
-        .then(function(doc) {
+        .then(function (doc) {
           log.debug('add() -> success', doc);
           _fireOnChange(doc);
           deferred.resolve(doc);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           log.error('add() -> failed', err);
           deferred.reject(err);
         });
@@ -149,11 +185,9 @@
     }
 
     function _activate() {
+      settingsDb = pouchDbUtilsService.createDb(SettingsStoreService.DBNAME);
       var deferred = $q.defer();
-      settingsDb = pouchDB(SettingsStoreService.DBNAME, {
-        adapter: 'websql'
-      });
-      deferred.resolve();
+      deferred.resolve(settingsDb);
       return deferred.promise;
     }
 
