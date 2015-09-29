@@ -1,3 +1,13 @@
+/**
+ * @name pouchDbUtilsService
+ * @module kmsscan.utils.PouchDb
+ * @author Gerhard Hirschfeld
+ *
+ * @description
+ * This Service Class has some useful helper function to
+ * work with the pouchDb lib.
+ *
+ */
 (function () {
   'use strict';
 
@@ -8,15 +18,14 @@
       'pouchdb',
       'kmsscan.utils.Logger'
     ])
-    .factory('pouchDbUtilsService', HelpersUtilsService);
+    .factory('pouchDbUtilsService', PouchDbUtilsService);
 
-  function HelpersUtilsService($q, pouchDB, Logger) {
+  function PouchDbUtilsService(pouchDB, Logger) {
     var log = new Logger(namespace);
 
     return {
       createDb: createDb,
       destroyDb: destroyDb
-
     };
 
     ////////////////////////////////////////////////////////
@@ -44,8 +53,8 @@
         return db.destroy();
       } catch (error) {
         log.error('destroyDb', error);
+        return;
       }
-
     }
 
   }

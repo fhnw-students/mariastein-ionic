@@ -1,6 +1,6 @@
 /**
  * @name roomsStoreService
- * @module kmsscan.services.stores.stores
+ * @module kmsscan.services.stores.Rooms
  * @author Gery Hirschfeld
  *
  * @description
