@@ -1,3 +1,12 @@
+/**
+ * @name DetailController
+ * @module kmsscan.views.Detail
+ * @author Gabriel Brunner
+ *
+ * @description
+ * This Controller is used for the detail.html page.
+ *
+ */
 (function () {
   'use strict';
 
