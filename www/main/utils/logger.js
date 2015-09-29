@@ -27,7 +27,6 @@
       }else{
         this.enabled = false;
       }
-
     }
 
     Logger.prototype.debug = function (text, object) {
@@ -52,20 +51,14 @@
       object = (_.isObject(text) || _.isArray(text))
         ? text
         : object;
-
       text = (_.isObject(text) || _.isArray(text))
         ? undefined
         : text;
-
       text = text || '';
-
       if (_.isBoolean(object)) {
         object = (object) ? 'YES' : 'NO';
       }
-
       object = object || '';
-
-
       var arrow = (text !== '' || object !== '') ? '=> ' : '';
       $log[type]('[' + getTimestamp() + ' - ' + this.name + '] ' + arrow + text, object);
     };
