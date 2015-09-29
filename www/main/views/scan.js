@@ -1,3 +1,13 @@
+/**
+ * @module kmsscan.views.Scan
+ * @author Gabriel Brunner
+ *
+ * @description
+ * This view opens the camera to scan the QR-Code of an object, but if no
+ * barcode scanner is available a input will appear to test the scan
+ * manually
+ *
+ */
 (function () {
   'use strict';
 
