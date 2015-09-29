@@ -40,7 +40,6 @@
     vm.saveSettings = saveSettings;
     vm.onLanguageChange = onLanguageChange;
 
-
     activate();
 
     ////////////////////////////////////////

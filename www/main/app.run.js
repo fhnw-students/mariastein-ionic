@@ -49,6 +49,9 @@
         var backup = [];
 
         initSettings()
+          .then(function (settings) {
+            $translate.use(settings.language);
+          })
           .then(function () {
             return $q.all([
               loadPages(0), // DE
