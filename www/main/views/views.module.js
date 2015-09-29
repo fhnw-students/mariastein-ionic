@@ -4,7 +4,7 @@
   var namespace = 'kmsscan.views';
 
   angular.module(namespace, [
-    namespace + '.Init',
+    //namespace + '.Init',
     namespace + '.Menu',
     namespace + '.NotFound',
     namespace + '.Welcome',

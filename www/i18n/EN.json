@@ -46,6 +46,7 @@
     "ZOOM":  "Text Zooming"
   },
   "MESSAGE": {
+    "INIT_PROGRESS": "Loading data from the server...",
     "NOT_FOUND": "No item was found. Please try again!",
     "SCAN": "scanning...",
     "SCAN_CANCELLED": "scanning cancelled",
