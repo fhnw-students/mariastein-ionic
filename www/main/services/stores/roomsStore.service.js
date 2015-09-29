@@ -11,7 +11,7 @@
 (function () {
   'use strict';
 
-  var namespace = 'kmsscan.services.stores.stores';
+  var namespace = 'kmsscan.services.stores.Rooms';
 
   angular
     .module(namespace, [
