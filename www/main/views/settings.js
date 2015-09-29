@@ -1,3 +1,12 @@
+/**
+ * @name SettingsController
+ * @module kmsscan.views.Settings
+ * @author Gabriel Brunner
+ *
+ * @description
+ * This Controller is used for the settings.html page.
+ *
+ */
 (function () {
   'use strict';
 
@@ -22,7 +31,7 @@
       });
   }
 
-  //syncIsActive
+
   function SettingsController(Logger, $rootScope, settingsStoreService) {
     var vm = this; // view-model
     var log = new Logger(namespace);
@@ -32,7 +41,7 @@
     vm.onLanguageChange = onLanguageChange;
 
     activate();
-    ///////////////////////////////
+
     function activate() {
       $rootScope.$on('onLanguageChange', function (event, langKey) {
         vm.settings.language = angular.uppercase(langKey);
