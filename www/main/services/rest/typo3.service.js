@@ -19,16 +19,7 @@
     .factory('typo3Service', Typo3Service);
 
   Typo3Service.BACKENDS = {
-    PROD: {
-      PAGES: 'http://kloster-mariastein.business-design.ch/index.php?id=137&type=5000',
-      ROOMS: 'http://kloster-mariastein.business-design.ch/index.php?id=138&type=5000',
-      FILES: 'http://kloster-mariastein.business-design.ch/'
-    },
-    DEV: {
-      PAGES: 'http://localhost:3000/pages',
-      ROOMS: 'http://localhost:3000/rooms',
-      FILES: 'http://localhost:3000/'
-    }
+    PROD: "http://kloster-mariastein.business-design.ch/"
   };
 
   function Typo3Service($q, $http, $cordovaFileTransfer, Logger) {
@@ -55,11 +46,13 @@
       log.debug('loadPages()', langKey);
       var deferred = $q.defer();
       $http({
-        url: Typo3Service.BACKENDS[env].PAGES,
+        url: Typo3Service.BACKENDS[env] + 'index.php',
         type: 'GET',
         dataType: 'json',
         params: {
-          L: langKey || 0
+          L: langKey || 0,
+          id: 137,
+          type: 5000
         }
       })
         .success(function (response) {
@@ -89,11 +82,13 @@
       log.debug('loadRooms()', langKey);
       var deferred = $q.defer();
       $http({
-        url: Typo3Service.BACKENDS[env].ROOMS,
+        url: Typo3Service.BACKENDS[env] + 'index.php',
         type: 'GET',
         dataType: 'json',
         params: {
-          L: langKey || 0
+          L: langKey || 0,
+          id: 138,
+          type: 5000
         }
       })
         .success(function (response) {
@@ -123,7 +118,7 @@
     function downloadImage(url, targetPath) {
       var deferred = $q.defer();
       if (window.cordova) {
-        url = Typo3Service.BACKENDS[env].FILES + url;
+        url = Typo3Service.BACKENDS[env] + url;
         var trustHosts = true;
         var options = {};
         log.debug('downloadImage()', url);
