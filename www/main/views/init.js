@@ -28,9 +28,13 @@
       }, 200);
     }
 
-    $rootScope.$on('kmsscan.run.activate.succeed', function () {
+    $rootScope.$on('kmsscan.run.activate.succeed', function (event, args) {
       log.info('kmsscan.run.activate.succeed');
-      $state.go('menu.welcome');
+      if(args.isPristine){
+        $state.go('menu.tutorial');
+      }else{
+        $state.go('menu.welcome');
+      }
     });
 
     $rootScope.$on('kmsscan.run.activate.failed', function () {
