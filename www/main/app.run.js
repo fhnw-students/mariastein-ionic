@@ -1,9 +1,19 @@
+/**
+ * @name app.run
+ * @module kmsscan.run
+ * @author Gerhard Hirschfeld
+ *
+ * @description
+ *
+ *
+ */
 (function () {
   'use strict';
 
-  angular.module('kmsscan.run', [
-    'kmsscan.utils.Logger',
+  var namespace = 'kmsscan.run';
 
+  angular.module(namespace, [
+    'kmsscan.utils.Logger',
     'kmsscan.services.stores.Settings',
     'kmsscan.services.rest.Typo3',
     'kmsscan.services.stores.Pages',
@@ -12,9 +22,9 @@
   ])
     .run(run);
 
-  function run($rootScope, $translate, $timeout, $q, $ionicPlatform, Logger,
-               typo3Service, pagesStoreService, roomsStoreService, settingsStoreService, imagesService) {
-    var log = new Logger('kmsscan.run');
+  function run($rootScope, $translate, $timeout, $q, $ionicPlatform, Logger, typo3Service, pagesStoreService,
+               roomsStoreService, settingsStoreService, imagesService) {
+    var log = new Logger(namespace);
 
     // Global Declarations
     $rootScope.syncIsActive = true;
