@@ -1,5 +1,6 @@
 {
-  "name": "HelloIonic",
+  "name": "mariastein-ionic",
+  "version": "0.0.0",
   "private": "true",
   "devDependencies": {
     "angular-mocks": "*",
