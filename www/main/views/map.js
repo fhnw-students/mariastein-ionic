@@ -1,3 +1,11 @@
+/**
+ * @module kmsscan.views.Map
+ * @author Ramon Herzig
+ *
+ * @description
+ * This state is used for display all rooms with objects to scan.
+ *
+ */
 (function () {
   'use strict';
 
