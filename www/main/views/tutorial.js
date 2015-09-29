@@ -1,5 +1,4 @@
 /**
- * @name tutorial
  * @module kmsscan.views.Tutorial
  * @author Roman Dyck
  *

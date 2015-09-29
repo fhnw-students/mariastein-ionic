@@ -1,5 +1,4 @@
 /**
- * @name SettingsController
  * @module kmsscan.views.Settings
  * @author Gabriel Brunner
  *

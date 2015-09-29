@@ -1,3 +1,11 @@
+/**
+ * @module kmsscan.views.Welcome
+ * @author Gabriel Brunner
+ *
+ * @description
+ * This state is used for the special-content "welcome"
+ *
+ */
 (function () {
   'use strict';
 
