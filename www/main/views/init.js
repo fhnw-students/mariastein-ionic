@@ -36,7 +36,6 @@
     $rootScope.$on('kmsscan.run.activate.failed', function () {
       log.error('kmsscan.run.activate.failed');
       $state.go('menu.welcome');
-      showOfflinePopup();
     });
 
     $rootScope.$on('kmsscan.run.offline', function () {
