@@ -76,7 +76,6 @@
 /**
 
 
-
  pagesStoreService.getNews('DE')
  .then(function (result) {
                 log.warn('getNews', result);

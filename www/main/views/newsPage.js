@@ -1,11 +1,10 @@
 (function () {
   'use strict';
 
-  var namespace = 'kmsscan.views.News';
+  var namespace = 'kmsscan.views.NewsPage';
 
   angular.module(namespace, [
     'kmsscan.utils.Logger',
-    'kmsscan.services.stores.News',
     'kmsscan.services.stores.Settings'
   ])
       .config(StateConfig)
@@ -26,7 +25,7 @@
   }
 
   function NewsPageController($window, $stateParams, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,
-                            $rootScope, Logger, newsPageStoreService, settingsStoreService, $scope) {
+                            $rootScope, Logger, settingsStoreService, $scope) {
     var vm = this; // view-model
     var log = new Logger(namespace);
     vm.doc = {};
