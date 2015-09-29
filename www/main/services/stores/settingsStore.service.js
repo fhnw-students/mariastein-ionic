@@ -34,7 +34,7 @@
     zooming: false
   };
 
-  function SettingsStoreService($q, Logger, pouchDB, pouchDbUtilsService) {
+  function SettingsStoreService($q, Logger, pouchDbUtilsService) {
     var log = new Logger(namespace);
     var callbacks = [];
     var settingsDb;

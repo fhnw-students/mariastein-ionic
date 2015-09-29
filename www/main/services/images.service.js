@@ -1,7 +1,7 @@
 /**
  * @name imagesService
  * @module kmsscan.services.Images
- * @author Gery Hirschfeld
+ * @author Gerhard Hirschfeld
  *
  * @description
  * This Service Class handel's the images of the typo3 pages and rooms data.
