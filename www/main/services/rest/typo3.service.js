@@ -19,7 +19,7 @@
     .factory('typo3Service', Typo3Service);
 
   Typo3Service.BACKENDS = {
-    PROD: "http://kloster-mariastein.business-design.ch/"
+    PROD: 'http://kloster-mariastein.business-design.ch/'
   };
 
   function Typo3Service($q, $http, $cordovaFileTransfer, Logger) {
