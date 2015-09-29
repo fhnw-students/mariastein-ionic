@@ -69,6 +69,7 @@
       return pagesDb.get(helpersUtilsService.buildDocId(uid, langKey))
         .then(function (page) {
           page.image = JSON.parse(page.image);
+          page.date = moment(page.date);
           return page;
         });
     }
@@ -111,6 +112,10 @@
         .then(function (results) {
           var docs = helpersUtilsService.filterDocsWithSameLangKey(results[0], langKey);
           docs = _appendVisitedDate(docs, results[1]);
+          docs = docs.map(function (doc) {
+            doc.date = moment(doc.date * 1000);
+            return doc;
+          });
           return docs
             .map(function (doc) {
               doc.image = JSON.parse(doc.image);
