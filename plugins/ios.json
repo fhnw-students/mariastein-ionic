@@ -46,7 +46,7 @@
                     "CoreGraphics.framework": [
                         {
                             "xml": false,
-                            "count": 1
+                            "count": 2
                         }
                     ],
                     "CoreImage.framework": [
@@ -85,6 +85,10 @@
                         {
                             "xml": "<feature name=\"Vibration\"><param name=\"ios-package\" value=\"CDVVibration\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"ios-package\" value=\"CDVInAppBrowser\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -112,6 +116,9 @@
             "PACKAGE_NAME": "com.ionicframework.mariasteinionic438093"
         },
         "cordova-plugin-transport-security": {
+            "PACKAGE_NAME": "com.ionicframework.mariasteinionic438093"
+        },
+        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.ionicframework.mariasteinionic438093"
         }
     },
