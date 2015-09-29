@@ -204,6 +204,7 @@
     function _parseObjects(data) {
       data = data.map(function (item) {
         var newItem = _getObject(item.content);
+        newItem.uid = item.uid;
         newItem.image = _parseImage(newItem.image);
         return newItem;
       });

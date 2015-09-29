@@ -114,7 +114,7 @@
       var queue = [];
       for (var key in images) {
         if (key) {
-          queue.push(typo3Service.downloadImage(images[key], getPath(images[key])));
+          queue.push(typo3Service.downloadImage(images[key], getPath(key)));
         }
       }
       return $q.all(queue);

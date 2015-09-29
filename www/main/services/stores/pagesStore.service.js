@@ -200,7 +200,7 @@
         .then(function () {
           return _sync(langKey, data);
         })
-        .then(_createIndex)
+        //.then(_createIndex)
         .then(function () {
           log.debug('success');
           deferred.resolve(data);
@@ -285,15 +285,18 @@
       var selector = {};
       if (key === 'uid') {
         value = parseInt(value, 10);
-      }else{
+      } else {
         value = value.toString();
       }
       selector[key] = {
         $eq: value
       };
-      pagesDb.find({
-        selector: selector
-      })
+      _createIndex(key)
+        .then(function () {
+          return pagesDb.find({
+            selector: selector
+          });
+        })
         .then(_setVisited)
         .then(function (uid) {
           log.debug('query() - success', uid);
@@ -350,10 +353,10 @@
       return deferred.promise;
     }
 
-    function _createIndex() {
+    function _createIndex(field) {
       return pagesDb.createIndex({
         index: {
-          fields: ['qrcode', 'uid', 'langkey']
+          fields: [field]
         }
       });
     }
