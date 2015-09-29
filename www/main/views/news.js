@@ -74,6 +74,10 @@
       return doc.visitedAt === undefined;
     }
 
+    function formatDate(date) {
+      return moment(date).format();
+    }
+
   }
 
 }());
