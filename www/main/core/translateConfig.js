@@ -1,3 +1,10 @@
+/**
+ * @module kmsscan.translateConfig
+ * @author Gerhard Hirschfeld
+ *
+ * @description
+ * This configuration defines the handle of the third-party-lib $translate
+ */
 (function () {
   'use strict';
 
@@ -16,7 +23,6 @@
       'DE', 'FR', 'EN', 'IT'
     ];
   }
-
 
   /**
    * @name TranslateConfig
