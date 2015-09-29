@@ -1,14 +1,24 @@
+/**
+ * @name Typo3 service test class
+ * @module kmsscan.services.rest.Typo3
+ * @author Luca Indermuehle
+ *
+ * @description
+ * This class tests the functionality of typo3.service.js
+ */
 'use strict';
 describe('Unit: kmsscan.services.rest.Typo3', function () {
 
   var typo3Service, $httpBackend, $rootScope, $q;
   beforeEach(module('kmsscan.services.rest.Typo3'));
 
+
   beforeEach(inject(function (_typo3Service_, _$httpBackend_, _$rootScope_, _$q_) {
     typo3Service = _typo3Service_;
     $httpBackend = _$httpBackend_;
     $rootScope = _$rootScope_;
     $q = _$q_;
+
   }));
 
   describe('Structure', function () {
@@ -27,32 +37,34 @@ describe('Unit: kmsscan.services.rest.Typo3', function () {
     );
   });
 
+  /**
+   * tests the public api from the typo3 service
+   */
   describe('Public API', function () {
-    //beforeEach(function() {
-    //
-    //});
 
-    //it('should return a promise', function () {
-      //expect(typo3Service.loadPages('DE').then).toBeDefined();
-    //});
+    it('typo3Service.loadPages(DE) - should return a correct json response with pages', function(done) {
 
+      /* ######### verify result ######### */
+      var testResult = function(res) {
+        expect(res.objects.length).to.be.equal(3);
+        expect(res.images.length).to.be.equal(2);
 
-    it('should fetch an employee', function(done) {
-      var testEmployee = function(res) {
-        console.log(res);
-        expect(res).to.be.a('object');
+        // Stichkontrollen beim einigen Eintraegen
+        expect(res.objects[0].title).to.be.equal('Seite 1');
+        expect(res.objects[1].uid).to.be.equal(2);
       };
 
       var failTest = function(error) {
         console.log(error);
+        failTest(error);
         //expect(error).toBeUndefined();
       };
 
-      $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/routing/klomaapp/page/json?L=DE')
-        .respond(pagesJson);
+      /* ######### Init test ######### */
+      $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000&L=DE&id=136&type=5000').respond(pagesJsonDE);
 
       typo3Service.loadPages('DE')
-        .then(testEmployee)
+        .then(testResult)
         .catch(failTest)
         .finally(done);
 
@@ -62,71 +74,69 @@ describe('Unit: kmsscan.services.rest.Typo3', function () {
 
     });
 
+    it('typo3Service.loadPages(FR) - should return a correct french json response with the pages', function(done) {
 
-    it('should simulate promise', inject(function ($q, $rootScope, typo3Service) {
+      /* ######### verify result ######### */
+      var testResult = function(res) {
+        expect(res.objects.length).to.be.equal(1);
+        expect(res.images.length).to.be.equal(0);
 
-      //var resolvedValue;
-      //
-      //typo3Service.loadPages('DE')
-      //  .then(function (res) {
-      //    console.log(res);
-      //    resolvedValue = res;
-      //  })
-      //  .catch(function (err) {
-      //    console.log(err);
-      //  });
-      //
-      //// Propagate promise resolution to 'then' functions using $apply().
-      //$rootScope.$apply();
-      //$rootScope.$digest();
-      //expect(resolvedValue).to.be.a('object');
-    }));
+        // Stichkontrollen beim einigen Eintraegen
+        expect(res.objects[0].title).to.be.equal('Seite 1 FR');
+      };
 
-    //it('should resolve with [something]', function () {
-    //  var data;
-    //
-    //  // set up a deferred
-    //  var deferred = $q.defer();
-    //  // get promise reference
-    //  var promise = deferred.promise;
-    //
-    //  // set up promise resolve callback
-    //  promise.then(function (response) {
-    //    data = response.success;
-    //
-    //    // make your actual test
-    //    expect(data).to.be.a('object');
-    //  });
-    //
-    //  typo3Service.loadPages('DE').then(function(response) {
-    //    // resolve our deferred with the response when it returns
-    //    deferred.resolve(response);
-    //  });
-    //
-    //  // force `$digest` to resolve/reject deferreds
-    //  $rootScope.$digest();
-    //
-    //
-    //});
+      var failTest = function(error) {
+        console.log(error);
+        failTest(error);
+        //expect(error).toBeUndefined();
+      };
 
-    //it('typo3Service.loadPages() - should return an object with pages and images',
-    //  inject(function(typo3Service, $rootScope, $httpBackend, $q) {
-    //    $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/routing/klomaapp/page/json?L=DE')
-    //      .respond(pagesJson);
-    //
-    //    typo3Service.loadPages('DE')
-    //      .then(function(res) {
-    //        console.log(res);
-    //        expect(res)
-    //          .to.be.a('object');
-    //      })
-    //      .catch(function(err) {
-    //        console.log(err);
-    //      });
-    //
-    //    $rootScope.$digest();
-    //  })
-    //);
+      /* ######### Init test ######### */
+      $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000&L=FR&id=136&type=5000').respond(pagesJsonFR);
+
+      typo3Service.loadPages('FR')
+          .then(testResult)
+          .catch(failTest)
+          .finally(done);
+
+      $rootScope.$digest();
+
+      $httpBackend.flush();
+
+    });
+
+    it('typo3Service.loadRooms(..) - should return a correct json response with rooms', function(done) {
+
+      /* ######### verify result ######### */
+      var testResult = function(res) {
+        /*expect(res.objects.length).to.be.equal(1);
+        expect(res.images.length).to.be.equal(0);
+
+        // Stichkontrollen beim einigen Eintraegen
+        expect(res.objects[0].title).to.be.equal('Seite 1 FR');*/
+      };
+
+      var failTest = function(error) {
+        console.log(error);
+        failTest(error);
+        //expect(error).toBeUndefined();
+      };
+
+      /* ######### Init test ######### */
+      $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json?L=DE').respond(pagesJsonFR);
+
+      typo3Service.loadRooms('DE')
+          .then(testResult)
+          .catch(failTest)
+          .finally(done);
+
+      $rootScope.$digest();
+
+      $httpBackend.flush();
+
+    });
+
   });
 
 });
+

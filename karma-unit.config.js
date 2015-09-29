@@ -18,9 +18,16 @@ module.exports = function (config) {
       'karma-firefox-launcher',
       'karma-phantomjs-launcher',
       'karma-mocha-reporter',
-      'karma-ng-html2js-preprocessor'
+      'karma-ng-html2js-preprocessor',
+      'karma-coverage'
     ],
-    files:   []
+    files:   [],
+      preprocessors: {
+          // source files, that you wanna generate coverage for
+          // do not include tests or libraries
+          // (these files will be instrumented by Istanbul)
+          'src/*.js': ['coverage']
+      }
   };
 
   // Test Lib files
