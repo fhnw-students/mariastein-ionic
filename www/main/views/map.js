@@ -1,11 +1,14 @@
-(function() {
+(function () {
   'use strict';
 
-  angular.module('kmsscan.views.Map', [
-      'kmsscan.utils.Logger',
-      'kmsscan.services.stores.Pages',
-      'kmsscan.services.stores.Settings'
-    ])
+  var namespace = 'kmsscan.views.Map';
+
+  angular.module(namespace, [
+    'kmsscan.utils.Logger',
+    'kmsscan.services.stores.Pages',
+    'kmsscan.services.stores.Rooms',
+    'kmsscan.services.stores.Settings'
+  ])
     .config(StateConfig)
     .controller('MapCtrl', MapController);
 
@@ -22,8 +25,8 @@
       });
   }
 
-  function MapController($q, $rootScope, Logger, settingsStoreService, roomsStoreService) {
-    var log = new Logger('kmsscan.views.Map');
+  function MapController($q, $scope, $rootScope, Logger, settingsStoreService, roomsStoreService, pagesStoreService) {
+    var log = new Logger(namespace);
     var vm = this; // view-model
     vm.isPending = true;
     vm.hasFailed = false;
@@ -37,23 +40,35 @@
       activate();
     }
 
-    settingsStoreService.onChange(function() {
+    var eventIndexOnChange = settingsStoreService.onChange(function () {
       activate();
+    });
+
+    $scope.$on('$destroy', function () {
+      settingsStoreService.offChange(eventIndexOnChange);
     });
     /////////////////////////////
     function activate() {
       settingsStoreService.get()
-        .then(function(settings) {
-          return roomsStoreService.getAll(settings.language);
+        .then(function (settings) {
+          return $q.all([
+            roomsStoreService.getAll(settings.language),
+            pagesStoreService.getVisited(settings.language)
+          ]);
         })
-        .then(function(rooms) {
-          log.debug('activate() -> succeed', rooms);
-          vm.rooms = rooms;
+        .then(function (results) {
+          log.debug('activate() -> succeed', results);
+          vm.rooms = results[0];
+          var counterObjectsInRooms = roomsStoreService.countObjectsInRooms(results[1]);
+          vm.rooms = vm.rooms.map(function (room) {
+            room.scannedObjects = counterObjectsInRooms[room.uid] || 0;
+            return room;
+          });
           vm.isPending = false;
           vm.hasFailed = false;
         })
-        .catch(function(err) {
-          log.error('Failed to load visited rooms!', err)
+        .catch(function (err) {
+          log.error('Failed to load visited rooms!', err);
           vm.isPending = false;
           vm.hasFailed = true;
         });

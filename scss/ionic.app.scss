@@ -1,12 +1,20 @@
 @font-face {
-  font-family: "ChaparralPro-Regular";
-  src:         url("../font/ChaparralPro-Regular.eot?") format("eot"),
-                 //      url("../font/ChaparralPro-Regular.woff2") format("woff2"), //      url("../font/ChaparralPro-Regular.woff") format("woff"), url("../font/ChaparralPro-Regular.ttf") format("truetype");
-  //      url("../font/ChaparralPro-Regular.svg#Samplino") format("svg");
+  font-family: "ZwoOT-Regular";
+  src:         url("../font/ZwoOT.otf") format("opentype");
 }
 
-$font-family-sans-serif: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !default;
-$font-family-serif: "ChaparralPro-Regular", serif !default;
+@font-face {
+  font-family: "ZwoOT-Bold";
+  src:         url("../font/ZwoOT-Italic.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "ZwoOT-Regular";
+  src:         url("../font/ZwoOT-Italic.otf") format("opentype");
+}
+
+$font-family-sans-serif: "ZwoOT-Regular", "Helvetica Neue", sans-serif !default;
+$font-family-serif: "ZwoOT-Bold", serif !default;
 $headings-font-family: $font-family-serif !default;
 
 /*
@@ -35,10 +43,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 .bar-header .title, .bar-header h1 {
   font-family: $headings-font-family;
-  font-weight: bold; // Bug fix until we have the original font files
   font-size:   1.6em; // Bug fix until we have the original font files
-  padding-top: 3px; // Bug fix until we have the original font files
-  font-style:  italic;
   color:       $positive !important;
 }
 
@@ -53,8 +58,6 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .item-content h2 {
   font-size:   1.2em;
   font-family: $headings-font-family;
-  // font-weight: bold;
-  // color: $positive !important;
 }
 
 .footer-button {
@@ -148,6 +151,16 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   color:dimgrey;
 }
 
+.map-list{
+  .item h2 {
+    font-size: 1.2em;
+    overflow: hidden;
+  }
+  .badge{
+    margin-top: 25px;
+  }
+}
+
 .detail-single-image{
   background-color: black;
   width: 100%;
@@ -178,26 +191,3 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     min-height: 80px;
   }
 }
-
-/* slider with box */
-//.slidebox{
-//  background-color: black;
-//  border:none;
-//}
-//.slidebox-slider {
-//  text-align: center;
-//}
-//.slidebox-img {
-//  height:200px;
-//}
-//.slidebox .slider-slides{
-//  height:220px;
-//}
-//.slidebox .slider-pager {
-//  background-color: white;
-//  bottom:0px;
-//  height:21px;
-//  margin-bottom:-1px;
-//  padding-top:5px;
-//}
-/* END: slider with box */

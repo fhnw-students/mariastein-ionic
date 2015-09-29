@@ -2,20 +2,20 @@
   "name": "mariastein-ionic",
   "version": "1.0.0",
   "description": "mariastein-ionic: An Ionic project",
-  "dependencies": {
-    "lodash": "^3.10.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "bower": "^1.3.3",
     "browser-sync": "^2.7.13",
     "gulp": "^3.5.6",
     "gulp-concat": "^2.2.0",
+    "gulp-jshint": "^1.11.2",
     "gulp-karma": "0.0.4",
     "gulp-minify-css": "^0.3.0",
     "gulp-rename": "^1.2.0",
-    "gulp-sass": "^1.3.3",
+    "gulp-sass": "2.0.4",
     "gulp-util": "^2.2.14",
     "jasmine-core": "^2.3.4",
+    "jshint-stylish": "^2.0.1",
     "karma": "*",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^0.1.7",
@@ -26,6 +26,8 @@
     "karma-ng-html2js-preprocessor": "^0.1.2",
     "karma-ng-scenario": "^0.1.0",
     "karma-phantomjs-launcher": "^0.2.0",
+    "lodash": "^3.10.0",
+    "node-sass": "3.3.3",
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
@@ -36,6 +38,7 @@
     "com.ionic.keyboard"
   ],
   "cordovaPlatforms": [
-    "ios"
+    "ios",
+    "android"
   ]
 }

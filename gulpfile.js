@@ -52,6 +52,20 @@ gulp.task('git-check', function (done) {
   done();
 });
 
+var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');
+
+/**
+ * JSHINT
+ * Checks the source code with some defined guidelines from the .jshintrc
+ */
+gulp.task('jshint', function () {
+  return gulp
+    .src('www/main/**/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter(stylish));
+});
+
 /**
  * TEST UNIT
  * Description

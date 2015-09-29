@@ -7,7 +7,7 @@
     .module(namespace, [
       namespace + '.Logger',
       namespace + '.Helpers',
-      namespace + '.SqlLite'
+      namespace + '.PouchDb'
     ]);
 
 })();

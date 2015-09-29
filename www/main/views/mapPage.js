@@ -1,11 +1,13 @@
-(function() {
+(function () {
   'use strict';
 
-  angular.module('kmsscan.views.MapPage', [
-      'kmsscan.utils.Logger',
-      'kmsscan.services.stores.Rooms',
-      'kmsscan.services.stores.Settings'
-    ])
+  var namespace = 'kmsscan.views.MapPage';
+
+  angular.module(namespace, [
+    'kmsscan.utils.Logger',
+    'kmsscan.services.stores.Rooms',
+    'kmsscan.services.stores.Settings'
+  ])
     .config(StateConfig)
     .controller('MapPageCtrl', MapPageController);
 
@@ -23,10 +25,9 @@
       });
   }
 
-  function MapPageController($q, $timeout, $window, $stateParams, $ionicModal, $ionicSlideBoxDelegate,
-    $ionicBackdrop, $ionicScrollDelegate, $rootScope, Logger, roomsStoreService, settingsStoreService) {
+  function MapPageController($scope, $stateParams, $rootScope, Logger, roomsStoreService, settingsStoreService) {
     var vm = this; // view-model
-    var log = new Logger('kmsscan.views.Detail');
+    var log = new Logger(namespace);
     vm.doc = {};
     vm.isPending = true;
     vm.hasFailed = false;
@@ -39,23 +40,27 @@
       activate();
     }
 
-    settingsStoreService.onChange(function() {
+    var eventIndexOnChange = settingsStoreService.onChange(function () {
       activate();
+    });
+
+    $scope.$on('$destroy', function () {
+      settingsStoreService.offChange(eventIndexOnChange);
     });
     /////////////////////////////
     function activate() {
       settingsStoreService.get()
-        .then(function(settings) {
+        .then(function (settings) {
           return roomsStoreService.get($stateParams.uid, settings.language);
         })
-        .then(function(doc) {
+        .then(function (doc) {
           log.debug('activate() -> succeed', doc);
           vm.doc = doc;
           vm.isPending = false;
           vm.hasFailed = false;
         })
-        .catch(function(err) {
-          log.error('Failed to load doc!', err)
+        .catch(function (err) {
+          log.error('Failed to load doc!', err);
           vm.isPending = false;
           vm.hasFailed = true;
         });
@@ -64,8 +69,6 @@
     function isReady() {
       return !$rootScope.syncIsActive && !vm.isPending;
     }
-
-
 
   }
 

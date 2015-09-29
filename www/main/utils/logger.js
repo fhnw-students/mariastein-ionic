@@ -13,7 +13,7 @@
     }
 
     Logger.prototype.debug = function (text, object) {
-      if(this.enabled){
+      if (this.enabled) {
         this._log('log', text, object);
       }
     };

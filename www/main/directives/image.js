@@ -1,10 +1,20 @@
 (function () {
   'use strict';
 
-  angular.module('kmsscan.directives.Image', [])
-    .directive('kmsImage', Image);
+  angular.module('kmsscan.directives.Image', [
+    'kmsscan.services.Images'
+  ])
+    .directive('kmsImage', ImageDirective);
 
-  function Image(imagesStoreService) {
+  /**
+   * @name kmsImage
+   * @description
+   * This directive creates the correct image source path.
+   *
+   * @example
+   * <kms-image image-id="doc.image[0]"></kms-image>
+   */
+  function ImageDirective(imagesService) {
     return {
       restrict: 'E',
       replace: true,
@@ -12,15 +22,8 @@
       scope: {
         imageId: '='
       },
-      link: function (scope, element, attrs) {
-
-        scope.imageSrc = imagesStoreService.getPath(scope.imageId);
-
-        scope.getImageSrc = function () {
-          return imagesStoreService.getPath(scope.imageId);
-        };
-
-
+      link: function (scope) {
+        scope.imageSrc = imagesService.getPath(scope.imageId);
       }
     };
   }

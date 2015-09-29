@@ -1,21 +1,31 @@
-(function() {
+/**
+ * @name typo3Service
+ * @module kmsscan.services.rest.Typo3
+ * @author Gery Hirschfeld
+ *
+ * @description
+ * This Service Class handel's all the ajax requestto the typo3 backend.
+ *
+ */
+(function () {
   'use strict';
 
+  var namespace = 'kmsscan.services.rest.Typo3';
+
   angular
-    .module('kmsscan.services.rest.Typo3', [
-      'kmsscan.utils.Logger',
-      'ngCordova'
+    .module(namespace, [
+      'kmsscan.utils.Logger'
     ])
     .factory('typo3Service', Typo3Service);
 
   Typo3Service.BACKENDS = {
     PROD: {
-      PAGES: 'http://kloster-mariastein.business-design.ch/routing/klomaapp/page/json',
+      PAGES: 'http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000',
       ROOMS: 'http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json',
       FILES: 'http://kloster-mariastein.business-design.ch/'
-        //Old:  http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000
-        //Page: http://kloster-mariastein.business-design.ch/routing/klomaapp/page/json
-        //Room: http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json
+      //Old:  http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000
+      //Page: http://kloster-mariastein.business-design.ch/routing/klomaapp/page/json
+      //Room: http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json
     },
     DEV: {
       PAGES: 'http://localhost:3000/pages',
@@ -24,51 +34,48 @@
     }
   };
 
-  /**
-   * Service Class
-   * @constructor
-   */
   function Typo3Service($q, $http, $cordovaFileTransfer, Logger) {
-    var log = new Logger('kmsscan.services.rest.Typo3');
+    var log = new Logger(namespace);
     var env = 'PROD';
 
-    log.debug('init');
-    var service = {
+    return {
       loadPages: loadPages,
       loadRooms: loadRooms,
       downloadImage: downloadImage
     };
 
-    return service;
-
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
     /**
+     * @name loadPages
+     * @description
+     * This method request all pages in one language from the
+     * typo3 backend.
      *
-     * @returns {deferred.promise|{then, always}}
+     * @param langKey String
+     * @returns {deferred.promise|{then, always}} Object
      */
     function loadPages(langKey) {
       log.debug('loadPages()', langKey);
       var deferred = $q.defer();
       $http({
-          url: Typo3Service.BACKENDS[env].PAGES,
-          type: 'GET',
-          dataType: 'json',
-          params: {
-            // id: 136,
-            // type: 5000,
-            L: langKey || 0
-          }
-        })
-        .success(function(response) {
+        url: Typo3Service.BACKENDS[env].PAGES,
+        type: 'GET',
+        dataType: 'json',
+        params: {
+          id: 136,
+          type: 5000,
+          L: langKey || 0
+        }
+      })
+        .success(function (response) {
           log.debug('loadPages() - success', response);
           var objects = _parseObjects(response);
-
           deferred.resolve({
             objects: objects,
             images: _parseImages(objects)
           });
         })
-        .error(function(err) {
+        .error(function (err) {
           log.error('loadPages() - failed', err);
           deferred.reject(err);
         });
@@ -76,30 +83,32 @@
     }
 
     /**
+     * @name loadRooms
      * @description
      * Request all the rooms from the typo3 backend
      *
-     * @returns {deferred.promise|{then}}
+     * @param langKey String
+     * @returns {deferred.promise|{then}} Object
      */
     function loadRooms(langKey) {
       log.debug('loadRooms()', langKey);
       var deferred = $q.defer();
       $http({
-          url: Typo3Service.BACKENDS[env].ROOMS,
-          type: 'GET',
-          dataType: 'json',
-          params: {
-            L: langKey || 0
-          }
-        })
-        .success(function(response) {
+        url: Typo3Service.BACKENDS[env].ROOMS,
+        type: 'GET',
+        dataType: 'json',
+        params: {
+          L: langKey || 0
+        }
+      })
+        .success(function (response) {
           log.debug('loadRooms() - success', response);
           deferred.resolve({
             images: _parseImagesFromRooms(response),
             rooms: _parseRooms(response)
           });
         })
-        .error(function(err) {
+        .error(function (err) {
           log.error('loadRooms() - failed', err);
           deferred.reject(err);
         });
@@ -107,32 +116,35 @@
     }
 
     /**
+     * @name downloadImage
+     * @description
+     * This function downloads the given image form the typo3 backend and
+     * stores the in the local device directory(targetPath).
      *
-     * @param url
-     * @param id
-     * @returns {deferred.promise|{then, always}}
+     * @param url String
+     * @param targetPath String
+     * @returns {deferred.promise|{then, always}} Object
      */
-    function downloadImage(url, id) {
+    function downloadImage(url, targetPath) {
       var deferred = $q.defer();
       if (window.cordova) {
         url = Typo3Service.BACKENDS[env].FILES + url;
-        var targetPath = cordova.file.documentsDirectory + id + '.png';
         var trustHosts = true;
         var options = {};
         log.debug('downloadImage()', url);
         $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
-          .then(function(result) {
+          .then(function (result) {
             log.debug('downloadImage() - success', result);
             deferred.resolve({
               targetPath: targetPath,
               image: result
             });
-          }, function(err) {
+          }, function (err) {
             log.error('downloadImage() - failed', err);
             deferred.reject(err);
           });
       } else {
-        setTimeout(function() {
+        setTimeout(function () {
           log.warn('Cordova is not available!');
           deferred.resolve({});
         }, 500);
@@ -141,19 +153,13 @@
     }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
-    /**
-     *
-     * @param data
-     * @returns {Array}
-     * @private
-     */
     function _parseRooms(data) {
       var rooms = data
-        .map(function(room) {
+        .map(function (room) {
           room.image = _parseImage(room.image);
           return room;
         })
-        .map(function(room) {
+        .map(function (room) {
           room.previewImageUid = _getImageByTitle(room.image, 'preview');
           room.mapImageUid = _getImageByTitle(room.image, 'map');
           delete room.image;
@@ -163,19 +169,13 @@
     }
 
     function _getImageByTitle(images, title) {
-      images = images.filter(function(image) {
+      images = images.filter(function (image) {
         return image.originalResource.title === title;
       });
       var image = (images.length > 0) ? images[0] : undefined;
       return (image) ? image.uid : image;
     }
 
-    /**
-     *
-     * @param data
-     * @returns {Array}
-     * @private
-     */
     function _parseImages(data) {
       var images = [];
       for (var i = 0; i < data.length; i++) {
@@ -185,17 +185,16 @@
           }
         }
       }
-      return _.uniq(images, function(item) {
+      return _.uniq(images, function (item) {
         return item.uid;
       });
     }
 
     function _parseImagesFromRooms(data) {
-      var roomsWithImages = [];
-      roomsWithImages = data.map(function(obj) {
-          return obj.image;
-        })
-        .map(function(image) {
+      var roomsWithImages = data.map(function (obj) {
+        return obj.image;
+      })
+        .map(function (image) {
           return _parseImage(image);
         });
 
@@ -203,22 +202,17 @@
       for (var r = roomsWithImages.length - 1; r >= 0; r--) {
         for (var i = roomsWithImages[r].length - 1; i >= 0; i--) {
           images.push(roomsWithImages[r][i]);
-        };
-      };
+        }
+      }
 
-      return _.uniq(images, function(item) {
+      return _.uniq(images, function (item) {
         return item.uid;
       });
     }
 
-    /**
-     *
-     * @param data
-     * @returns {Array|*}
-     * @private
-     */
+
     function _parseObjects(data) {
-      data = data.map(function(item) {
+      data = data.map(function (item) {
         var newItem = _getObject(item.content);
         newItem.image = _parseImage(newItem.image);
         return newItem;
@@ -227,12 +221,6 @@
       return data;
     }
 
-    /**
-     *
-     * @param obj
-     * @returns {*}
-     * @private
-     */
     function _getObject(obj) {
       for (var key in obj) {
         if (angular.isObject(obj)) {
@@ -242,16 +230,12 @@
       return {};
     }
 
-    /**
-     *
-     * @param images
-     * @returns {Array}
-     * @private
-     */
     function _parseImage(images) {
       var a = [];
       for (var key in images) {
-        a.push(images[key]);
+        if (key) {
+          a.push(images[key]);
+        }
       }
       return a;
     }
