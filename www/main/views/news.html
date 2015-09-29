@@ -1,35 +1,19 @@
 <ion-view view-title="{{ 'LABEL.NEWS' | translate }}">
-
-    <ion-content delegate-handle="scrollMain">
+    <ion-content>
 
         <kms-spinner ng-hide="news.isReady()"></kms-spinner>
 
-        <a class="item item-list-news news-image-slider" ng-if="news.isReady() && news.doc.image.length > 1">
-            <ion-scroll direction="x">
-                <kms-image ng-repeat="image in news.doc.image" image-id="image" ng-click="news.showImages($index)" class="image-list-thumb">
-                </kms-image>
-            </ion-scroll>
-        </a>
-
-        <div class="news-single-image">
-            <kms-image image-id="news.doc.image[0]" class="image-list-thumb" ng-if="news.isReady() && news.doc.image.length === 1"
-                       ng-click="news.showImages($index)"></kms-image>
-        </div>
-
-        <div class="padding" ng-if="news.isReady()">
-            <h3>{{news.doc.title}}</h3>
-
-            <ion-scroll ng-if="news.settings.zooming && news.enableZoom" zooming="{{news.settings.zooming}}" min-zoom="{{news.zoomMin}}" direction="xy" style="width: 100%;" delegate-handle="scrollHandle1" on-double-tap="news.zoom(1)" ng-style="{news: news.hgt2+ 'px'}">
-
-            </ion-scroll>
-
-            <div ng-if="!news.settings.zooming || !news.enableZoom" on-tap="news.scrollTop()">
-            </div>
-
-        </div>
+        <ion-list ng-if="news.isReady()">
+            <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="doc in news.news"
+                      ui-sref="menu.newsPage({uid: doc.uid})" ng-class="{unread:news.isUnread(doc)}">
+                <div class="kms-item-thumbnail-left">
+                    <kms-image image-id="doc.image[0]"></kms-image>
+                </div>
+                <h2>{{doc.title}}</h2>
+                <!--<p>{{doc.date.format('DD.MM.YYYY HH:MM')}}</p>-->
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+        </ion-list>
 
     </ion-content>
-    <ion-footer-bar class="footer-button">
-        <kms-scan-button></kms-scan-button>
-    </ion-footer-bar>
 </ion-view>

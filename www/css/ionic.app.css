@@ -9401,3 +9401,6 @@ a.button {
     margin-left: -80px;
     min-width: 80px;
     min-height: 80px; }
+
+.unread p, .unread h2 {
+  font-weight: bold; }

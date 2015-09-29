@@ -5,6 +5,7 @@
 
   angular.module(namespace, [
     'kmsscan.utils.Logger',
+    'kmsscan.services.stores.Pages',
     'kmsscan.services.stores.Settings'
   ])
       .config(StateConfig)
@@ -25,7 +26,7 @@
   }
 
   function NewsPageController($window, $stateParams, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,
-                            $rootScope, Logger, settingsStoreService, $scope) {
+                            $rootScope, Logger, settingsStoreService, $scope, pagesStoreService) {
     var vm = this; // view-model
     var log = new Logger(namespace);
     vm.doc = {};
@@ -64,7 +65,7 @@
       settingsStoreService.get()
           .then(function (settings) {
             vm.settings = settings;
-            return newsStoreService.get($stateParams.uid, settings.language);
+            return pagesStoreService.get($stateParams.uid, settings.language);
           })
           .then(function (doc) {
             log.debug('activate() -> succeed', doc);
@@ -136,6 +137,9 @@
       }
     }
 
+
+
+
   }
 
 }());
@@ -151,5 +155,14 @@
  .catch(function (err) {
                 log.error('getNews', err);
               });
+
+ pagesStoreService.visitedByUid(uid)
+ .then(function (result) {
+                log.warn('getNews', result);
+              })
+ .catch(function (err) {
+                log.error('getNews', err);
+              });
+
 
  **/

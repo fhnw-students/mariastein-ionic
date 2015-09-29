@@ -1,19 +1,29 @@
-<ion-view view-title="{{ 'LABEL.newsPage' | translate }}">
-    <ion-content>
+<ion-view view-title="{{ 'LABEL.NEWSPAGE' | translate }}">
+
+    <ion-content delegate-handle="scrollMain">
 
         <kms-spinner ng-hide="newsPage.isReady()"></kms-spinner>
 
-        <ion-list ng-if="newsPage.isReady()">
-            <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="doc in newsPage.pages" ui-sref="menu.detail({uid: doc.uid})">
-                <div class="kms-item-thumbnail-left">
-                    <kms-image image-id="doc.image[0]"></kms-image>
-                </div>
-                <h2>{{doc.title}}</h2>
-                <p>{{doc.scanedAt.format('DD.MM.YYYY HH:MM')}}</p>
-                <i class="icon ion-chevron-right icon-accessory"></i>
-            </ion-item>
-        </ion-list>
+        <a class="item item-list-newsPage newsPage-image-slider" ng-if="newsPage.isReady() && newsPage.doc.image.length > 1">
+            <ion-scroll direction="x">
+                <kms-image ng-repeat="image in newsPage.doc.image" image-id="image" ng-click="newsPage.showImages($index)" class="image-list-thumb">
+                </kms-image>
+            </ion-scroll>
+        </a>
+
+        <div class="newsPage-single-image">
+            <kms-image image-id="newsPage.doc.image[0]" class="image-list-thumb" ng-if="newsPage.isReady() && newsPage.doc.image.length === 1"
+                       ng-click="newsPage.showImages($index)"></kms-image>
+        </div>
+
+        <div class="padding" ng-if="newsPage.isReady()">
+            <h3>{{newsPage.doc.title}}</h3>
+
+
+        </div>
 
     </ion-content>
+    <ion-footer-bar class="footer-button">
+        <kms-scan-button></kms-scan-button>
+    </ion-footer-bar>
 </ion-view>
-

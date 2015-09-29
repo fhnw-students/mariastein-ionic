@@ -29,9 +29,10 @@
     var vm = this; // view-model
     vm.isPending = true;
     vm.hasFailed = false;
-    vm.pages = [];
+    vm.news = [];
 
     vm.isReady = isReady;
+    vm.isUnread = isUnread;
 
     if ($rootScope.syncIsActive) {
       $rootScope.$on('kmsscan.run.activate.succeed', activate);
@@ -50,11 +51,11 @@
     function activate() {
       settingsStoreService.get()
           .then(function (settings) {
-            return pagesStoreService.getVisited(settings.language);
+            return pagesStoreService.getNews(settings.language);
           })
-          .then(function (pages) {
-            log.debug('activate() -> succeed', pages);
-            vm.pages = pages;
+          .then(function (news) {
+            log.debug('activate() -> succeed', news);
+            vm.news = news;
             vm.isPending = false;
             vm.hasFailed = false;
           })
@@ -69,29 +70,10 @@
       return !$rootScope.syncIsActive && !vm.isPending;
     }
 
+    function isUnread(doc) {
+      return doc.visitedAt === undefined;
+    }
+
   }
 
 }());
-
-/**
-
-
- pagesStoreService.getNews('DE')
- .then(function (result) {
-                log.warn('getNews', result);
-              })
- .catch(function (err) {
-                log.error('getNews', err);
-              });
-
-
-
- pagesStoreService.visitedByUid(uid)
- .then(function (result) {
-                log.warn('getNews', result);
-              })
- .catch(function (err) {
-                log.error('getNews', err);
-              });
-
- **/
