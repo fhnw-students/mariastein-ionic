@@ -1,4 +1,13 @@
-(function () {
+/**
+ * @name tutorial
+ * @module kmsscan.views.Tutorial
+ * @author Roman Dyck
+ *
+ * @description
+ * This Class handel's the Tutorial behaviour.
+ *
+ */
+ (function () {
   'use strict';
 
   var namespace = 'kmsscan.views.Tutorial';
