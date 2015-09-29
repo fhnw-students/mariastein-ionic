@@ -1,3 +1,13 @@
+/**
+ * @name pagesStoreService
+ * @module kmsscan.services.stores.Pages
+ * @author Gery Hirschfeld
+ *
+ * @description
+ * This Service Class handel's the pages data. Pages data are objects to scan, special-contents
+ * or news. This service works with the local database pouchDb to store and sync the data.
+ *
+ */
 (function () {
   'use strict';
 
@@ -16,14 +26,16 @@
     PAGES: 'kmsscan.pages',
     HISTORY: 'kmsscan.history'
   };
+
+  PagesStoreService.TYPES = {
+    NEWS: 'news',
+    OBJECT: 'content',
+    SPECIAL: 'special-content'
+  };
+
   PagesStoreService.WELCOME_PAGE_UID = 3;
 
-  /**
-   * Service Class
-   * @returns {{sync: sync, getAll: getAll}}
-   * @constructor
-   */
-  function PagesStoreService($q, Logger, pouchDB, helpersUtilsService, pouchDbUtilsService) {
+  function PagesStoreService($q, Logger, helpersUtilsService, pouchDbUtilsService) {
     var log = new Logger(namespace);
     var pagesDb, historyDb;
     log.debug('init');
@@ -32,31 +44,59 @@
     var service = {
       get: get,
       getWelcomePage: getWelcomePage,
-
-      visited: visited,
-      getVisited: getVisited,
-
+      getNews: getNews,
+      getVisited: getVisitedObjects,
+      visited: visitedByQrCode,
+      visitedByUid: visitedByUid,
       sync: sync,
-      clean: _cleanPages
+      clean: clean,
+      cleanHistory: cleanHistory
     };
 
     _activate();
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
-    function getWelcomePage(langkey) {
-      return get(PagesStoreService.WELCOME_PAGE_UID, langkey);
-    }
-
-    function get(uid, langkey) {
-      return pagesDb.get(helpersUtilsService.buildDocId(uid, langkey))
+    /**
+     * @name get
+     * @description
+     * Returns a promise which resolves a doc with the given uid and langKey(like 'DE', 'EN' etc.)
+     *
+     * @param uid Number
+     * @param langKey String
+     * @returns Promise<doc>
+     */
+    function get(uid, langKey) {
+      return pagesDb.get(helpersUtilsService.buildDocId(uid, langKey))
         .then(function (page) {
           page.image = JSON.parse(page.image);
+          page.date = moment(page.date);
           return page;
         });
     }
 
-    function getVisited(langkey) {
+    /**
+     * @name getWelcomePage
+     * @description
+     * Returns the welcome page in the specified language
+     *
+     * @param langKey String
+     * @returns Promise<doc>
+     */
+    function getWelcomePage(langKey) {
+      return get(PagesStoreService.WELCOME_PAGE_UID, langKey);
+    }
+
+    /**
+     * @name getNews
+     * @description
+     * Returns all pages with the type news and appends the visited date
+     * from the history database
+     *
+     * @param langKey String
+     * @returns Promise<Array<doc>>
+     */
+    function getNews(langKey) {
       return $q.all([
         pagesDb.allDocs({
           'include_docs': true
@@ -67,11 +107,16 @@
       ])
         .then(_parseDocs)
         .then(function (results) {
-          var ids = _parseDocIds(results[1]);
-          var docs = helpersUtilsService.filterDocsWithSameLangKey(results[0], langkey);
-          docs = _filterVisitedDocs(docs, ids);
-          docs = _appendScanedDate(docs, results[1]);
-
+          results[0] = _filterByType(results[0], PagesStoreService.TYPES.NEWS);
+          return results;
+        })
+        .then(function (results) {
+          var docs = helpersUtilsService.filterDocsWithSameLangKey(results[0], langKey);
+          docs = _appendVisitedDate(docs, results[1]);
+          docs = docs.map(function (doc) {
+            doc.date = moment(doc.date * 1000);
+            return doc;
+          });
           return docs
             .map(function (doc) {
               doc.image = JSON.parse(doc.image);
@@ -80,36 +125,80 @@
         });
     }
 
-    function visited(qrcode) {
-      var deferred = $q.defer();
-      log.debug('visited()', qrcode);
-      //PageQRCode1
-      pagesDb.find({
-        selector: {
-          qrcode: {
-            $eq: qrcode
-          }
-        }
-      })
-        .then(_visited)
-        .then(function (uid) {
-          log.debug('query() - success', uid);
-          deferred.resolve(uid);
+    /**
+     * @name getVisitedObjects
+     * @description
+     * Returns all visited pages with the type content(Objects to scan).
+     *
+     * @param langKey String
+     * @returns Promise<Array<doc>>
+     */
+    function getVisitedObjects(langKey) {
+      return $q.all([
+        pagesDb.allDocs({
+          'include_docs': true
+        }),
+        historyDb.allDocs({
+          'include_docs': true
         })
-        .catch(function (err) {
-          log.error('query() - failed', err);
-          deferred.reject(err);
+      ])
+        .then(_parseDocs)
+        .then(function (results) {
+          results[0] = _filterByType(results[0], PagesStoreService.TYPES.OBJECT);
+          return results;
+        })
+        .then(function (results) {
+          var ids = _parseDocIds(results[1]);
+          var docs = helpersUtilsService.filterDocsWithSameLangKey(results[0], langKey);
+          docs = _filterVisitedDocs(docs, ids);
+          docs = _appendVisitedDate(docs, results[1]);
+          return docs
+            .map(function (doc) {
+              doc.image = JSON.parse(doc.image);
+              return doc;
+            });
         });
-
-      return deferred.promise;
     }
 
-    function sync(langkey, data) {
+    /**
+     * @name visitedByUid
+     * @description
+     * Sets a new visited date at the docs with the given uid
+     *
+     * @param uid Number
+     * @returns Promise<Number> uid
+     */
+    function visitedByUid(uid) {
+      return _visited('uid', uid);
+    }
+
+    /**
+     * @name visitedByQrCode
+     * @description
+     * Sets a new visited date at the docs with the given qrcode
+     *
+     * @param qrcode String
+     * @returns Promise<Number> uid
+     */
+    function visitedByQrCode(qrcode) {
+      return _visited('qrcode', qrcode);
+    }
+
+    /**
+     * @name sync
+     * @description
+     * This method is called by app.run.js for the synchronisation.
+     *
+     * @param langKey String
+     * @param data Array<Object>
+     * @returns deferred.promise|{then, always} data Array<Object>
+     */
+    function sync(langKey, data) {
       var deferred = $q.defer();
       log.debug('sync', data);
       _activate()
         .then(function () {
-          return _sync(langkey, data);
+          return _sync(langKey, data);
         })
         .then(_createIndex)
         .then(function () {
@@ -120,24 +209,44 @@
           log.error('failed', err);
           deferred.reject(err);
         });
-
       return deferred.promise;
     }
 
+    /**
+     * @name clean
+     * @description
+     * Destroys the local database with all the pages, but not the history of scans
+     *
+     * @returns {Promise.<Object>}
+     */
+    function clean() {
+      return pouchDbUtilsService.destroyDb(pagesDb);
+    }
+
+    function cleanHistory() {
+      return pouchDbUtilsService.destroyDb(historyDb);
+    }
+
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
-    function _appendScanedDate(docs, visited) {
+    function _filterByType(array, type) {
+      return array.filter(function (doc) {
+        return doc.type === type;
+      });
+    }
+
+    function _appendVisitedDate(docs, visited) {
       return docs.map(function (doc) {
-        doc.scanedAt = visited
+        doc.visitedAt = visited
           .filter(function (item) {
             return item._id === doc.uid.toString();
           })
           .map(function (item) {
-            return item.scanedAt;
+            return item.visitedAt;
           });
-        if (doc.scanedAt && doc.scanedAt.length > 0) {
-          doc.scanedAt = moment(doc.scanedAt[0]);
+        if (doc.visitedAt && doc.visitedAt.length > 0) {
+          doc.visitedAt = moment(doc.visitedAt[0]);
         } else {
-          doc.scanedAt = undefined;
+          doc.visitedAt = undefined;
         }
         return doc;
       });
@@ -171,16 +280,43 @@
       });
     }
 
-    function _visited(response) {
+    function _visited(key, value) {
+      var deferred = $q.defer();
+      var selector = {};
+      if (key === 'uid') {
+        value = parseInt(value, 10);
+      }else{
+        value = value.toString();
+      }
+      selector[key] = {
+        $eq: value
+      };
+      pagesDb.find({
+        selector: selector
+      })
+        .then(_setVisited)
+        .then(function (uid) {
+          log.debug('query() - success', uid);
+          deferred.resolve(uid);
+        })
+        .catch(function (err) {
+          log.error('query() - failed', err);
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function _setVisited(response) {
       var docs = response.docs;
       var id = docs[0].uid.toString();
-      var scanedAt = new Date();
+      var visitedAt = new Date();
       var deferred = $q.defer();
       log.debug('_visited', docs);
       if (_.isArray(docs) && docs.length > 0) {
         historyDb.get(id)
           .then(function (doc) {
-            doc.scanedAt = scanedAt;
+            doc.visitedAt = visitedAt;
             return historyDb.put(doc);
           })
           .then(function () {
@@ -189,7 +325,7 @@
           .catch(function (err) {
             if (err.status === 404) {
               historyDb.put({
-                scanedAt: scanedAt
+                visitedAt: visitedAt
               }, id)
                 .then(function (response) {
                   log.debug('add() -> success', response);
@@ -217,7 +353,7 @@
     function _createIndex() {
       return pagesDb.createIndex({
         index: {
-          fields: ['qrcode', 'langkey']
+          fields: ['qrcode', 'uid', 'langkey']
         }
       });
     }
@@ -272,9 +408,6 @@
       return deferred.promise;
     }
 
-    function _cleanPages() {
-      return pouchDbUtilsService.destroyDb(pagesDb);
-    }
 
   }
 })();

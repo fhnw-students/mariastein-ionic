@@ -5,7 +5,7 @@
  *
  * @description
  * This Service Class has some useful helper function to
- * work with the pouchDb
+ * work with the pouchDb lib.
  *
  */
 (function () {
@@ -18,15 +18,14 @@
       'pouchdb',
       'kmsscan.utils.Logger'
     ])
-    .factory('pouchDbUtilsService', HelpersUtilsService);
+    .factory('pouchDbUtilsService', PouchDbUtilsService);
 
-  function HelpersUtilsService(pouchDB, Logger) {
+  function PouchDbUtilsService(pouchDB, Logger) {
     var log = new Logger(namespace);
 
     return {
       createDb: createDb,
       destroyDb: destroyDb
-
     };
 
     ////////////////////////////////////////////////////////
@@ -54,8 +53,8 @@
         return db.destroy();
       } catch (error) {
         log.error('destroyDb', error);
+        return;
       }
-
     }
 
   }

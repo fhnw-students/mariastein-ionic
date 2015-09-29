@@ -15,6 +15,8 @@
     namespace + '.Scan',
     namespace + '.Detail',
     namespace + '.History',
+    namespace + '.News',
+    namespace + '.NewsPage',
     namespace + '.Settings'
 
   ]);

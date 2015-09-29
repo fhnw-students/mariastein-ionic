@@ -1,13 +1,27 @@
-<ion-view view-title="{{ 'LABEL.NEWS' | translate }}">
-    <ion-content>
+<ion-view view-title="{{ 'LABEL.NEWSPAGE' | translate }}">
 
-        <div class="padding">
-            <h3>{{newsPage.item.title}}</h3>
-            <p>{{newsPage.item.text}}</p>
+    <ion-content delegate-handle="scrollMain">
+
+        <kms-spinner ng-hide="newsPage.isReady()"></kms-spinner>
+
+        <a class="item item-list-newsPage newsPage-image-slider" ng-if="newsPage.isReady() && newsPage.doc.image.length > 1">
+            <ion-scroll direction="x">
+                <kms-image ng-repeat="image in newsPage.doc.image" image-id="image" ng-click="newsPage.showImages($index)" class="image-list-thumb">
+                </kms-image>
+            </ion-scroll>
+        </a>
+
+        <div class="newsPage-single-image">
+            <kms-image image-id="newsPage.doc.image[0]" class="image-list-thumb" ng-if="newsPage.isReady() && newsPage.doc.image.length === 1"
+                       ng-click="newsPage.showImages($index)"></kms-image>
+        </div>
+
+        <div class="padding" ng-if="newsPage.isReady()">
+            <h3>{{newsPage.doc.title}}</h3>
+
+
         </div>
 
     </ion-content>
-    <ion-footer-bar class="footer-button">
-        <kms-scan-button></kms-scan-button>
-    </ion-footer-bar>
+
 </ion-view>
