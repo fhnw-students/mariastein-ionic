@@ -4,7 +4,7 @@
         <kms-spinner ng-hide="news.isReady()"></kms-spinner>
 
         <ion-list ng-if="news.isReady()">
-            <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="doc in news.news"
+            <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="doc in news.news | orderBy:'-date'"
                       ui-sref="menu.newsPage({uid: doc.uid})" ng-class="{unread:news.isUnread(doc)}">
                 <div class="kms-item-thumbnail-left">
                     <kms-image image-id="doc.image[0]"></kms-image>
