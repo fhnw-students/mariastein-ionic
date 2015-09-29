@@ -49,7 +49,8 @@
       visited: visitedByQrCode,
       visitedByUid: visitedByUid,
       sync: sync,
-      clean: clean
+      clean: clean,
+      cleanHistory: cleanHistory
     };
 
     _activate();
@@ -222,6 +223,10 @@
       return pouchDbUtilsService.destroyDb(pagesDb);
     }
 
+    function cleanHistory() {
+      return pouchDbUtilsService.destroyDb(historyDb);
+    }
+
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
     function _filterByType(array, type) {
       return array.filter(function (doc) {
@@ -280,6 +285,8 @@
       var selector = {};
       if (key === 'uid') {
         value = parseInt(value, 10);
+      }else{
+        value = value.toString();
       }
       selector[key] = {
         $eq: value
@@ -287,11 +294,6 @@
       pagesDb.find({
         selector: selector
       })
-        //pagesDb.find({
-        //  selector: {
-        //    uid: {$eq: parseInt(value,10)}
-        //  }
-        //})
         .then(_setVisited)
         .then(function (uid) {
           log.debug('query() - success', uid);
@@ -351,7 +353,7 @@
     function _createIndex() {
       return pagesDb.createIndex({
         index: {
-          fields: ['uid', 'qrcode', 'langkey']
+          fields: ['qrcode', 'uid', 'langkey']
         }
       });
     }
