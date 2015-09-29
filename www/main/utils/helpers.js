@@ -1,3 +1,13 @@
+/**
+ * @name helpersUtilsService
+ * @module kmsscan.utils.Helpers
+ * @author Gerhard Hirschfeld
+ *
+ * @description
+ * This Service Class has some useful helper function, which are
+ * used in several other services or controllers
+ *
+ */
 (function () {
   'use strict';
 
