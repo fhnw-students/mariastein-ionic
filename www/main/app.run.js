@@ -47,9 +47,10 @@
       $ionicPlatform.ready(function () {
         log.debug('$ionicPlatform is ready');
         var backup = [];
-
+        var settings = {};
         initSettings()
-          .then(function (settings) {
+          .then(function (s) {
+            settings = s;
             $translate.use(settings.language);
           })
           .then(function () {
@@ -87,7 +88,9 @@
           .then(function (results) {
             $timeout(function () {
               $rootScope.syncIsActive = false;
-              $rootScope.$broadcast('kmsscan.run.activate.succeed');
+              $rootScope.$broadcast('kmsscan.run.activate.succeed', {
+                isPristine: settings.isPristine
+              });
             });
             log.debug('done', results);
           })
