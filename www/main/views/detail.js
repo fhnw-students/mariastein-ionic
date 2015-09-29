@@ -92,6 +92,7 @@
 
     function showLess() {
       vm.more = false;
+      $ionicScrollDelegate.scrollTop(true);
     }
 
     function showImages(index) {

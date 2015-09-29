@@ -1,15 +1,26 @@
+/**
+ * @name typo3Service
+ * @module kmsscan.services.rest.Typo3
+ * @author Gery Hirschfeld
+ *
+ * @description
+ * This Service Class handel's all the ajax requestto the typo3 backend.
+ *
+ */
 (function () {
   'use strict';
 
+  var namespace = 'kmsscan.services.rest.Typo3';
+
   angular
-    .module('kmsscan.services.rest.Typo3', [
+    .module(namespace, [
       'kmsscan.utils.Logger'
     ])
     .factory('typo3Service', Typo3Service);
 
   Typo3Service.BACKENDS = {
     PROD: {
-      PAGES: 'http://kloster-mariastein.business-design.ch/routing/klomaapp/page/json',
+      PAGES: 'http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000',
       ROOMS: 'http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json',
       FILES: 'http://kloster-mariastein.business-design.ch/'
       //Old:  http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000
@@ -23,27 +34,25 @@
     }
   };
 
-  /**
-   * Service Class
-   * @constructor
-   */
   function Typo3Service($q, $http, $cordovaFileTransfer, Logger) {
-    var log = new Logger('kmsscan.services.rest.Typo3');
+    var log = new Logger(namespace);
     var env = 'PROD';
 
-    log.debug('init');
-    var service = {
+    return {
       loadPages: loadPages,
       loadRooms: loadRooms,
       downloadImage: downloadImage
     };
 
-    return service;
-
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
     /**
+     * @name loadPages
+     * @description
+     * This method request all pages in one language from the
+     * typo3 backend.
      *
-     * @returns {deferred.promise|{then, always}}
+     * @param langKey String
+     * @returns {deferred.promise|{then, always}} Object
      */
     function loadPages(langKey) {
       log.debug('loadPages()', langKey);
@@ -53,15 +62,14 @@
         type: 'GET',
         dataType: 'json',
         params: {
-          // id: 136,
-          // type: 5000,
+          id: 136,
+          type: 5000,
           L: langKey || 0
         }
       })
         .success(function (response) {
           log.debug('loadPages() - success', response);
           var objects = _parseObjects(response);
-
           deferred.resolve({
             objects: objects,
             images: _parseImages(objects)
@@ -75,10 +83,12 @@
     }
 
     /**
+     * @name loadRooms
      * @description
      * Request all the rooms from the typo3 backend
      *
-     * @returns {deferred.promise|{then}}
+     * @param langKey String
+     * @returns {deferred.promise|{then}} Object
      */
     function loadRooms(langKey) {
       log.debug('loadRooms()', langKey);
@@ -106,26 +116,19 @@
     }
 
     /**
+     * @name downloadImage
+     * @description
+     * This function downloads the given image form the typo3 backend and
+     * stores the in the local device directory(targetPath).
      *
-     * @param url
-     * @param id
-     * @returns {deferred.promise|{then, always}}
+     * @param url String
+     * @param targetPath String
+     * @returns {deferred.promise|{then, always}} Object
      */
-    function downloadImage(url, id) {
+    function downloadImage(url, targetPath) {
       var deferred = $q.defer();
       if (window.cordova) {
         url = Typo3Service.BACKENDS[env].FILES + url;
-
-        var targetPath = '';
-        if (ionic.Platform.isIOS()) {
-          targetPath = cordova.file.documentsDirectory;
-        }
-        if (ionic.Platform.isAndroid()) {
-          targetPath = cordova.file.applicationStorageDirectory;
-        }
-
-        targetPath += id + '.png';
-
         var trustHosts = true;
         var options = {};
         log.debug('downloadImage()', url);
@@ -150,12 +153,6 @@
     }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
-    /**
-     *
-     * @param data
-     * @returns {Array}
-     * @private
-     */
     function _parseRooms(data) {
       var rooms = data
         .map(function (room) {
@@ -179,12 +176,6 @@
       return (image) ? image.uid : image;
     }
 
-    /**
-     *
-     * @param data
-     * @returns {Array}
-     * @private
-     */
     function _parseImages(data) {
       var images = [];
       for (var i = 0; i < data.length; i++) {
@@ -200,8 +191,7 @@
     }
 
     function _parseImagesFromRooms(data) {
-      var roomsWithImages = [];
-      roomsWithImages = data.map(function (obj) {
+      var roomsWithImages = data.map(function (obj) {
         return obj.image;
       })
         .map(function (image) {
@@ -220,12 +210,7 @@
       });
     }
 
-    /**
-     *
-     * @param data
-     * @returns {Array|*}
-     * @private
-     */
+
     function _parseObjects(data) {
       data = data.map(function (item) {
         var newItem = _getObject(item.content);
@@ -236,12 +221,6 @@
       return data;
     }
 
-    /**
-     *
-     * @param obj
-     * @returns {*}
-     * @private
-     */
     function _getObject(obj) {
       for (var key in obj) {
         if (angular.isObject(obj)) {
@@ -251,12 +230,6 @@
       return {};
     }
 
-    /**
-     *
-     * @param images
-     * @returns {Array}
-     * @private
-     */
     function _parseImage(images) {
       var a = [];
       for (var key in images) {

@@ -1,4 +1,13 @@
-(function () {
+/**
+ * @name tutorial
+ * @module kmsscan.views.Tutorial
+ * @author Roman Dyck
+ *
+ * @description
+ * This Class handel's the Tutorial behaviour.
+ *
+ */
+ (function () {
   'use strict';
 
   var namespace = 'kmsscan.views.Tutorial';
@@ -23,13 +32,14 @@
       });
   }
 
-  function TutorialController($timeout, $rootScope, settingsStoreService, Logger, $ionicSlideBoxDelegate) {
+  function TutorialController($window, $timeout, $rootScope, settingsStoreService, Logger, $ionicSlideBoxDelegate) {
     var vm = this; // view-model
     var log = new Logger(namespace);
 
     vm.settings = {};
-    vm.more = false;
+    vm.more = false;  //variable for more/less-text function
     vm.startSlide = 2; //start at this slideindex to skip settings for 2nd+ start of tutorial
+    vm.hgt = $window.innerHeight - 200; //window height for ion-scroll
 
     vm.isReady = isReady;
     vm.onLanguageChange = onLanguageChange;
@@ -79,6 +89,7 @@
         });
     }
 
+    //leave tutorial
     function historyGoBack() {
       if (vm.settings.isPristine) {
         vm.settings.isPristine = !vm.settings.isPristine;
@@ -109,10 +120,12 @@
       return $ionicSlideBoxDelegate.slidesCount() - 1;
     }
 
+    //show more text
     function showMore() {
       vm.more = true;
     }
 
+    //show less text
     function showLess() {
       vm.more = false;
     }

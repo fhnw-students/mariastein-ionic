@@ -2,7 +2,21 @@
   'use strict';
 
   angular.module('kmsscan.translateConfig', [])
+    .constant('languagesConstant', new Languages())
     .config(TranslateConfig);
+
+  /**
+   * @name Languages
+   * @description
+   * This is a constant in angular-js. The index is important for getting
+   * data from the typo3 backend
+   */
+  function Languages() {
+    return [
+      'DE', 'FR', 'EN', 'IT'
+    ];
+  }
+
 
   /**
    * @name TranslateConfig

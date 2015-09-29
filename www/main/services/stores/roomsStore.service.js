@@ -1,35 +1,31 @@
-(function() {
+/**
+ * @name roomsStoreService
+ * @module kmsscan.services.stores.stores
+ * @author Gery Hirschfeld
+ *
+ * @description
+ * This Service Class handel's the rooms data. It works with the local
+ * database pouchDb to store and sync the data.
+ *
+ */
+(function () {
   'use strict';
 
+  var namespace = 'kmsscan.services.stores.Rooms';
+
   angular
-    .module('kmsscan.services.stores.Rooms', [
+    .module(namespace, [
       'pouchdb',
-      'kmsscan.utils.Logger'
+      'kmsscan.utils.Logger',
+      'kmsscan.utils.Helpers',
+      'kmsscan.utils.PouchDb'
     ])
     .factory('roomsStoreService', RoomsStoreService);
 
-  /**
-   * Service Class
-   * @param $q
-   * @returns {{sync: sync, getAll: getAll}}
-   * @constructor
-   */
-
   RoomsStoreService.DBNAME = 'kmsscan.rooms';
 
-  RoomsStoreService.LANGUAGES = {
-    DE: 0,
-    0: 'DE',
-    FR: 1,
-    1: 'FR',
-    EN: 2,
-    2: 'EN',
-    IT: 3,
-    3: 'IT'
-  };
-
-  function RoomsStoreService(Logger, $q, pouchDB) {
-    var log = new Logger('kmsscan.services.stores.Rooms');
+  function RoomsStoreService(Logger, $q, helpersUtilsService, pouchDbUtilsService) {
+    var log = new Logger(namespace);
     var roomsDb;
     log.info('init');
 
@@ -48,45 +44,117 @@
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
-    function get(uid, langkey) {
-      return roomsDb.get(_id(uid, langkey))
-        .then(function(page) {
+    /**
+     * @name get
+     * @description
+     * Returns the doc with the _id <uid>-<langKey>.
+     *
+     * @param uid Number
+     * @param langKey String
+     * @returns Object<page>
+     */
+    function get(uid, langKey) {
+      return roomsDb.get(helpersUtilsService.buildDocId(uid, langKey))
+        .then(function (page) {
           return page;
         });
     }
 
-    function getAll(langkey) {
+    /**
+     * @name getAll
+     * @description
+     * Returns all docs with the given language.
+     *
+     * @param langKey String
+     * @returns Array<page>
+     */
+    function getAll(langKey) {
       return roomsDb.allDocs({
-          'include_docs': true
-        })
+        'include_docs': true
+      })
         .then(_parseDocs)
-        .then(function(results) {
-          return _filterDocsWithSameLangKey(results, langkey);
+        .then(function (results) {
+          return helpersUtilsService.filterDocsWithSameLangKey(results, langKey);
         });
     }
 
-    function sync(langkey, idx, data) {
+    /**
+     * @name sync
+     * @description
+     * This method is called by app.run.js for the synchronisation. It parses the images of
+     * the pages and rooms. Afterwards it downloads the images from the typo3 backend.
+     *
+     * @param langKey String
+     * @param idx Number
+     * @param data Array<Object>
+     * @returns deferred.promise|{then, always} rooms
+     */
+    function sync(langKey, idx, data) {
       var deferred = $q.defer();
       var rooms = data[idx].rooms;
       var pages = data[idx - data.length / 2].objects;
       var counterObjectsInRooms = countObjectsInRooms(pages);
       rooms = addCounter(rooms, counterObjectsInRooms);
-
       log.debug('sync', rooms);
       _activate()
-        .then(function() {
-          return _sync(langkey, rooms);
+        .then(function () {
+          return _sync(langKey, rooms);
         })
-        .then(function() {
+        .then(function () {
           log.debug('success');
           deferred.resolve(rooms);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           log.error('failed', err);
           deferred.reject(err);
         });
 
       return deferred.promise;
+    }
+
+    /**
+     * @name addCounter
+     * @description
+     * This method adds the amount property to the rooms doc.
+     *
+     * @param rooms Array<Object>
+     * @param counterObjectsInRooms
+     * @returns Array<Object>
+     */
+    function addCounter(rooms, counterObjectsInRooms) {
+      return rooms.map(function (room) {
+        room.amount = counterObjectsInRooms[room.uid] || 0;
+        return room;
+      });
+    }
+
+    /**
+     * @name countObjectsInRooms
+     * @description
+     * It counts the amount of Object in a single room.
+     *
+     * @param pages Array<pages>
+     * @returns Object with the counter results
+     */
+    function countObjectsInRooms(pages) {
+      var counter = {};
+      pages.map(function (page) {
+        if (page.room && page.room.uid) {
+          return page.room.uid;
+        }
+        return page.room;
+      })
+        .filter(function (roomId) {
+          return roomId !== undefined;
+        })
+        .map(function (roomId) {
+          if (roomId in counter) {
+            counter[roomId]++;
+          } else {
+            counter[roomId] = 1;
+          }
+        });
+      return counter;
     }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
@@ -100,25 +168,18 @@
 
     function _syncRoom(langkey, record) {
       var deferred = $q.defer();
-      var id = _id(record.uid, RoomsStoreService.LANGUAGES[langkey]);
-      record.langkey = RoomsStoreService.LANGUAGES[langkey];
-
+      record.langkey = helpersUtilsService.getLanguageKeyByValue(langkey);
+      var id = helpersUtilsService.buildDocId(record.uid, record.langkey);
       roomsDb.put(record, id)
-        .then(function(response) {
+        .then(function (response) {
           log.debug('add() -> success', response);
           deferred.resolve(response);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           log.error('add() -> failed', err);
           deferred.reject(err);
         });
       return deferred.promise;
-    }
-
-    function _filterDocsWithSameLangKey(array, langkey) {
-      return array.filter(function(doc) {
-        return langkey === doc.langkey;
-      });
     }
 
     function _parseDocs(response) {
@@ -133,49 +194,15 @@
       return item.doc;
     }
 
-    function addCounter(rooms, counterObjectsInRooms){
-      return rooms.map(function  (room) {
-        room.amount = counterObjectsInRooms[room.uid] || 0;
-        return room;
-      });
-    }
-
-    function countObjectsInRooms(pages) {
-      var counter = {};
-      pages.map(function(page) {
-          if (page.room && page.room.uid) {
-            return page.room.uid;
-          }
-          return page.room;
-        })
-        .filter(function(roomId) {
-          return roomId !== undefined;
-        })
-        .map(function(roomId) {
-          if (roomId in counter) {
-            counter[roomId]++;
-          } else {
-            counter[roomId] = 1;
-          }
-        });
-      return counter;
-    }
-
-    function _id(uid, langkey) {
-      return uid.toString() + '-' + langkey;
-    }
-
     function _activate() {
+      roomsDb = pouchDbUtilsService.createDb(RoomsStoreService.DBNAME);
       var deferred = $q.defer();
-      roomsDb = pouchDB(RoomsStoreService.DBNAME, {
-        adapter: 'websql'
-      });
-      deferred.resolve();
+      deferred.resolve(roomsDb);
       return deferred.promise;
     }
 
     function _clean() {
-      return roomsDb.destroy();
+      return pouchDbUtilsService.destroyDb(roomsDb);
     }
 
   }
