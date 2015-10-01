@@ -24,7 +24,7 @@
 
   RoomsStoreService.DBNAME = 'kmsscan.rooms';
 
-  function RoomsStoreService(Logger, $q, helpersUtilsService, pouchDbUtilsService) {
+  function RoomsStoreService(Logger, $q, helpersUtilsService, pouchDbUtilsService, imagesService) {
     var log = new Logger(namespace);
     var roomsDb;
     log.info('init');
@@ -56,6 +56,8 @@
     function get(uid, langKey) {
       return roomsDb.get(helpersUtilsService.buildDocId(uid, langKey))
         .then(function (page) {
+          page.previewImageUid = imagesService.getPath(page.previewImageUid);
+          page.mapImageUid = imagesService.getPath(page.mapImageUid);
           return page;
         });
     }
@@ -75,7 +77,14 @@
         .then(_parseDocs)
         .then(function (results) {
           return helpersUtilsService.filterDocsWithSameLangKey(results, langKey);
-        });
+        })
+        .then(function (results) {
+          return results.map(function (doc) {
+            doc.previewImageUid = imagesService.getPath(doc.previewImageUid);
+            doc.mapImageUid = imagesService.getPath(doc.mapImageUid);
+            return doc;
+          })
+        })
     }
 
     /**
@@ -91,10 +100,6 @@
      */
     function sync(rooms) {
       var deferred = $q.defer();
-      //var rooms = data[idx].rooms;
-      //var pages =  data[idx-1].objects; //data[idx - data.length / 2].objects;
-      //var counterObjectsInRooms = countObjectsInRooms(pages);
-      //rooms = addCounter(rooms, counterObjectsInRooms);
       log.debug('sync', rooms);
       _activate()
         .then(function () {
