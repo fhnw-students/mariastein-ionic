@@ -45,6 +45,7 @@
       get: get,
       getWelcomePage: getWelcomePage,
       getNews: getNews,
+      getNewsBadgeInfos: getNewsBadgeInfos,
       getVisited: getVisitedObjects,
       visited: visitedByQrCode,
       visitedByUid: visitedByUid,
@@ -102,6 +103,36 @@
      */
     function getWelcomePage(langKey) {
       return get(PagesStoreService.WELCOME_PAGE_UID, langKey);
+    }
+
+    function getNewsBadgeInfos(langKey) {
+      return $q.all([
+        pagesDb.allDocs({
+          'include_docs': true
+        }),
+        historyDb.allDocs({
+          'include_docs': true
+        })
+      ])
+        .then(_parseDocs)
+        .then(function (results) {
+          results[0] = _filterByType(results[0], PagesStoreService.TYPES.NEWS);
+          return results;
+        })
+        .then(function (results) {
+          var docs = helpersUtilsService.filterDocsWithSameLangKey(results[0], langKey);
+          docs = _appendVisitedDate(docs, results[1]);
+          //docs = docs.map(function (doc) {
+          //  doc.date = moment(doc.date * 1000);
+          //  return doc;
+          //});
+          var unread = docs.filter(function (doc) {
+            return !doc.visitedAt;
+          });
+          return {
+            unread: unread.length
+          };
+        });
     }
 
     /**
