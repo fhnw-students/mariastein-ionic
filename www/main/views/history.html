@@ -3,7 +3,7 @@
 
         <kms-spinner ng-hide="history.isReady()"></kms-spinner>
 
-        <ion-list ng-if="history.isReady() && history.pages.length > 0">
+        <ion-list ng-if="!history.noContent && history.isReady() && history.pages.length > 0">
             <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="doc in history.pages | orderBy:'-scanedAt'" ui-sref="menu.detail({uid: doc.uid})">
                 <div class="kms-item-thumbnail-left">
                     <kms-image image-id="doc.image[0]"></kms-image>
@@ -15,19 +15,15 @@
         </ion-list>
 
 
-        <div class="kmsscan-info-card" ng-if="history.pages.length === 0">
-            <div class="card">
-                <div class="item item-text-wrap item-icon-left">
-                    <i class="icon ion-information-circled"></i>
-                    {{'MESSAGE.EMPTY_HISTORY' | translate}}
-                </div>
-            </div>
+        <kms-info-card message="MESSAGE.NO_CONTENT" ng-if="history.noContent">
+            <kms-update-content-button></kms-update-content-button>
+        </kms-info-card>
 
-            <br/><br/><br/>
+        <kms-info-card message="MESSAGE.EMPTY_HISTORY" ng-if="!history.noContent && history.pages.length === 0">
             <a href="#/menu/scan" class="button button-large button-positive icon-left ion-qr-scanner">
                 {{'LABEL.SCAN' | translate}}
             </a>
-        </div>
+        </kms-info-card>
 
     </ion-content>
 </ion-view>

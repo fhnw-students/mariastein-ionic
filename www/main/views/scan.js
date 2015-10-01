@@ -34,13 +34,15 @@
       });
   }
 
-  function ScanController($cordovaBarcodeScanner, $ionicPlatform, $rootScope, $cordovaVibration, $state,
+  function ScanController($q, $cordovaBarcodeScanner, $ionicPlatform, $rootScope, $cordovaVibration, $state,
                           settingsStoreService, Logger, pagesStoreService) {
     var vm = this; // view-model
     var log = new Logger(namespace);
 
     vm.isBarcodeScannerReady = false;
+    vm.hasFailed = false;
     vm.isPending = true;
+    vm.noContent = false;
     vm.barcodeText = '';
     vm.settings = {};
 
@@ -51,10 +53,15 @@
     $ionicPlatform.ready(activate);
     //////////////////////////////////////////
     function activate() {
-      settingsStoreService.get()
-        .then(function (settings) {
-          vm.isPending = false;
-          vm.settings = settings;
+
+      $q.all([
+        settingsStoreService.get(),
+        pagesStoreService.isEmpty()
+      ])
+        .then(function (results) {
+          vm.settings = results[0];
+          vm.noContent = results[1];
+          vm.hasFailed = false;
 
           if (window.cordova) {
             vm.isBarcodeScannerReady = true;
@@ -62,7 +69,14 @@
           } else {
             log.warn('Barcode-Scanner is not available!');
           }
-        });
+        })
+        .catch(function (err) {
+          log.error('Failed to load visited pages!', err);
+          vm.hasFailed = true;
+        })
+        .finally(function () {
+          vm.isPending = false;
+        })
     }
 
     function scan() {

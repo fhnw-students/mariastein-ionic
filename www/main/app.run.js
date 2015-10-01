@@ -23,13 +23,12 @@
     var log = new Logger(namespace);
 
     // Global Declarations
-    $rootScope.syncIsActive = true;
     $rootScope.onLine = window.navigator.onLine;
     $rootScope.getImagePath = function (imageId) {
       return imagesService.getPath(imageId);
     };
 
-    syncService.run();
+    //syncService.run();
     onLanguageChange();
 
     /////////////////////////////////////////

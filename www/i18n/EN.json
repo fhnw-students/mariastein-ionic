@@ -59,6 +59,7 @@
     },
     "EMPTY_HISTORY": "No objects scanned yet, please scan an object!",
     "NOT_FOUND": "No item was found. Please try again!",
+    "NO_CONTENT": "No Contents available. Please connect to the internet and update your content!",
     "SCAN": "scanning...",
     "SCAN_CANCELLED": "scanning cancelled",
     "SCAN_WRONG_FORMAT": "wrong barcode format"

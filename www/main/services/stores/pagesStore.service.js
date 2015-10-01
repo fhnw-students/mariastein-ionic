@@ -48,6 +48,7 @@
       getVisited: getVisitedObjects,
       visited: visitedByQrCode,
       visitedByUid: visitedByUid,
+      isEmpty: isEmpty,
       sync: sync,
       clean: clean,
       cleanHistory: cleanHistory
@@ -57,6 +58,22 @@
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
+
+    function isEmpty() {
+      var deferred = $q.defer();
+      pagesDb.allDocs({
+        'include_docs': true
+      })
+        .then(function (result) {
+          deferred.resolve(result.total_rows < 1);
+        })
+        .catch(function (err) {
+
+          deferred.reject(err);
+        });
+      return deferred.promise;
+    }
+
     /**
      * @name get
      * @description
@@ -189,7 +206,6 @@
      * @description
      * This method is called by app.run.js for the synchronisation.
      *
-     * @param langKey String
      * @param data Array<Object>
      * @returns deferred.promise|{then, always} data Array<Object>
      */
@@ -378,16 +394,7 @@
     }
 
     function _parsePage(data) {
-      data = angular.copy(data);
-      data.room = data.room && data.room.uid;
-
-      if (data.image) {
-        data.image = data.image.map(function (image) {
-          return image.uid;
-        });
-        data.image = JSON.stringify(data.image);
-      }
-
+      data.image = JSON.stringify(data.image);
       return data;
     }
 

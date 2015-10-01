@@ -44,6 +44,7 @@
      * TODO
      */
     function run() {
+      $rootScope.syncIsActive = true;
       _showInitModal();
       $ionicPlatform.ready(function () {
         log.debug('$ionicPlatform is ready');
