@@ -1,10 +1,10 @@
 /**
  * @name DetailController
  * @module kmsscan.views.Detail
- * @author Gabriel Brunner
+ * @author Gabriel Brunner & David Heimgartner
  *
  * @description
- * This Controller is used for the detail.html page.
+ * This view shows the typo3 pages such as news or objects to scan
  *
  */
 (function () {
@@ -57,6 +57,7 @@
     vm.scrollTop = scrollTop;
     vm.zoom = zoom;
     vm.updateSlideStatus = updateSlideStatus;
+    vm.isNews = isNews;
 
     if ($rootScope.syncIsActive) {
       $rootScope.$on('kmsscan.run.activate.succeed', activate);
@@ -89,6 +90,10 @@
           vm.isPending = false;
           vm.hasFailed = true;
         });
+    }
+
+    function isNews() {
+      return vm.doc && vm.doc.type === 'news';
     }
 
     function isReady() {

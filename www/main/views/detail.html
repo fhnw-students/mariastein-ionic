@@ -20,24 +20,24 @@
             <h3>{{detail.doc.title}}</h3>
 
             <ion-scroll ng-if="detail.settings.zooming && detail.enableZoom" zooming="{{detail.settings.zooming}}" min-zoom="{{detail.zoomMin}}" direction="xy" style="width: 100%;" delegate-handle="scrollHandle1" on-double-tap="detail.zoom(1)" ng-style="{height: detail.hgt2+ 'px'}">
-                <p ng-bind-html="detail.doc.teaser"></p>
-                <button ng-if="!detail.more" class="button button-clear button-positive" on-tap="detail.showMore()">
+                <p ng-if="!detail.isNews()" ng-bind-html="detail.doc.teaser"></p>
+                <button ng-if="!detail.more && !detail.isNews()" class="button button-clear button-positive" on-tap="detail.showMore()">
                     {{'LABEL.MORE'|translate}}
                 </button>
-                <p ng-if="detail.more" ng-bind-html="detail.doc.content"></p>
-                <button ng-if="detail.more" class="button button-clear button-positive" on-tap="detail.showLess()">
+                <p ng-if="detail.more || detail.isNews()" ng-bind-html="detail.doc.content"></p>
+                <button ng-if="detail.more && !detail.isNews()" class="button button-clear button-positive" on-tap="detail.showLess()">
                     {{'LABEL.LESS'|translate}}
                 </button>
             </ion-scroll>
 
             <div ng-if="!detail.settings.zooming || !detail.enableZoom" on-tap="detail.scrollTop()">
-                <p ng-bind-html="detail.doc.teaser"></p>
-                <button ng-if="!detail.more" class="button button-clear button-positive" on-tap="detail.showMore()">
+                <p ng-if="!detail.isNews()" ng-bind-html="detail.doc.teaser"></p>
+                <button ng-if="!detail.more && !detail.isNews()" class="button button-clear button-positive"  on-tap="detail.showMore()">
                     {{'LABEL.MORE'|translate}}
                 </button>
-                <p ng-if="detail.more" ng-bind-html="detail.doc.content"></p>
+                <p ng-if="detail.more || detail.isNews()" ng-bind-html="detail.doc.content"></p>
 
-                <button ng-if="detail.more" class="button button-clear button-positive" on-tap="detail.showLess()">
+                <button ng-if="detail.more && !detail.isNews()" class="button button-clear button-positive" on-tap="detail.showLess()">
                     {{'LABEL.LESS'|translate}}
                 </button>
             </div>
@@ -45,7 +45,7 @@
         </div>
 
     </ion-content>
-    <ion-footer-bar class="footer-button">
+    <ion-footer-bar class="footer-button" ng-if="!detail.isNews()">
         <kms-scan-button></kms-scan-button>
     </ion-footer-bar>
 </ion-view>
