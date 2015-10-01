@@ -8,25 +8,25 @@
     'kmsscan.services.stores.Pages',
     'kmsscan.services.stores.Settings'
   ])
-      .config(StateConfig)
-      .controller('NewsPageCtrl', NewsPageController);
+    .config(StateConfig)
+    .controller('NewsPageCtrl', NewsPageController);
 
   function StateConfig($stateProvider) {
     $stateProvider
-        .state('menu.newsPage', {
-          url: '/newsPage/:uid',
-          views: {
-            'menuContent': {
-              templateUrl: 'main/views/newsPage.html',
-              controller: 'NewsPageCtrl as newsPage'
-            }
+      .state('menu.newsPage', {
+        url: '/newsPage/:uid',
+        views: {
+          'menuContent': {
+            templateUrl: 'main/views/newsPage.html',
+            controller: 'NewsPageCtrl as newsPage'
           }
+        }
 
-        });
+      });
   }
 
   function NewsPageController($window, $stateParams, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,
-                            $rootScope, Logger, settingsStoreService, $scope, pagesStoreService) {
+                              $rootScope, Logger, settingsStoreService, $scope, pagesStoreService) {
     var vm = this; // view-model
     var log = new Logger(namespace);
     vm.doc = {};
@@ -62,23 +62,27 @@
     });
     /////////////////////////////
     function activate() {
-      pagesStoreService.visitedByUid($stateParams.uid);
+      pagesStoreService.visitedByUid($stateParams.uid)
+        .then(function () {
+          $rootScope.$broadcast('kmsscan.views.newsPage.activated');
+        });
+      
       settingsStoreService.get()
-          .then(function (settings) {
-            vm.settings = settings;
-            return pagesStoreService.get($stateParams.uid, settings.language);
-          })
-          .then(function (doc) {
-            log.debug('activate() -> succeed', doc);
-            vm.doc = doc;
-            vm.isPending = false;
-            vm.hasFailed = false;
-          })
-          .catch(function (err) {
-            log.error('Failed to load doc!', err);
-            vm.isPending = false;
-            vm.hasFailed = true;
-          });
+        .then(function (settings) {
+          vm.settings = settings;
+          return pagesStoreService.get($stateParams.uid, settings.language);
+        })
+        .then(function (doc) {
+          log.debug('activate() -> succeed', doc);
+          vm.doc = doc;
+          vm.isPending = false;
+          vm.hasFailed = false;
+        })
+        .catch(function (err) {
+          log.error('Failed to load doc!', err);
+          vm.isPending = false;
+          vm.hasFailed = true;
+        });
     }
 
     function isReady() {
@@ -95,10 +99,10 @@
       $ionicModal.fromTemplateUrl(templateUrl, {
         scope: $scope
       })
-          .then(function (modal) {
-            vm.modal = modal;
-            vm.modal.show();
-          });
+        .then(function (modal) {
+          vm.modal = modal;
+          vm.modal.show();
+        });
     }
 
     function closeModal() {
@@ -110,14 +114,14 @@
       if (vm.settings.zooming) {
         vm.enableZoom = true;
         $ionicScrollDelegate.$getByHandle('scrollMain')
-            .scrollTo(0, 200, true);
+          .scrollTo(0, 200, true);
       }
     }
 
     function updateSlideStatus(slide) {
       var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide)
-          .getScrollPosition()
-          .zoom;
+        .getScrollPosition()
+        .zoom;
       if (zoomFactor === vm.zoomMin) {
         $ionicSlideBoxDelegate.enableSlide(true);
       } else {
@@ -127,18 +131,16 @@
 
     function zoom(slide) {
       var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide)
-          .getScrollPosition()
-          .zoom;
+        .getScrollPosition()
+        .zoom;
       if (zoomFactor === vm.zoomMin) {
         $ionicScrollDelegate.$getByHandle('scrollHandle' + slide)
-            .zoomBy(2, true);
+          .zoomBy(2, true);
       } else {
         $ionicScrollDelegate.$getByHandle('scrollHandle' + slide)
-            .zoomTo(1, true);
+          .zoomTo(1, true);
       }
     }
-
-
 
 
   }
