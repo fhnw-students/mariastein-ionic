@@ -4,6 +4,7 @@
 
         <ion-list ng-show="settings.isReady()">
 
+            <!-- Settings -->
             <ion-item class="item item-divider item-divider-text item-text-wrap">
                 {{'LABEL.TUTORIALSETTINGSVIBRATION' | translate}}
             </ion-item>
@@ -42,8 +43,27 @@
                             </select>
                         </span>
             </ion-item>
-
         </ion-list>
+
+        <br/><br/>
+
+        <!-- About -->
+        <ion-list>
+            <ion-item class="item item-divider item-divider-text item-text-wrap">
+                {{ 'LABEL.ABOUT' | translate }}
+            </ion-item>
+            <ion-item>{{ 'LABEL.VERSION' | translate }}<span class="item-note">0.0.0</span></ion-item>
+        </ion-list>
+
+        <br/><br/>
+
+        <kms-update-content-button class="button-full "></kms-update-content-button>
+
+        <button class="button button-full button-assertive icon-left ion-trash-a" ng-click="settings.destroyContent()">
+            {{ 'LABEL.DESTROY_CONTENT' | translate }}
+        </button>
+
+
     </ion-content>
 
 </ion-view>

@@ -7,6 +7,7 @@
     .module(namespace, [
       namespace + '.Logger',
       namespace + '.Helpers',
+      namespace + '.Parsers',
       namespace + '.PouchDb'
     ]);
 

@@ -17,7 +17,6 @@
     .module(namespace, [
       'pouchdb',
       'kmsscan.utils.Logger',
-      'kmsscan.utils.Helpers',
       'kmsscan.utils.PouchDb'
     ])
     .factory('settingsStoreService', SettingsStoreService);

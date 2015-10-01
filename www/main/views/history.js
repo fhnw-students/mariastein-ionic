@@ -29,6 +29,8 @@
     var vm = this; // view-model
     vm.isPending = true;
     vm.hasFailed = false;
+    vm.noContent = false;
+    vm.settings = {};
     vm.pages = [];
 
     vm.isReady = isReady;
@@ -48,20 +50,26 @@
     });
     /////////////////////////////
     function activate() {
-      settingsStoreService.get()
-        .then(function (settings) {
-          return pagesStoreService.getVisited(settings.language);
+      $q.all([
+        settingsStoreService.get(),
+        pagesStoreService.isEmpty()
+      ])
+        .then(function (results) {
+          vm.settings = results[0];
+          vm.noContent = results[1];
+          return pagesStoreService.getVisited(vm.settings.language);
         })
         .then(function (pages) {
           log.debug('activate() -> succeed', pages);
           vm.pages = pages;
-          vm.isPending = false;
           vm.hasFailed = false;
         })
         .catch(function (err) {
           log.error('Failed to load visited pages!', err);
-          vm.isPending = false;
           vm.hasFailed = true;
+        })
+        .finally(function () {
+          vm.isPending = false;
         });
     }
 

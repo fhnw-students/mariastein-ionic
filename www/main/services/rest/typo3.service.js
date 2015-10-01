@@ -14,6 +14,7 @@
 
   angular
     .module(namespace, [
+      'ngCordova',
       'kmsscan.utils.Logger'
     ])
     .factory('typo3Service', Typo3Service);
@@ -58,10 +59,11 @@
         .success(function (response) {
           log.debug('loadPages() - success', response);
           var objects = _parseObjects(response);
-          deferred.resolve({
-            objects: objects,
-            images: _parseImages(objects)
-          });
+          deferred.resolve(objects);
+          //{
+          //  objects: objects,
+          //  images: _parseImages(objects)
+          //});
         })
         .error(function (err) {
           log.error('loadPages() - failed', err);
@@ -92,11 +94,16 @@
         }
       })
         .success(function (response) {
-          log.debug('loadRooms() - success', response);
-          deferred.resolve({
-            images: _parseImagesFromRooms(response),
-            rooms: _parseRooms(response)
+          response = response.map(function (item) {
+            item.image = _parseImage(item.image);
+            return item;
           });
+          log.debug('loadRooms() - success', response);
+          deferred.resolve(response);
+          //{
+          //  images: _parseImagesFromRooms(response),
+          //  rooms: _parseRooms(response)
+          //});
         })
         .error(function (err) {
           log.error('loadRooms() - failed', err);
@@ -204,7 +211,7 @@
     function _parseObjects(data) {
       data = data.map(function (item) {
         var newItem = _getObject(item.content);
-        newItem.uid = item.uid;
+        newItem
         newItem.image = _parseImage(newItem.image);
         return newItem;
       });
