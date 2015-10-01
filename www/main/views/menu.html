@@ -5,6 +5,7 @@
             <h1 class="title">{{ 'LABEL.MENU' | translate }}</h1>
         </ion-header-bar>
         <ion-content>
+
             <ion-list>
 
                 <ion-item menu-close  class="item-icon-left" type="item-text-wrap" href="#/menu/scan">
@@ -25,6 +26,7 @@
                 <ion-item menu-close  class="item-icon-left" type="item-text-wrap" href="#/menu/news">
                     <i class="icon ion-chatbubble"></i>
                     {{ 'LABEL.NEWS' | translate }}
+                    <span class="badge badge-positive" ng-show="menu.getNewsBadgeInfos() > 0">{{menu.getNewsBadgeInfos()}}</span>
                 </ion-item>
 
                 <ion-item menu-close  class="item-icon-left" type="item-text-wrap" href="#/menu/welcome">
