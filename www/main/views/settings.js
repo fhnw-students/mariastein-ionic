@@ -12,7 +12,10 @@
   var namespace = 'kmsscan.views.Settings';
 
   angular.module(namespace, [
-    'kmsscan.services.stores.Settings'
+    'kmsscan.services.stores.Settings',
+    'kmsscan.services.Sync',
+    'kmsscan.services.stores.Pages',
+    'kmsscan.services.stores.Rooms'
   ])
     .config(StateConfig)
     .controller('SettingsCtrl', SettingsController);
@@ -31,7 +34,7 @@
   }
 
 
-  function SettingsController(Logger, $rootScope, settingsStoreService) {
+  function SettingsController(Logger, $rootScope, settingsStoreService, syncService, pagesStoreService, roomsStoreService) {
     var vm = this; // view-model
     var log = new Logger(namespace);
 
@@ -39,6 +42,8 @@
     vm.isReady = isReady;
     vm.saveSettings = saveSettings;
     vm.onLanguageChange = onLanguageChange;
+    vm.syncContent = syncContent;
+    vm.destroyContent = destroyContent;
 
     activate();
 
@@ -51,6 +56,17 @@
         log.debug('activate() - success', settings);
         vm.settings = settings;
       });
+    }
+
+    function destroyContent() {
+      //settingsStoreService.clean();
+      pagesStoreService.clean();
+      pagesStoreService.cleanHistory();
+      roomsStoreService.clean();
+    }
+
+    function syncContent() {
+      syncService.run();
     }
 
     function isReady() {

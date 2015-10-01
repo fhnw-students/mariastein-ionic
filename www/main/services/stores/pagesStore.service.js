@@ -193,22 +193,15 @@
      * @param data Array<Object>
      * @returns deferred.promise|{then, always} data Array<Object>
      */
-    function sync(langKey, data) {
+    function sync(data) {
       var deferred = $q.defer();
       log.debug('sync', data);
       _activate()
         .then(function () {
-          return _sync(langKey, data);
+          return _sync(data);
         })
-        //.then(_createIndex)
-        .then(function () {
-          log.debug('success');
-          deferred.resolve(data);
-        })
-        .catch(function (err) {
-          log.error('failed', err);
-          deferred.reject(err);
-        });
+        .then(deferred.resolve)
+        .catch(deferred.reject);
       return deferred.promise;
     }
 
@@ -361,20 +354,17 @@
       });
     }
 
-    function _sync(langkey, data) {
+    function _sync(data) {
       var queue = [];
       for (var i = 0; i < data.length; i++) {
-        queue.push(_syncPage(langkey, data[i]));
+        queue.push(_syncPage(data[i]));
       }
       return $q.all(queue);
     }
 
-    function _syncPage(langkey, record) {
+    function _syncPage(record) {
       var deferred = $q.defer();
-
-      record.langkey = helpersUtilsService.getLanguageKeyByValue(langkey);
-      var id = helpersUtilsService.buildDocId(record.uid, record.langkey);
-
+      var id = helpersUtilsService.buildDocId(record.uid, record.langKey);
       pagesDb.put(_parsePage(record), id)
         .then(function (response) {
           log.debug('add() -> success', response);

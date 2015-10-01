@@ -9418,3 +9418,11 @@ a.button {
 .init-slide-up > .ng-leave {
   -webkit-transition: all ease-in-out 250ms;
   transition: all ease-in-out 250ms; }
+
+.kmsscan-info-card {
+  text-align: center; }
+  .kmsscan-info-card i {
+    color: #456aa2; }
+  .kmsscan-info-card button {
+    padding-left: 45px;
+    padding-right: 45px; }

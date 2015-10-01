@@ -3,7 +3,7 @@
 
         <kms-spinner ng-hide="history.isReady()"></kms-spinner>
 
-        <ion-list ng-if="history.isReady()">
+        <ion-list ng-if="history.isReady() && history.pages.length > 0">
             <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="doc in history.pages | orderBy:'-scanedAt'" ui-sref="menu.detail({uid: doc.uid})">
                 <div class="kms-item-thumbnail-left">
                     <kms-image image-id="doc.image[0]"></kms-image>
@@ -12,7 +12,22 @@
                 <p>{{doc.visitedAt.format('DD.MM.YYYY HH:mm')}}</p>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </ion-item>
-        </ion-list> 
+        </ion-list>
+
+
+        <div class="kmsscan-info-card" ng-if="history.pages.length === 0">
+            <div class="card">
+                <div class="item item-text-wrap item-icon-left">
+                    <i class="icon ion-information-circled"></i>
+                    {{'MESSAGE.EMPTY_HISTORY' | translate}}
+                </div>
+            </div>
+
+            <br/><br/><br/>
+            <a href="#/menu/scan" class="button button-large button-positive icon-left ion-qr-scanner">
+                {{'LABEL.SCAN' | translate}}
+            </a>
+        </div>
 
     </ion-content>
 </ion-view>

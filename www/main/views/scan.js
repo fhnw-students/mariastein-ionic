@@ -15,6 +15,7 @@
 
   angular.module(namespace, [
     'kmsscan.utils.Logger',
+    'kmsscan.services.stores.Settings',
     'kmsscan.services.stores.Pages'
   ])
     .config(StateConfig)
@@ -46,7 +47,6 @@
     vm.isReady = isReady;
     vm.scan = scan;
     vm.submit = submit;
-    vm.destroy = destroy;
 
     $ionicPlatform.ready(activate);
     //////////////////////////////////////////
@@ -63,12 +63,6 @@
             log.warn('Barcode-Scanner is not available!');
           }
         });
-    }
-
-    function destroy() {
-      pagesStoreService.clean();
-      pagesStoreService.cleanHistory();
-      settingsStoreService.clean();
     }
 
     function scan() {

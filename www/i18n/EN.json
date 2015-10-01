@@ -2,6 +2,10 @@
   "LABEL": {
     "BACK":  "Back",
     "CITY":  "Mariastein",
+    "ABOUT":  "About",
+    "VERSION":  "Version",
+    "UPDATE_CONTENT":  "Update Content",
+    "DESTROY_CONTENT":  "Destroy Content",
     "CLOSE":  "Close",
     "CONTACT":  "Contact",
     "CONTACT_NAME":  "Benediktinerkloster Mariastein",
@@ -46,7 +50,14 @@
     "ZOOM":  "Text Zooming"
   },
   "MESSAGE": {
-    "INIT_PROGRESS": "Loading data from the server...",
+    "SYNC": {
+      "DEVICE": "Waiting of device...",
+      "DATA": "Loading data from the server...",
+      "STORE": "Saving data...",
+      "IMAGES": "Loading images from the server...",
+      "SUCCESS": "Synchronisation was successful"
+    },
+    "EMPTY_HISTORY": "No objects scanned yet, please scan an object!",
     "NOT_FOUND": "No item was found. Please try again!",
     "SCAN": "scanning...",
     "SCAN_CANCELLED": "scanning cancelled",
