@@ -15,8 +15,8 @@
   angular
     .module(namespace, [
       'kmsscan.utils.Logger',
-      'kmsscan.services.stores.Settings',
       'kmsscan.services.rest.Typo3',
+      'kmsscan.services.stores.Settings',
       'kmsscan.services.stores.Pages',
       'kmsscan.services.stores.Rooms',
       'kmsscan.services.Images',

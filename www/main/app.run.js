@@ -28,7 +28,7 @@
       return imagesService.getPath(imageId);
     };
 
-    //syncService.run();
+    syncService.run();
     onLanguageChange();
 
     /////////////////////////////////////////

@@ -14,6 +14,7 @@
 
   angular
     .module(namespace, [
+      'ngCordova',
       'kmsscan.utils.Logger'
     ])
     .factory('typo3Service', Typo3Service);
