@@ -2,18 +2,23 @@
     <ion-content>
 
         <kms-spinner ng-hide="news.isReady()"></kms-spinner>
+        <div ng-if="news.isReady()">
 
-        <ion-list ng-if="news.isReady()">
-            <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="doc in news.news | orderBy:'-date'"
-                      ui-sref="menu.detail({uid: doc.uid})" ng-class="{unread:news.isUnread(doc)}">
-                <div class="kms-item-thumbnail-left">
-                    <kms-image image-id="doc.image[0]"></kms-image>
-                </div>
-                <h2>{{doc.title}}</h2>
-                <p>{{doc.date.format('DD.MM.YYYY HH:mm')}}</p>
-                <i class="icon ion-chevron-right icon-accessory"></i>
-            </ion-item>
-        </ion-list>
+            <ion-list>
+                <ion-item class="item item-thumbnail-left item-icon-right"
+                          ng-repeat="doc in news.news | orderBy:'-date'"
+                          ui-sref="menu.detail({uid: doc.uid})" ng-class="{unread:news.isUnread(doc)}">
+
+                    <img ng-src="{{doc.image[0]}}"/>
+
+                    <h2>{{doc.title}}</h2>
+
+                    <p>{{doc.date.format('DD.MM.YYYY HH:mm')}}</p>
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+
+                </ion-item>
+            </ion-list>
+        </div>
 
     </ion-content>
 </ion-view>
