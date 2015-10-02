@@ -17,11 +17,19 @@
    * @example
    * <kms-scan-button></kms-scan-button>
    */
-  function ScanButton() {
+  function ScanButton($ionicHistory, $state) {
     return {
       restrict:    'E',
       replace:     true,
-      templateUrl: 'main/directives/scanButton.html'
+      templateUrl: 'main/directives/scanButton.html',
+      link: function (scope) {
+        scope.scan = function () {
+          $ionicHistory.nextViewOptions({
+            disableBack: true
+          });
+          $state.go('menu.scan');
+        }
+      }
     };
   }
 
