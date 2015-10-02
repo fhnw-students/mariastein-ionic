@@ -62,14 +62,12 @@
         .then(function (settings) {
           log.debug('activate() - success', settings);
           vm.settings = settings;
-          console.log('isPristine: ' + vm.settings.isPristine);
           if (vm.settings.isPristine) {
             vm.startSlide = 0;
           }
           $timeout(function () {
             $ionicSlideBoxDelegate.slide(vm.startSlide);
           });
-
           settings.isPristine = false;
           settingsStoreService.set(settings);
         });
