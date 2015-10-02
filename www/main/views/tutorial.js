@@ -37,7 +37,8 @@
 
     vm.settings = {};
     vm.more = false;  //variable for more/less-text function
-    vm.startSlide = 2; //start at this slideindex to skip settings for 2nd+ start of tutorial
+    vm.startSlide = 0; //start at this slideindex to skip settings for 2nd+ start of tutorial
+    $ionicSlideBoxDelegate.stop();
     vm.hgt = $window.innerHeight - 200; //window height for ion-scroll
 
     vm.isReady = isReady;
@@ -65,10 +66,10 @@
           if (vm.settings.isPristine) {
             vm.startSlide = 0;
           }
-          $timeout(function () {
-            $ionicSlideBoxDelegate.slide(vm.startSlide);
-          });
+          $ionicSlideBoxDelegate.slide(vm.startSlide);
+          $ionicSlideBoxDelegate.start();
           settings.isPristine = false;
+          settings.isPending = true;
           settingsStoreService.set(settings);
         });
     }

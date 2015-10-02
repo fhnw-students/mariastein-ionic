@@ -4,7 +4,7 @@
 
         <kms-spinner ng-hide="tutorial.isReady()"></kms-spinner>
 
-        <div id="tutorial-big-div" ng-show="tutorial.isReady()">
+        <div id="tutorial-big-div" ng-if="tutorial.isReady()">
 
             <ion-slide-box active-slide="tutorial.startSlide">
                 <ion-slide>
@@ -118,6 +118,7 @@
                 </ion-slide>
             </ion-slide-box>
         </div>
+
         <div class="bar bar-footer bar-light" ng-if="tutorial.isReady()">
             <a class="button icon-left ion-chevron-left button-clear button-dark"
                ng-disabled="tutorial.getSlideIndex()==0" ng-click="tutorial.prevSlide()">
