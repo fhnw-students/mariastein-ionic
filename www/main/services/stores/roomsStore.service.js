@@ -28,7 +28,6 @@
   function RoomsStoreService(Logger, $q, helpersUtilsService, pouchDbUtilsService, imagesService) {
     var log = new Logger(namespace);
     var roomsDb;
-    log.info('init');
 
     // Public API
     var service = {
