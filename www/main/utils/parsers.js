@@ -23,7 +23,6 @@
       parsePagesFromTypo3Response: parsePagesFromTypo3Response,
       parseRoomsFromTypo3Response: parseRoomsFromTypo3Response,
       parseImagesFromTypo3Response: parseImagesFromTypo3Response
-
     };
 
     ////////////////////////////////////////////////////////
@@ -37,7 +36,8 @@
         .filter(_filterPageResponses)
         .map(_parseImages)
         .map(_parseRooms)
-        .map(_setLanguageKey);
+        .map(_setLanguageKey)
+        .map(_parseTexts);
       return pages
     }
 
@@ -61,7 +61,8 @@
             return room;
           });
         })
-        .map(_setLanguageKey);
+        .map(_setLanguageKey)
+        .map(_parseTexts);
       return rooms
     }
 
@@ -136,6 +137,30 @@
       return (image) ? image.uid : image;
     }
 
+  }
+
+  function _parseTexts(p) {
+    return p.map(function(page){
+      if(page.teaser && _.isString(page.teaser)){
+        page.teaser = _parseText(page.teaser);
+      }
+      if(page.content && _.isString(page.content)){
+        page.content = _parseText(page.content);
+      }
+      return page;
+    });
+  }
+
+  function _parseText(text) {
+    return text
+      .split('')
+      .map(function (char) {
+        if(char.charCodeAt(0) === 10){
+          return '<br/>';
+        }
+        return char;
+      })
+      .join('');
   }
 
   //function parseImages(results) {
