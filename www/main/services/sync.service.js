@@ -165,18 +165,20 @@
       }
 
       function goTo(stateId) {
-        $ionicHistory.clearHistory();
-        $ionicHistory.nextViewOptions({
-          disableBack: true
-        });
-        $state.go(stateId);
+        $timeout(function () {
+          $ionicHistory.clearHistory();
+          $ionicHistory.nextViewOptions({
+            disableBack: true
+          });
+          $state.go(stateId);
+        }, 200);
       }
 
       $timeout(function () {
         $rootScope.$broadcast('kmsscan.run.activate.succeed');
         $rootScope.initLoadingModal.hide();
         $rootScope.syncIsActive = false;
-      }, 600);
+      }, 800);
       log.debug('done', results);
     }
 
