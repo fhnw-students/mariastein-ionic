@@ -20,10 +20,10 @@
             </ion-toggle>
 
             <!--<ion-item class="item item-divider item-divider-text item-text-wrap">-->
-                <!--{{'LABEL.TUTORIALSETTINGSMUSIC' | translate}}-->
+            <!--{{'LABEL.TUTORIALSETTINGSMUSIC' | translate}}-->
             <!--</ion-item>-->
             <!--<ion-toggle ng-model="settings.settings.music" ng-change="settings.saveSettings()"-->
-                        <!--toggle-class="toggle-calm">{{ 'LABEL.MUSIC' | translate }}-->
+            <!--toggle-class="toggle-calm">{{ 'LABEL.MUSIC' | translate }}-->
             <!--</ion-toggle>-->
 
             <ion-item class="item item-divider item-divider-text item-text-wrap">
@@ -57,12 +57,14 @@
 
         <br/><br/>
 
-        <kms-update-content-button class="button-full "></kms-update-content-button>
+        <div class="padding">
+            <kms-update-content-button class="button-block button-outline"></kms-update-content-button>
 
-        <button class="button button-full button-assertive icon-left ion-trash-a" ng-click="settings.destroyContent()">
-            {{ 'LABEL.DESTROY_CONTENT' | translate }}
-        </button>
-
+            <button class="button button-block button-assertive button-outline icon-left ion-trash-a"
+                    ng-click="settings.destroyContent()">
+                {{ 'LABEL.DESTROY_CONTENT' | translate }}
+            </button>
+        </div>
 
     </ion-content>
 
