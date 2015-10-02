@@ -86,8 +86,6 @@
                 $rootScope.$broadcast('kmsscan.views.newsPage.activated');
               });
           }
-
-
           log.debug('activate() -> succeed', doc);
           vm.doc = doc;
           vm.isPending = false;
