@@ -31,7 +31,8 @@
       });
   }
 
-  function TutorialController($window, $timeout, $rootScope, settingsStoreService, Logger, $ionicSlideBoxDelegate) {
+  function TutorialController($window, $state, $rootScope, settingsStoreService, Logger, $ionicSlideBoxDelegate,
+                              $ionicHistory) {
     var vm = this; // view-model
     var log = new Logger(namespace);
 
@@ -93,10 +94,14 @@
     //leave tutorial
     function historyGoBack() {
       if (vm.settings.isPristine) {
-        vm.settings.isPristine = !vm.settings.isPristine;
-        saveSettings();
+        $ionicHistory.nextViewOptions({
+          disableBack: true
+        });
+        $state.go('menu.welcome');
+      }else{
+        window.history.back();
       }
-      window.history.back();
+
     }
 
     function prevSlide() {
