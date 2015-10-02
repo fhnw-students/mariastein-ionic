@@ -9446,3 +9446,9 @@ span.detail {
 
 span.name-of-person {
   color: #456aa2; }
+
+.platform-ipad .modal-wrapper .modal .bar-header:not(.bar-subheader) {
+  height: 64px !important; }
+
+.platform-ipad .modal-wrapper .modal .bar-header:not(.bar-subheader) > * {
+  margin-top: 20px !important; }
