@@ -57,12 +57,12 @@
       "SUCCESS": "Sincronizzazione terminata con successo!"
     },
     "ERROR": {
-      "UNKONW": "<b>Unknown Error<b><br/><br/>Please try again.",
-      "NO_CONNECTION": "<b>No Internet Connection<b><br/><br/>Sorry no Internet connectivity detected. Please reconnect and try again.",
-      "HTTP_ERROR": "<b>Http Error occurred<b><br/><br/>Please reconnect and try again."
+      "UNKONW": "<b>Errore sconosciuto<b><br/><br/>Riporovare nuovamente.",
+      "NO_CONNECTION": "<b>Nessuna connessione ad internet.<b><br/><br/>Spiacente, ma non è stata rilevata alcuna connessione ad internet. Riprovi a connettersi.",
+      "HTTP_ERROR": "<b>Si è verificato un errore Http<b><br/><br/>Riprovi a connettersi."
     },
-    "EMPTY_HISTORY": "Non ha effettuato scansioni. Effettui una scansione prima!",
-    "NOT_FOUND": "Non è stato trovato alcun oggetto. Effettui nuovamente la scansione!",
+    "EMPTY_HISTORY": "Non ha effettuato scansioni. Effettui una scansione!",
+    "NOT_FOUND": "Non è stato rilevato alcun codie. Effettui nuovamente la scansione!",
     "SCAN": "Scanzione in corso...",
     "SCAN_CANCELLED": "Scansione annullata",
     "SCAN_WRONG_FORMAT": "Formato errato"
