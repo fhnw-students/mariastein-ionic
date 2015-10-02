@@ -28,7 +28,6 @@
   function RoomsStoreService(Logger, $q, helpersUtilsService, pouchDbUtilsService, imagesService) {
     var log = new Logger(namespace);
     var roomsDb;
-    log.info('init');
 
     // Public API
     var service = {
@@ -55,10 +54,13 @@
      * @returns Object<page>
      */
     function get(uid, langKey) {
-      return roomsDb.get(helpersUtilsService.buildDocId(uid, langKey))
-        .then(function (page) {
-          return _convertImageUidToPath(page);
-        });
+      if (uid && langKey) {
+        return roomsDb.get(helpersUtilsService.buildDocId(uid, langKey))
+          .then(function (page) {
+            return _convertImageUidToPath(page);
+          });
+      }
+      return undefined;
     }
 
     /**
@@ -80,8 +82,8 @@
         .then(function (results) {
           return results.map(function (doc) {
             return _convertImageUidToPath(doc);
-          })
-        })
+          });
+        });
     }
 
     /**

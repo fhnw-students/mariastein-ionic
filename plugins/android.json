@@ -17,11 +17,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Vibration\"><param name=\"android-package\" value=\"org.apache.cordova.vibration.Vibration\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
                             "count": 1
                         },
                         {
@@ -29,7 +25,11 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+                            "xml": "<feature name=\"Vibration\"><param name=\"android-package\" value=\"org.apache.cordova.vibration.Vibration\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -568,19 +568,19 @@
         "org.apache.cordova.file-transfer": {
             "PACKAGE_NAME": "com.ionicframework.mariasteinionic438093"
         },
-        "org.apache.cordova.vibration": {
+        "cordova-plugin-transport-security": {
             "PACKAGE_NAME": "com.ionicframework.mariasteinionic438093"
         },
-        "phonegap-plugin-barcodescanner": {
+        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.ionicframework.mariasteinionic438093"
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.ionicframework.mariasteinionic438093"
         },
-        "cordova-plugin-transport-security": {
+        "org.apache.cordova.vibration": {
             "PACKAGE_NAME": "com.ionicframework.mariasteinionic438093"
         },
-        "cordova-plugin-inappbrowser": {
+        "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.ionicframework.mariasteinionic438093"
         }
     },

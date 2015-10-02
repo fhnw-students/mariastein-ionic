@@ -16,7 +16,7 @@
     .module('kmsscan.utils.Logger', [])
     .factory('Logger', LoggerService);
 
-  LoggerService.isEnabled = true;
+  LoggerService.isEnabled = false;
 
   function LoggerService($log) {
 

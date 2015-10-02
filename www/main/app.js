@@ -9,6 +9,7 @@ var db;
     'ngCordova',
     'ngSanitize',
     'pascalprecht.translate',
+    'ngIOS9UIWebViewPatch',
 
     // Core components
     'kmsscan.ionicPlatform',

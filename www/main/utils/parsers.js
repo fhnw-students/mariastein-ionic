@@ -23,7 +23,6 @@
       parsePagesFromTypo3Response: parsePagesFromTypo3Response,
       parseRoomsFromTypo3Response: parseRoomsFromTypo3Response,
       parseImagesFromTypo3Response: parseImagesFromTypo3Response
-
     };
 
     ////////////////////////////////////////////////////////
@@ -37,8 +36,9 @@
         .filter(_filterPageResponses)
         .map(_parseImages)
         .map(_parseRooms)
-        .map(_setLanguageKey);
-      return pages
+        .map(_setLanguageKey)
+        .map(_parseTexts);
+      return pages;
     }
 
     /**
@@ -61,8 +61,9 @@
             return room;
           });
         })
-        .map(_setLanguageKey);
-      return rooms
+        .map(_setLanguageKey)
+        .map(_parseTexts);
+      return rooms;
     }
 
     /**
@@ -78,7 +79,7 @@
         .map(function (r) {
           return r.map(function (c) {
             return c.image;
-          })
+          });
         });
       var images = {};
       for (var pr = 0; pr < data.length; pr++) {
@@ -136,6 +137,30 @@
       return (image) ? image.uid : image;
     }
 
+  }
+
+  function _parseTexts(p) {
+    return p.map(function (page) {
+      if (page.teaser && _.isString(page.teaser)) {
+        page.teaser = _parseText(page.teaser);
+      }
+      if (page.content && _.isString(page.content)) {
+        page.content = _parseText(page.content);
+      }
+      return page;
+    });
+  }
+
+  function _parseText(text) {
+    return text
+      .split('')
+      .map(function (char) {
+        if (char.charCodeAt(0) === 10) {
+          return '<br/>';
+        }
+        return char;
+      })
+      .join('');
   }
 
   //function parseImages(results) {

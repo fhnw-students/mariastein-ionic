@@ -80,6 +80,12 @@
           return pagesStoreService.get($stateParams.uid, settings.language);
         })
         .then(function (doc) {
+          if (doc.type === 'news') {
+            pagesStoreService.visitedByUid($stateParams.uid)
+              .then(function () {
+                $rootScope.$broadcast('kmsscan.views.newsPage.activated');
+              });
+          }
           log.debug('activate() -> succeed', doc);
           vm.doc = doc;
           vm.isPending = false;

@@ -16,6 +16,7 @@
     "moment": "~2.10.6",
     "ngCordova": "~0.1.17-alpha",
     "pouchdb": "~4.0.1",
-    "pouchdb-find": "~0.3.5"
+    "pouchdb-find": "~0.3.5",
+    "angular-ios9-uiwebview-patch": "~1.1.1"
   }
 }

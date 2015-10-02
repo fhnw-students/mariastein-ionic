@@ -7,7 +7,7 @@
 
         <div class="row responsive-lg" ng-if="!welcome.noContent && welcome.isReady() && !welcome.hasFailed">
             <div class="col"><kms-image image-id="welcome.page.image[0]" width="100%"></kms-image></div>
-            <div class="col"><p>{{welcome.page.content}}</p></div>
+            <div class="col"><p ng-bind-html="welcome.page.content"></p></div>
         </div>
 
         <kms-info-card message="MESSAGE.NO_CONTENT" ng-if="welcome.noContent">

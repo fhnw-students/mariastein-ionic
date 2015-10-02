@@ -25,9 +25,9 @@
     ])
     .factory('syncService', SyncService);
 
-  function SyncService($rootScope, $translate, $timeout, $q, $ionicPlatform, $ionicHistory, $state, Logger, typo3Service, pagesStoreService,
-                       roomsStoreService, settingsStoreService, imagesService, $ionicModal, languagesConstant,
-                       parsersUtilsService) {
+  function SyncService($rootScope, $translate, $timeout, $q, $ionicPlatform, $ionicHistory, $state, Logger,
+                       typo3Service, pagesStoreService, roomsStoreService, settingsStoreService, imagesService,
+                       $ionicModal, languagesConstant, parsersUtilsService) {
     var log = new Logger(namespace);
     log.debug('init');
 
@@ -160,23 +160,25 @@
         goTo('menu.tutorial');
       } else {
         if ($ionicHistory.currentView() && $ionicHistory.currentView().stateId !== 'menu.welcome') {
-          goTo('menu.welcome')
+          goTo('menu.welcome');
         }
       }
 
       function goTo(stateId) {
-        $ionicHistory.clearHistory();
-        $ionicHistory.nextViewOptions({
-          disableBack: true
-        });
-        $state.go(stateId);
+        $timeout(function () {
+          $ionicHistory.clearHistory();
+          $ionicHistory.nextViewOptions({
+            disableBack: true
+          });
+          $state.go(stateId);
+        }, 200);
       }
 
       $timeout(function () {
         $rootScope.$broadcast('kmsscan.run.activate.succeed');
         $rootScope.initLoadingModal.hide();
         $rootScope.syncIsActive = false;
-      }, 600);
+      }, 800);
       log.debug('done', results);
     }
 

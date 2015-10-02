@@ -61,7 +61,6 @@
 
     ////////////////////////////////
     function activate() {
-      log.info('activate()');
       $q.all([
         settingsStoreService.get(),
         pagesStoreService.isEmpty()

@@ -67,10 +67,9 @@
         'include_docs': true
       })
         .then(function (result) {
-          deferred.resolve(result.total_rows < 1);
+          deferred.resolve(result['total_rows'] < 1);
         })
         .catch(function (err) {
-
           deferred.reject(err);
         });
       return deferred.promise;
@@ -89,7 +88,7 @@
       return pagesDb.get(helpersUtilsService.buildDocId(uid, langKey))
         .then(function (page) {
           page.image = JSON.parse(page.image);
-          page.date = moment(page.date);
+          page.date = moment(page.date * 1000);
           return page;
         });
     }
@@ -165,7 +164,6 @@
         .then(function (results) {
           var docs = helpersUtilsService.filterDocsWithSameLangKey(results[0], langKey);
           docs = _appendVisitedDate(docs, results[1]);
-          //docs = _convertImages(docs);
           docs = docs.map(function (doc) {
             doc.date = moment(doc.date * 1000);
             return doc;
@@ -173,7 +171,7 @@
           return docs
             .map(function (doc) {
               doc.image = JSON.parse(doc.image);
-              return _convertImagesUidToPath(doc);;
+              return _convertImagesUidToPath(doc);
             });
         });
     }

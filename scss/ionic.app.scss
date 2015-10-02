@@ -5,16 +5,16 @@
 
 @font-face {
   font-family: "ZwoOT-Bold";
-  src:         url("../font/ZwoOT-Italic.otf") format("opentype");
+  src:         url("../font/ZwoOT-Bold.otf") format("opentype");
 }
 
 @font-face {
-  font-family: "ZwoOT-Regular";
+  font-family: "ZwoOT-Italic";
   src:         url("../font/ZwoOT-Italic.otf") format("opentype");
 }
 
-$font-family-sans-serif: "ZwoOT-Regular", "Helvetica Neue", sans-serif !default;
-$font-family-serif: "ZwoOT-Bold", serif !default;
+$font-family-sans-serif: "ZwoOT-Regular", "Arial", sans-serif !default;
+$font-family-serif: "ZwoOT-Regular", serif !default;
 $headings-font-family: $font-family-serif !default;
 
 /*
@@ -34,6 +34,10 @@ $royal: rgb(127, 74, 148) !default;
 $dark: rgb(84, 76, 70) !default;
 
 $base-color: rgb(112, 113, 115) !default;
+
+$font-size-base: 16px !default;
+$font-size-large: 20px !default;
+$font-size-small: 13px !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -89,11 +93,21 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   }
 }
 
+.padding-bottom-45 {
+  padding-bottom: 45px;
+}
+
 /* slider with thumbnails */
 .image-list-thumb {
   padding:        0 2px;
   padding-bottom: 2px;
   height:         200px;
+}
+
+@media screen and (min-width: 767px) {
+  .image-list-thumb {
+    height: 400px;
+  }
 }
 
 .image-list-thumb:first-child {
@@ -234,26 +248,42 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   color: $assertive;
 }
 
-//@media only screen and (min-width: 680px) {
-//  .platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .modal.slide-left-right-ios7 .bar-header:not(.bar-subheader) {
-//    height: 64px;
-//  }
-//  .platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .modal.slide-left-right-ios7 .bar-header:not(.bar-subheader) > * {
-//    margin-top: 20px;
-//  }
-//  .platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .modal.slide-left-right-ios7 .tabs-top > .tabs, .platform-ios.platform-cordova .modal-wrapper .modal.slide-left-right-ios7 .tabs.tabs-top {
-//    top: 64px;
-//  }
-//  .platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .modal.slide-left-right-ios7 .has-header, .platform-ios.platform-cordova .modal-wrapper .modal.slide-left-right-ios7 .bar-subheader {
-//    top: 64px;
-//  }
-//  .platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .modal.slide-left-right-ios7 .has-subheader {
-//    top: 108px;
-//  }
-//  .platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .modal.slide-left-right-ios7 .has-tabs-top {
-//    top: 113px;
-//  }
-//  .platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .modal.slide-left-right-ios7 .has-header.has-subheader.has-tabs-top {
-//    top: 157px;
-//  }
-//}
+span {
+  &.important {
+    color: $assertive;
+  }
+  &.detail {
+    color: $balanced;
+  }
+  &.name-of-person {
+    color: $positive;
+  }
+}
+
+.platform-ipad {
+  .modal-wrapper .modal .bar-header:not(.bar-subheader) {
+    height: 64px !important;
+  }
+
+  .modal-wrapper .modal .bar-header:not(.bar-subheader) > * {
+    margin-top: 20px !important;
+  }
+}
+
+h3, h2, h1, .title{
+  color: $positive;
+  font-style: normal;
+  font-weight: normal;
+}
+
+h4, h5{
+  font-family: $font-family-sans-serif;
+}
+
+p i{
+  font-style: italic;
+}
+
+.bar .button {
+  font-size: 16px;
+}
