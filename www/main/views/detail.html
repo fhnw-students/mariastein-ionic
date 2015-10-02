@@ -21,6 +21,7 @@
 
         <div class="padding" ng-if="detail.isReady()">
             <h3>{{detail.doc.title}}</h3>
+            <h5 ng-if="detail.isNews()">{{detail.doc.date.format('DD.MM.YYYY HH:mm')}}</h5>
 
             <ion-scroll class="padding-bottom-45" ng-if="detail.settings.zooming && detail.enableZoom" zooming="{{detail.settings.zooming}}"
                         min-zoom="{{detail.zoomMin}}" direction="xy" style="width: 100%;"
