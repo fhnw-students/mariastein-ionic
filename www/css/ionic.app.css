@@ -8,7 +8,7 @@
   src: url("../font/ZwoOT-Italic.otf") format("opentype"); }
 
 @font-face {
-  font-family: "ZwoOT-Regular";
+  font-family: "ZwoOT-Italic";
   src: url("../font/ZwoOT-Italic.otf") format("opentype"); }
 
 /*
@@ -3339,7 +3339,7 @@ body,
   color: #707173;
   word-wrap: break-word;
   font-size: 16px;
-  font-family: "ZwoOT-Regular", "Helvetica Neue", sans-serif;
+  font-family: "ZwoOT-Regular", "Arial", sans-serif;
   line-height: 22px;
   text-rendering: optimizeLegibility;
   -webkit-backface-visibility: hidden;
@@ -5228,7 +5228,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
   white-space: nowrap;
   font-weight: 400;
   font-size: 14px;
-  font-family: "ZwoOT-Regular", "Helvetica Neue", sans-serif;
+  font-family: "ZwoOT-Regular", "Arial", sans-serif;
   opacity: 0.7; }
   .tab-item:hover {
     cursor: pointer; }
@@ -7015,7 +7015,7 @@ input,
 button,
 select,
 textarea {
-  font-family: "ZwoOT-Regular", "Helvetica Neue", sans-serif; }
+  font-family: "ZwoOT-Regular", "Arial", sans-serif; }
 
 .item-input {
   display: -webkit-box;
@@ -9452,3 +9452,13 @@ span.name-of-person {
 
 .platform-ipad .modal-wrapper .modal .bar-header:not(.bar-subheader) > * {
   margin-top: 20px !important; }
+
+h3, h2, h1 {
+  color: #456aa2;
+  font-style: italic; }
+
+h4, h5 {
+  font-family: "ZwoOT-Regular", "Arial", sans-serif; }
+
+p i {
+  font-style: italic; }
