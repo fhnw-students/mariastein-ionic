@@ -25,8 +25,9 @@
     ])
     .factory('syncService', SyncService);
 
-  function SyncService($rootScope, $translate, $timeout, $q, $ionicPlatform, Logger, typo3Service, pagesStoreService,
-                       roomsStoreService, settingsStoreService, imagesService, $ionicModal, languagesConstant, parsersUtilsService) {
+  function SyncService($rootScope, $translate, $timeout, $q, $ionicPlatform, $ionicHistory, $state, Logger, typo3Service, pagesStoreService,
+                       roomsStoreService, settingsStoreService, imagesService, $ionicModal, languagesConstant,
+                       parsersUtilsService) {
     var log = new Logger(namespace);
     log.debug('init');
 
@@ -45,6 +46,7 @@
      */
     function run() {
       $rootScope.syncIsActive = true;
+      $rootScope.initModalFailed = false;
       _showInitModal();
       $ionicPlatform.ready(function () {
         log.debug('$ionicPlatform is ready');
@@ -66,13 +68,15 @@
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
     function _showInitModal() {
       $rootScope.initModalMessage = 'MESSAGE.SYNC.DEVICE';
-      $ionicModal.fromTemplateUrl('main/views/initProgressModal.html', {
-        scope: $rootScope,
-        animation: 'init-slide-up'
-      }).then(function (modal) {
-        modal.show();
-        $rootScope.initLoadingModal = modal;
-      });
+      if ($rootScope.initLoadingModal === undefined || !$rootScope.initLoadingModal.isShown) {
+        $ionicModal.fromTemplateUrl('main/views/initProgressModal.html', {
+          scope: $rootScope,
+          animation: 'init-slide-up'
+        }).then(function (modal) {
+          $rootScope.initLoadingModal = modal;
+          $rootScope.initLoadingModal.show();
+        });
+      }
     }
 
     function _initSettings() {
@@ -129,30 +133,56 @@
         queue.push(pagesStoreService.sync(r.pages[l]));
         queue.push(roomsStoreService.sync(r.rooms[l]));
       }
-      return $q.all(queue);
+      return $q.all(queue)
+        .then(function () {
+          return r;
+        });
     }
 
     function _downloadImages(r) {
-      return imagesService.download(r.images);
+      var deferred = $q.defer();
+      imagesService.download(r.images)
+        .then(function () {
+          deferred.resolve(r);
+        })
+        .catch(deferred.reject);
+      return deferred.promise;
     }
 
     function _onDone() {
-      $rootScope.syncIsActive = false;
+
     }
 
     function _onSuccess(results) {
       $rootScope.initModalMessage = 'MESSAGE.SYNC.SUCCESS';
-      $timeout(function () {
-        $rootScope.$broadcast('kmsscan.run.activate.succeed', {
-          //isPristine: settings.isPristine
+
+      if (results.settings.isPristine) {
+        goTo('menu.tutorial');
+      } else {
+        if ($ionicHistory.currentView() && $ionicHistory.currentView().stateId !== 'menu.welcome') {
+          goTo('menu.welcome')
+        }
+      }
+
+      function goTo(stateId) {
+        $ionicHistory.clearHistory();
+        $ionicHistory.nextViewOptions({
+          disableBack: true
         });
+        $state.go(stateId);
+      }
+
+      $timeout(function () {
+        $rootScope.$broadcast('kmsscan.run.activate.succeed');
         $rootScope.initLoadingModal.hide();
+        $rootScope.syncIsActive = false;
       }, 600);
       log.debug('done', results);
     }
 
     function _onError(err) {
       log.error('stop -> catch', err);
+      $rootScope.initModalFailed = err;
       $timeout(function () {
         $rootScope.$broadcast('kmsscan.run.activate.failed');
       });

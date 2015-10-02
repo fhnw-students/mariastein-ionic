@@ -18,7 +18,8 @@
       'pouchdb',
       'kmsscan.utils.Logger',
       'kmsscan.utils.Helpers',
-      'kmsscan.utils.PouchDb'
+      'kmsscan.utils.PouchDb',
+      'kmsscan.directives.Image'
     ])
     .factory('pagesStoreService', PagesStoreService);
 
@@ -35,7 +36,7 @@
 
   PagesStoreService.WELCOME_PAGE_UID = 3;
 
-  function PagesStoreService($q, Logger, helpersUtilsService, pouchDbUtilsService) {
+  function PagesStoreService($q, Logger, helpersUtilsService, pouchDbUtilsService, imagesService) {
     var log = new Logger(namespace);
     var pagesDb, historyDb;
     log.debug('init');
@@ -105,6 +106,13 @@
       return get(PagesStoreService.WELCOME_PAGE_UID, langKey);
     }
 
+    /**
+     * @name
+     * @description
+     *
+     * @param langKey
+     * @returns {*}
+     */
     function getNewsBadgeInfos(langKey) {
       return $q.all([
         pagesDb.allDocs({
@@ -122,10 +130,6 @@
         .then(function (results) {
           var docs = helpersUtilsService.filterDocsWithSameLangKey(results[0], langKey);
           docs = _appendVisitedDate(docs, results[1]);
-          //docs = docs.map(function (doc) {
-          //  doc.date = moment(doc.date * 1000);
-          //  return doc;
-          //});
           var unread = docs.filter(function (doc) {
             return !doc.visitedAt;
           });
@@ -161,6 +165,7 @@
         .then(function (results) {
           var docs = helpersUtilsService.filterDocsWithSameLangKey(results[0], langKey);
           docs = _appendVisitedDate(docs, results[1]);
+          //docs = _convertImages(docs);
           docs = docs.map(function (doc) {
             doc.date = moment(doc.date * 1000);
             return doc;
@@ -168,7 +173,7 @@
           return docs
             .map(function (doc) {
               doc.image = JSON.parse(doc.image);
-              return doc;
+              return _convertImagesUidToPath(doc);;
             });
         });
     }
@@ -268,6 +273,19 @@
     }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
+    function _convertImages(docs) {
+      return docs.map(function (doc) {
+        return _convertImagesUidToPath(doc);
+      });
+    }
+
+    function _convertImagesUidToPath(doc) {
+      doc.image = doc.image.map(function (image) {
+        return imagesService.getPath(image);
+      });
+      return doc;
+    }
+
     function _filterByType(array, type) {
       return array.filter(function (doc) {
         return doc.type === type;

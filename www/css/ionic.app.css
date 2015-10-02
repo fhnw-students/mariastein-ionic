@@ -9419,10 +9419,14 @@ a.button {
   -webkit-transition: all ease-in-out 250ms;
   transition: all ease-in-out 250ms; }
 
-.kmsscan-info-card {
+.kmsscan-info-card, .kmsscan-error-card {
   text-align: center; }
-  .kmsscan-info-card i {
-    color: #456aa2; }
-  .kmsscan-info-card button {
+  .kmsscan-info-card button, .kmsscan-error-card button {
     padding-left: 45px;
     padding-right: 45px; }
+
+.kmsscan-info-card i {
+  color: #456aa2; }
+
+.kmsscan-error-card i {
+  color: #d94e28; }

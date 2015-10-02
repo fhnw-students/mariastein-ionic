@@ -15,7 +15,8 @@
   angular
     .module(namespace, [
       'ngCordova',
-      'kmsscan.utils.Logger'
+      'kmsscan.utils.Logger',
+      'kmsscan.utils.Errors'
     ])
     .factory('typo3Service', Typo3Service);
 
@@ -23,7 +24,7 @@
     PROD: 'http://kloster-mariastein.business-design.ch/'
   };
 
-  function Typo3Service($q, $http, $cordovaFileTransfer, Logger) {
+  function Typo3Service($q, $http, $cordovaFileTransfer, Logger, errorsUtilsService) {
     var log = new Logger(namespace);
     var env = 'PROD';
 
@@ -60,14 +61,13 @@
           log.debug('loadPages() - success', response);
           var objects = _parseObjects(response);
           deferred.resolve(objects);
-          //{
-          //  objects: objects,
-          //  images: _parseImages(objects)
-          //});
         })
-        .error(function (err) {
-          log.error('loadPages() - failed', err);
-          deferred.reject(err);
+        .error(function (e, status) {
+          log.error('loadPages() - failed', status);
+          deferred.reject(errorsUtilsService.get(status === 0 ? 1 : 2, {
+            status: status,
+            error: e
+          }));
         });
       return deferred.promise;
     }
@@ -100,14 +100,13 @@
           });
           log.debug('loadRooms() - success', response);
           deferred.resolve(response);
-          //{
-          //  images: _parseImagesFromRooms(response),
-          //  rooms: _parseRooms(response)
-          //});
         })
-        .error(function (err) {
-          log.error('loadRooms() - failed', err);
-          deferred.reject(err);
+        .error(function (e, status) {
+          log.error('loadRooms() - failed', status);
+          deferred.reject(errorsUtilsService.get(status === 0 ? 1 : 2, {
+            status: status,
+            error: e
+          }));
         });
       return deferred.promise;
     }

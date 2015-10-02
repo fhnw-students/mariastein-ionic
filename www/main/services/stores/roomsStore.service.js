@@ -18,7 +18,8 @@
       'pouchdb',
       'kmsscan.utils.Logger',
       'kmsscan.utils.Helpers',
-      'kmsscan.utils.PouchDb'
+      'kmsscan.utils.PouchDb',
+      'kmsscan.directives.Image'
     ])
     .factory('roomsStoreService', RoomsStoreService);
 
@@ -56,9 +57,7 @@
     function get(uid, langKey) {
       return roomsDb.get(helpersUtilsService.buildDocId(uid, langKey))
         .then(function (page) {
-          page.previewImageUid = imagesService.getPath(page.previewImageUid);
-          page.mapImageUid = imagesService.getPath(page.mapImageUid);
-          return page;
+          return _convertImageUidToPath(page);
         });
     }
 
@@ -80,9 +79,7 @@
         })
         .then(function (results) {
           return results.map(function (doc) {
-            doc.previewImageUid = imagesService.getPath(doc.previewImageUid);
-            doc.mapImageUid = imagesService.getPath(doc.mapImageUid);
-            return doc;
+            return _convertImageUidToPath(doc);
           })
         })
     }
@@ -157,6 +154,12 @@
     }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
+    function _convertImageUidToPath(doc) {
+      doc.previewImageUid = imagesService.getPath(doc.previewImageUid);
+      doc.mapImageUid = imagesService.getPath(doc.mapImageUid);
+      return doc;
+    }
+
     function _sync(data) {
       var queue = [];
       for (var i = 0; i < data.length; i++) {

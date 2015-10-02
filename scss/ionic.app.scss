@@ -202,27 +202,58 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 .init-slide-up {
   -webkit-transform: translate3d(0, 100%, 0);
-  transform: translate3d(0, 100%, 0); }
+  transform:         translate3d(0, 100%, 0);
+}
 
 .init-slide-up.ng-enter-active,
 .init-slide-up > .ng-enter-active {
   -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0); }
+  transform:         translate3d(0, 0, 0);
+}
 
 .init-slide-up.ng-leave,
 .init-slide-up > .ng-leave {
   -webkit-transition: all ease-in-out 250ms;
-  transition: all ease-in-out 250ms; }
+  transition:         all ease-in-out 250ms;
+}
 
-.kmsscan-info-card{
+.kmsscan-info-card, .kmsscan-error-card {
   text-align: center;
 
-  i{
-    color: $positive;
-  }
-
-  button{
-    padding-left: 45px;
+  button {
+    padding-left:  45px;
     padding-right: 45px;
   }
 }
+
+.kmsscan-info-card i {
+  color: $positive;
+}
+
+.kmsscan-error-card i {
+  color: $assertive;
+}
+
+//@media only screen and (min-width: 680px) {
+//  .platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .modal.slide-left-right-ios7 .bar-header:not(.bar-subheader) {
+//    height: 64px;
+//  }
+//  .platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .modal.slide-left-right-ios7 .bar-header:not(.bar-subheader) > * {
+//    margin-top: 20px;
+//  }
+//  .platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .modal.slide-left-right-ios7 .tabs-top > .tabs, .platform-ios.platform-cordova .modal-wrapper .modal.slide-left-right-ios7 .tabs.tabs-top {
+//    top: 64px;
+//  }
+//  .platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .modal.slide-left-right-ios7 .has-header, .platform-ios.platform-cordova .modal-wrapper .modal.slide-left-right-ios7 .bar-subheader {
+//    top: 64px;
+//  }
+//  .platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .modal.slide-left-right-ios7 .has-subheader {
+//    top: 108px;
+//  }
+//  .platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .modal.slide-left-right-ios7 .has-tabs-top {
+//    top: 113px;
+//  }
+//  .platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .modal.slide-left-right-ios7 .has-header.has-subheader.has-tabs-top {
+//    top: 157px;
+//  }
+//}

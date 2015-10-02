@@ -8,6 +8,7 @@
       namespace + '.Logger',
       namespace + '.Helpers',
       namespace + '.Parsers',
+      namespace + '.Errors',
       namespace + '.PouchDb'
     ]);
 
