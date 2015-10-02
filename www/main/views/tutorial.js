@@ -6,7 +6,7 @@
  * This Class handel's the Tutorial behaviour.
  *
  */
- (function () {
+(function () {
   'use strict';
 
   var namespace = 'kmsscan.views.Tutorial';
@@ -93,15 +93,11 @@
 
     //leave tutorial
     function historyGoBack() {
-      if (vm.settings.isPristine) {
-        $ionicHistory.nextViewOptions({
-          disableBack: true
-        });
-        $state.go('menu.welcome');
-      }else{
-        window.history.back();
-      }
-
+      $ionicHistory.clearHistory();
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
+      $state.go('menu.welcome');
     }
 
     function prevSlide() {
