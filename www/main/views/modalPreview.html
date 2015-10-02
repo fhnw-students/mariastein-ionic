@@ -1,25 +1,26 @@
 <div class="modal image-modal bg-dark">
     <ion-header-bar class="bar-dark">
-
         <h1 class="title">{{'LABEL.PREVIEW'|translate}}</h1>
-
         <div class="buttons">
             <button class="button button-clear button-stable" ng-click="detail.closeModal()">
                 {{'LABEL.CLOSE'|translate}}
             </button>
         </div>
-
     </ion-header-bar>
     <ion-content class="bg-dark">
 
-        <ion-slide-box on-slide-changed="slideChanged(index)" active-slide="detail.activeSlide" class="slide-pager-dark">
+        <ion-slide-box on-slide-changed="slideChanged(index)" active-slide="detail.activeSlide"
+                       class="slide-pager-dark">
             <ion-slide ng-repeat="image in detail.doc.image">
 
                 <ion-scroll direction="xy" scrollbar-x="false" scrollbar-y="false"
                             zooming="true" min-zoom="{{detail.zoomMin}}" style="width: 100%; height: 100%;"
-                            delegate-handle="scrollHandle{{$index}}" on-double-tap="detail.zoom(detail.activeSlide)" on-scroll="detail.updateSlideStatus(detail.activeSlide)" on-release="detail.updateSlideStatus(detail.activeSlide)">
+                            delegate-handle="scrollHandle{{$index}}" on-double-tap="detail.zoom(detail.activeSlide)"
+                            on-scroll="detail.updateSlideStatus(detail.activeSlide)"
+                            on-release="detail.updateSlideStatus(detail.activeSlide)">
 
-                    <div ng-style="{height: detail.hgt+ 'px'}" class="image  bg-dark" style="background-image: url( {{detail.getImagePath(image)}} )"></div>
+                    <div ng-style="{height: detail.hgt+ 'px'}" class="image bg-dark"
+                         style="background-image: url( {{getImagePath(image)}} )"></div>
 
                 </ion-scroll>
             </ion-slide>
