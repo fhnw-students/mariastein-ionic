@@ -33,7 +33,7 @@
     zooming: false
   };
 
-  function SettingsStoreService($q, Logger, pouchDbUtilsService) {
+  function SettingsStoreService($q, Logger, pouchDbUtilsService, $translate) {
     var log = new Logger(namespace);
     var callbacks = [];
     var settingsDb;
@@ -63,15 +63,20 @@
      */
     function init() {
       var deferred = $q.defer();
+      _activate();
       settingsDb.get(SettingsStoreService.TABLENAME)
         .then(function (doc) {
           log.debug('init()', doc);
+          $translate.use(doc.language);
           deferred.resolve(doc);
         })
         .catch(function (err) {
           if (err.status === 404) {
             _init()
-              .then(deferred.resolve)
+              .then(function (doc) {
+                $translate.use(doc.language);
+                deferred.resolve(doc);
+              })
               .catch(function (err) {
                 log.error('catch() -> failed', err);
                 deferred.reject(err);

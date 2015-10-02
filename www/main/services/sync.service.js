@@ -68,7 +68,7 @@
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
     function _showInitModal() {
       $rootScope.initModalMessage = 'MESSAGE.SYNC.DEVICE';
-      if ($rootScope.initLoadingModal === undefined || !$rootScope.initLoadingModal.isShown) {
+      if ($rootScope.initLoadingModal === undefined || !$rootScope.initLoadingModal.isShown()) {
         $ionicModal.fromTemplateUrl('main/views/initProgressModal.html', {
           scope: $rootScope,
           animation: 'init-slide-up'
@@ -80,11 +80,7 @@
     }
 
     function _initSettings() {
-      return settingsStoreService.init()
-        .then(function (s) {
-          $translate.use(s.language);
-          return s;
-        });
+      return settingsStoreService.init();
     }
 
     function _loadData() {

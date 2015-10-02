@@ -34,8 +34,8 @@
   }
 
 
-  function SettingsController(Logger, $rootScope, settingsStoreService, syncService, pagesStoreService,
-                              roomsStoreService) {
+  function SettingsController(Logger, $rootScope, settingsStoreService, syncService, pagesStoreService, $q,
+                              $ionicLoading) {
     var vm = this; // view-model
     var log = new Logger(namespace);
 
@@ -56,14 +56,22 @@
       settingsStoreService.get().then(function (settings) {
         log.debug('activate() - success', settings);
         vm.settings = settings;
+        $ionicLoading.hide();
       });
     }
 
     function destroyContent() {
-      settingsStoreService.clean();
-      pagesStoreService.clean();
-      pagesStoreService.cleanHistory();
-      roomsStoreService.clean();
+      $ionicLoading.show();
+      $q.all([
+        settingsStoreService.clean(),
+        pagesStoreService.cleanHistory()
+      ])
+        .then(function () {
+          return settingsStoreService.init();
+        })
+        .then(function () {
+          activate();
+        });
     }
 
     function syncContent() {
