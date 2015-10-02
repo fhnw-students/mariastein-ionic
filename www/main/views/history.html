@@ -2,28 +2,32 @@
     <ion-content>
 
         <kms-spinner ng-hide="history.isReady()"></kms-spinner>
+        <div ng-if="history.isReady()">
 
-        <ion-list ng-if="!history.noContent && history.isReady() && history.pages.length > 0">
-            <ion-item class="item item-thumbnail-left item-icon-right" ng-repeat="doc in history.pages | orderBy:'-scanedAt'" ui-sref="menu.detail({uid: doc.uid})">
-                <div class="kms-item-thumbnail-left">
+            <ion-list ng-if="!history.noContent && history.pages.length > 0">
+                <ion-item class="item item-thumbnail-left item-icon-right"
+                          ng-repeat="doc in history.pages | orderBy:'-visitedAt'" ui-sref="menu.detail({uid: doc.uid})">
+
                     <kms-image image-id="doc.image[0]"></kms-image>
-                </div>
-                <h2>{{doc.title}}</h2>
-                <p>{{doc.visitedAt.format('DD.MM.YYYY HH:mm')}}</p>
-                <i class="icon ion-chevron-right icon-accessory"></i>
-            </ion-item>
-        </ion-list>
+                    <h2>{{doc.title}}</h2>
+
+                    <p>{{doc.visitedAt.format('DD.MM.YYYY HH:mm')}}</p>
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+
+                </ion-item>
+            </ion-list>
 
 
-        <kms-info-card message="MESSAGE.NO_CONTENT" ng-if="history.noContent">
-            <kms-update-content-button></kms-update-content-button>
-        </kms-info-card>
+            <kms-info-card message="MESSAGE.NO_CONTENT" ng-if="history.noContent">
+                <kms-update-content-button></kms-update-content-button>
+            </kms-info-card>
 
-        <kms-info-card message="MESSAGE.EMPTY_HISTORY" ng-if="!history.noContent && history.pages.length === 0">
-            <a href="#/menu/scan" class="button button-large button-positive icon-left ion-qr-scanner">
-                {{'LABEL.SCAN' | translate}}
-            </a>
-        </kms-info-card>
+            <kms-info-card message="MESSAGE.EMPTY_HISTORY" ng-if="!history.noContent && history.pages.length === 0">
+                <a href="#/menu/scan" class="button button-large button-positive icon-left ion-qr-scanner">
+                    {{'LABEL.SCAN' | translate}}
+                </a>
+            </kms-info-card>
+        </div>
 
     </ion-content>
 </ion-view>
