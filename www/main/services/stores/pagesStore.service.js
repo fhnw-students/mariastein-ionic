@@ -67,7 +67,7 @@
         'include_docs': true
       })
         .then(function (result) {
-          deferred.resolve(result.total_rows < 1);
+          deferred.resolve(result['total_rows'] < 1);
         })
         .catch(function (err) {
 
@@ -173,7 +173,7 @@
           return docs
             .map(function (doc) {
               doc.image = JSON.parse(doc.image);
-              return _convertImagesUidToPath(doc);;
+              return _convertImagesUidToPath(doc);
             });
         });
     }

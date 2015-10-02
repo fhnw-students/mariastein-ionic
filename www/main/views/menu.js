@@ -46,7 +46,7 @@
         })
         .then(function (result) {
           vm.newsBadgeInfos = result.unread;
-        })
+        });
     }
 
     function getNewsBadgeInfos() {

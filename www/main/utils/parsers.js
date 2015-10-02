@@ -38,7 +38,7 @@
         .map(_parseRooms)
         .map(_setLanguageKey)
         .map(_parseTexts);
-      return pages
+      return pages;
     }
 
     /**
@@ -63,7 +63,7 @@
         })
         .map(_setLanguageKey)
         .map(_parseTexts);
-      return rooms
+      return rooms;
     }
 
     /**
@@ -79,7 +79,7 @@
         .map(function (r) {
           return r.map(function (c) {
             return c.image;
-          })
+          });
         });
       var images = {};
       for (var pr = 0; pr < data.length; pr++) {
@@ -140,11 +140,11 @@
   }
 
   function _parseTexts(p) {
-    return p.map(function(page){
-      if(page.teaser && _.isString(page.teaser)){
+    return p.map(function (page) {
+      if (page.teaser && _.isString(page.teaser)) {
         page.teaser = _parseText(page.teaser);
       }
-      if(page.content && _.isString(page.content)){
+      if (page.content && _.isString(page.content)) {
         page.content = _parseText(page.content);
       }
       return page;
@@ -155,7 +155,7 @@
     return text
       .split('')
       .map(function (char) {
-        if(char.charCodeAt(0) === 10){
+        if (char.charCodeAt(0) === 10) {
           return '<br/>';
         }
         return char;

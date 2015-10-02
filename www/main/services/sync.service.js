@@ -25,9 +25,9 @@
     ])
     .factory('syncService', SyncService);
 
-  function SyncService($rootScope, $translate, $timeout, $q, $ionicPlatform, $ionicHistory, $state, Logger, typo3Service, pagesStoreService,
-                       roomsStoreService, settingsStoreService, imagesService, $ionicModal, languagesConstant,
-                       parsersUtilsService) {
+  function SyncService($rootScope, $translate, $timeout, $q, $ionicPlatform, $ionicHistory, $state, Logger,
+                       typo3Service, pagesStoreService, roomsStoreService, settingsStoreService, imagesService,
+                       $ionicModal, languagesConstant, parsersUtilsService) {
     var log = new Logger(namespace);
     log.debug('init');
 
@@ -160,7 +160,7 @@
         goTo('menu.tutorial');
       } else {
         if ($ionicHistory.currentView() && $ionicHistory.currentView().stateId !== 'menu.welcome') {
-          goTo('menu.welcome')
+          goTo('menu.welcome');
         }
       }
 

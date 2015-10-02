@@ -28,7 +28,7 @@
             disableBack: true
           });
           $state.go('menu.scan');
-        }
+        };
       }
     };
   }

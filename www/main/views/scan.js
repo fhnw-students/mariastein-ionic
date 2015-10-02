@@ -34,8 +34,8 @@
       });
   }
 
-  function ScanController($q, $ionicHistory, $cordovaBarcodeScanner, $ionicPlatform, $rootScope, $cordovaVibration, $state,
-                          settingsStoreService, Logger, pagesStoreService) {
+  function ScanController($q, $ionicHistory, $cordovaBarcodeScanner, $ionicPlatform, $rootScope, $cordovaVibration,
+                          $state, settingsStoreService, Logger, pagesStoreService) {
     var vm = this; // view-model
     var log = new Logger(namespace);
 
@@ -76,7 +76,7 @@
         })
         .finally(function () {
           vm.isPending = false;
-        })
+        });
     }
 
     function scan() {

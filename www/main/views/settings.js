@@ -34,7 +34,8 @@
   }
 
 
-  function SettingsController(Logger, $rootScope, settingsStoreService, syncService, pagesStoreService, roomsStoreService) {
+  function SettingsController(Logger, $rootScope, settingsStoreService, syncService, pagesStoreService,
+                              roomsStoreService) {
     var vm = this; // view-model
     var log = new Logger(namespace);
 
@@ -59,7 +60,7 @@
     }
 
     function destroyContent() {
-      //settingsStoreService.clean();
+      settingsStoreService.clean();
       pagesStoreService.clean();
       pagesStoreService.cleanHistory();
       roomsStoreService.clean();
