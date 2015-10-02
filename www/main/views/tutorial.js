@@ -51,6 +51,7 @@
     vm.getSlideMaxIndex = getSlideMaxIndex;
     vm.showMore = showMore;
     vm.showLess = showLess;
+    vm.saveSettings = saveSettings;
 
     activate();
     //////////////////////////////
@@ -69,9 +70,9 @@
           }
           $ionicSlideBoxDelegate.slide(vm.startSlide);
           $ionicSlideBoxDelegate.start();
-          settings.isPristine = false;
-          settings.isPending = true;
-          settingsStoreService.set(settings);
+          vm.settings.isPristine = false;
+          vm.isPending = false;
+          settingsStoreService.set(vm.settings);
         });
     }
 
