@@ -56,6 +56,11 @@
       "IMAGES": "téléchargez des images du serveur...",
       "SUCCESS": "synchronisation réussie!"
     },
+    "ERROR": {
+      "UNKONW": "<b>Unknown Error<b><br/><br/>Please try again.",
+      "NO_CONNECTION": "<b>No Internet Connection<b><br/><br/>Sorry no Internet connectivity detected. Please reconnect and try again.",
+      "HTTP_ERROR": "<b>Http Error occurred<b><br/><br/>Please reconnect and try again."
+    },
     "EMPTY_HISTORY":"Malheureusement, vous n'avez pas encore scanné un objet. Scannez un objet, s'il vous plaît!",
     "NOT_FOUND": "Pas d'objet trouvé. Essayez encore une fois, s'il vous plaît!",
     "SCAN": "en train de scanner...",
