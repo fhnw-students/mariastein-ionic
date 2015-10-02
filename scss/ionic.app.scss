@@ -14,7 +14,7 @@
 }
 
 $font-family-sans-serif: "ZwoOT-Regular", "Arial", sans-serif !default;
-$font-family-serif: "ZwoOT-Bold", serif !default;
+$font-family-serif: "ZwoOT-Regular", serif !default;
 $headings-font-family: $font-family-serif !default;
 
 /*
@@ -270,9 +270,10 @@ span {
   }
 }
 
-h3, h2, h1{
+h3, h2, h1, .title{
   color: $positive;
-  font-style: italic;
+  font-style: normal;
+  font-weight: normal;
 }
 
 h4, h5{
@@ -281,4 +282,8 @@ h4, h5{
 
 p i{
   font-style: italic;
+}
+
+.bar .button {
+  font-size: 16px;
 }

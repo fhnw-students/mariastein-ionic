@@ -3577,7 +3577,7 @@ h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   color: #707173;
   font-weight: 500;
-  font-family: "ZwoOT-Bold", serif;
+  font-family: "ZwoOT-Regular", serif;
   line-height: 1.2; }
   h1 small, h2 small, h3 small, h4 small, h5 small, h6 small,
   .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small {
@@ -9283,7 +9283,7 @@ a.button {
   transition-duration: 0s; }
 
 .bar-header .title, .bar-header h1 {
-  font-family: "ZwoOT-Bold", serif;
+  font-family: "ZwoOT-Regular", serif;
   font-size: 1.6em;
   color: #456aa2 !important; }
 
@@ -9295,7 +9295,7 @@ a.button {
 
 .item-content h2 {
   font-size: 1.2em;
-  font-family: "ZwoOT-Bold", serif; }
+  font-family: "ZwoOT-Regular", serif; }
 
 .footer-button {
   padding: 0; }
@@ -9453,12 +9453,16 @@ span.name-of-person {
 .platform-ipad .modal-wrapper .modal .bar-header:not(.bar-subheader) > * {
   margin-top: 20px !important; }
 
-h3, h2, h1 {
+h3, h2, h1, .title {
   color: #456aa2;
-  font-style: italic; }
+  font-style: normal;
+  font-weight: normal; }
 
 h4, h5 {
   font-family: "ZwoOT-Regular", "Arial", sans-serif; }
 
 p i {
   font-style: italic; }
+
+.bar .button {
+  font-size: 16px; }
