@@ -44,6 +44,18 @@ describe('Unit: kmsscan.services.rest.Typo3', function () {
 
     it('typo3Service.loadPages(DE) - should return a correct json response with pages', function(done) {
 
+      /* ######### Init test ######### */
+      $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000&L=DE&id=136&type=5000').respond(pagesJsonDE);
+
+      typo3Service.loadPages('DE')
+        .then(testResult)
+        .catch(failTest)
+        .finally(done);
+
+      $rootScope.$digest();
+
+      $httpBackend.flush();
+
       /* ######### verify result ######### */
       var testResult = function(res) {
         expect(res.objects.length).to.be.equal(3);
@@ -60,21 +72,21 @@ describe('Unit: kmsscan.services.rest.Typo3', function () {
         //expect(error).toBeUndefined();
       };
 
-      /* ######### Init test ######### */
-      $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000&L=DE&id=136&type=5000').respond(pagesJsonDE);
+    });
 
-      typo3Service.loadPages('DE')
-        .then(testResult)
-        .catch(failTest)
-        .finally(done);
+    it('typo3Service.loadPages(FR) - should return a correct french json response with the pages', function(done) {
+
+      /* ######### Init test ######### */
+      $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000&L=FR&id=136&type=5000').respond(pagesJsonFR);
+
+      typo3Service.loadPages('FR')
+          .then(testResult)
+          .catch(failTest)
+          .finally(done);
 
       $rootScope.$digest();
 
       $httpBackend.flush();
-
-    });
-
-    it('typo3Service.loadPages(FR) - should return a correct french json response with the pages', function(done) {
 
       /* ######### verify result ######### */
       var testResult = function(res) {
@@ -91,29 +103,17 @@ describe('Unit: kmsscan.services.rest.Typo3', function () {
         //expect(error).toBeUndefined();
       };
 
-      /* ######### Init test ######### */
-      $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000&L=FR&id=136&type=5000').respond(pagesJsonFR);
-
-      typo3Service.loadPages('FR')
-          .then(testResult)
-          .catch(failTest)
-          .finally(done);
-
-      $rootScope.$digest();
-
-      $httpBackend.flush();
-
     });
 
-    it('typo3Service.loadRooms(..) - should return a correct json response with rooms', function(done) {
+    it('typo3Service.loadRooms(DE) - should return a correct json response with rooms', function(done) {
 
       /* ######### verify result ######### */
       var testResult = function(res) {
-        /*expect(res.objects.length).to.be.equal(1);
-        expect(res.images.length).to.be.equal(0);
+        expect(res.images.length).to.be.equal(2);
+        expect(res.rooms.length).to.be.equal(1);
 
         // Stichkontrollen beim einigen Eintraegen
-        expect(res.objects[0].title).to.be.equal('Seite 1 FR');*/
+        expect(res.rooms[0].title).to.be.equal("Raum 1")
       };
 
       var failTest = function(error) {
@@ -123,7 +123,7 @@ describe('Unit: kmsscan.services.rest.Typo3', function () {
       };
 
       /* ######### Init test ######### */
-      $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json?L=DE').respond(pagesJsonFR);
+      $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json?L=DE').respond(roomsJsonDE);
 
       typo3Service.loadRooms('DE')
           .then(testResult)
@@ -134,9 +134,43 @@ describe('Unit: kmsscan.services.rest.Typo3', function () {
 
       $httpBackend.flush();
 
+
+
     });
 
   });
+
+  it('typo3Service.loadRooms(IT) - should return a correct json response with rooms', function(done) {
+
+    /* ######### Init test ######### */
+    $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json?L=IT').respond(roomsJsonIT);
+
+    typo3Service.loadRooms('IT')
+        .then(testResult)
+        .catch(failTest)
+        .finally(done);
+
+    $rootScope.$digest();
+
+    $httpBackend.flush();
+
+    /* ######### verify result ######### */
+    var testResult = function(res) {
+      expect(res.images.length).to.be.equal(2);
+      expect(res.rooms.length).to.be.equal(2);
+
+      // Stichkontrollen beim einigen Eintraegen
+      expect(res.rooms[0].title).to.be.equal("Spazio 1")
+    };
+
+    var failTest = function(error) {
+      console.log(error);
+      failTest(error);
+      //expect(error).toBeUndefined();
+    };
+
+  });
+
 
 });
 
