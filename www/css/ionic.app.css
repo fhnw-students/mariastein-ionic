@@ -3989,7 +3989,7 @@ a.subdued {
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 500;
     line-height: 44px; }
     .bar .title.title-left {
@@ -4016,7 +4016,7 @@ a.subdued {
       font-size: 20px;
       line-height: 32px; }
     .bar .button.button-icon {
-      font-size: 17px; }
+      font-size: 18px; }
       .bar .button.button-icon .icon:before,
       .bar .button.button-icon:before,
       .bar .button.button-icon.icon-left:before,
@@ -4028,7 +4028,7 @@ a.subdued {
       padding-right: 2px;
       padding-left: 2px;
       font-weight: 300;
-      font-size: 17px; }
+      font-size: 18px; }
       .bar .button.button-clear .icon:before,
       .bar .button.button-clear.icon:before,
       .bar .button.button-clear.icon-left:before,
@@ -4100,7 +4100,7 @@ a.subdued {
     background: none;
     box-shadow: none;
     color: #444;
-    font-size: 17px; }
+    font-size: 18px; }
   .bar-light .button.button-icon {
     border-color: transparent;
     background: none; }
@@ -4122,7 +4122,7 @@ a.subdued {
     background: none;
     box-shadow: none;
     color: #444;
-    font-size: 17px; }
+    font-size: 18px; }
   .bar-stable .button.button-icon {
     border-color: transparent;
     background: none; }
@@ -4144,7 +4144,7 @@ a.subdued {
     background: none;
     box-shadow: none;
     color: #fff;
-    font-size: 17px; }
+    font-size: 18px; }
   .bar-positive .button.button-icon {
     border-color: transparent;
     background: none; }
@@ -4166,7 +4166,7 @@ a.subdued {
     background: none;
     box-shadow: none;
     color: #fff;
-    font-size: 17px; }
+    font-size: 18px; }
   .bar-calm .button.button-icon {
     border-color: transparent;
     background: none; }
@@ -4188,7 +4188,7 @@ a.subdued {
     background: none;
     box-shadow: none;
     color: #fff;
-    font-size: 17px; }
+    font-size: 18px; }
   .bar-assertive .button.button-icon {
     border-color: transparent;
     background: none; }
@@ -4210,7 +4210,7 @@ a.subdued {
     background: none;
     box-shadow: none;
     color: #fff;
-    font-size: 17px; }
+    font-size: 18px; }
   .bar-balanced .button.button-icon {
     border-color: transparent;
     background: none; }
@@ -4232,7 +4232,7 @@ a.subdued {
     background: none;
     box-shadow: none;
     color: #fff;
-    font-size: 17px; }
+    font-size: 18px; }
   .bar-energized .button.button-icon {
     border-color: transparent;
     background: none; }
@@ -4254,7 +4254,7 @@ a.subdued {
     background: none;
     box-shadow: none;
     color: #fff;
-    font-size: 17px; }
+    font-size: 18px; }
   .bar-royal .button.button-icon {
     border-color: transparent;
     background: none; }
@@ -4276,7 +4276,7 @@ a.subdued {
     background: none;
     box-shadow: none;
     color: #fff;
-    font-size: 17px; }
+    font-size: 18px; }
   .bar-dark .button.button-icon {
     border-color: transparent;
     background: none; }
@@ -9281,7 +9281,6 @@ positive
 
 .bar-header .title, .bar-header h1 {
   font-family: "ZwoOT-Regular", serif;
-  font-size: 1.6em;
   color: #456aa2 !important; }
 
 .bar-dark .title, .bar-dark h1 {
@@ -9470,3 +9469,6 @@ p i {
 
 .kmsscan-init-modal p small {
   font-size: 0.68em; }
+
+.hide {
+  display: none; }

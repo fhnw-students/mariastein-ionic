@@ -1,4 +1,4 @@
-<ion-modal-view class="padding kmsscan-init-modal">
+<ion-modal-view>
     <ion-content>
 
         <div class="row responsive-lg" style="text-align: center; margin-top: 15px" ng-if="initModalFailed === false">
@@ -23,10 +23,11 @@
 
     </ion-content>
 
-    <div class="bar bar-footer bar-light" style="height: 105px">
+    <div class="bar bar-footer bar-light kmsscan-init-modal" style="height: 105px">
         <div class="row responsive-lg" style="text-align: center; margin-top: 15px" ng-if="initModalFailed === false">
             <div class="col">
                 <p class="positive" translate="{{initModalMessage}}"></p>
+
                 <p>
                     <small translate="MESSAGE.SYNC.PLEASE_WAIT"></small>
                 </p>
