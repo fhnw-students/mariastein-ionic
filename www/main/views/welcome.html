@@ -1,9 +1,8 @@
 <ion-view view-title="{{'LABEL.WELCOME' | translate}}">
 
-    <ion-content class="padding">
+    <ion-content>
 
         <kms-spinner ng-hide="welcome.isReady()"></kms-spinner>
-
 
         <div class="row responsive-lg" ng-if="!welcome.noContent && welcome.isReady() && !welcome.hasFailed">
             <div class="col"><kms-image image-id="welcome.page.image[0]" width="100%"></kms-image></div>
