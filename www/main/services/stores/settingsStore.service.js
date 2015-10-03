@@ -26,7 +26,7 @@
 
   var sysLang = angular.uppercase(navigator.language.substring(0, 2));
   SettingsStoreService.DEFAULTS = {
-    language: (sysLang === 'DE' || sysLang === 'FR' || sysLang === 'IT') ? sysLang : 'EN',
+    language: (sysLang === 'DE' || sysLang === 'FR' || sysLang === 'IT') ? sysLang : 'DE',
     vibration: true,
     music: false,
     isPristine: true,
