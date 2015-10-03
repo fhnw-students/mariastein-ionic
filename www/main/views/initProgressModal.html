@@ -15,19 +15,29 @@
                     <span ng-bind-html="initModalFailed.error.text | translate"></span>
                 </div>
             </div>
-
-            <kms-update-content-button></kms-update-content-button>
-
         </div>
 
+        <kms-info-card message="MESSAGE.NO_DATA_YET" ng-if="initModalFailed && !initModalHasData"></kms-info-card>
+
+        <kms-info-card message="MESSAGE.USE_OFFLINE" ng-if="initModalFailed && initModalHasData">
+            <div class="padding">
+                <button class="button button-stable button-block icon-left ion-arrow-right-b"
+                        translate="LABEL.USE_OFFLINE"
+                        ng-click="initModalOpenApp()"></button>
+            </div>
+        </kms-info-card>
 
     </ion-content>
 
     <div class="bar bar-footer bar-light kmsscan-init-modal" style="height: 80px">
+
+        <kms-update-content-button ng-if="initModalFailed" style="margin-left: 5px;margin-right: 5px;">
+
+        </kms-update-content-button>
+
         <div class="row responsive-lg" style="text-align: center;" ng-if="initModalFailed === false">
             <div class="col">
-                <p class="positive" translate="{{initModalMessage}}"></p>
-
+                <p class="positive">{{initModalMessage|translate:initModalMessageValues}}</p>
                 <p>
                     <small translate="MESSAGE.SYNC.PLEASE_WAIT"></small>
                 </p>

@@ -25,7 +25,7 @@
     ])
     .factory('syncService', SyncService);
 
-  function SyncService($rootScope, $translate, $timeout, $q, $ionicPlatform, $ionicHistory, $state, Logger,
+  function SyncService($rootScope, $timeout, $q, $ionicPlatform, $ionicHistory, $state, Logger,
                        typo3Service, pagesStoreService, roomsStoreService, settingsStoreService, imagesService,
                        $ionicModal, languagesConstant, parsersUtilsService) {
     var log = new Logger(namespace);
@@ -46,7 +46,6 @@
      */
     function run() {
       $rootScope.syncIsActive = true;
-      $rootScope.initModalFailed = false;
       _showInitModal();
       $ionicPlatform.ready(function () {
         log.debug('$ionicPlatform is ready');
@@ -68,6 +67,24 @@
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
     function _showInitModal() {
       $rootScope.initModalMessage = 'MESSAGE.SYNC.DEVICE';
+      $rootScope.initModalFailed = false;
+
+      $rootScope.initModalMessageValues = {
+        counter: '',
+        amount: ''
+      };
+      $rootScope.initModalOpenApp = function () {
+        $rootScope.$broadcast('kmsscan.sync.skipped');
+        $rootScope.initLoadingModal.hide();
+        $rootScope.syncIsActive = false;
+        $ionicHistory.nextViewOptions({
+          disableBack: true
+        });
+        $state.go('menu.welcome', {}, {
+          location: 'replace'
+        });
+      };
+
       if ($rootScope.initLoadingModal === undefined || !$rootScope.initLoadingModal.isShown()) {
         $ionicModal.fromTemplateUrl('main/views/initProgressModal.html', {
           scope: $rootScope,
@@ -136,6 +153,9 @@
     }
 
     function _downloadImages(r) {
+      $rootScope.initModalMessage = 'MESSAGE.SYNC.IMAGES';
+      $rootScope.initModalMessageValues.counter = 0;
+      $rootScope.initModalMessageValues.amount = Object.keys(r.images).length || 0;
       var deferred = $q.defer();
       imagesService.download(r.images)
         .then(function () {
@@ -171,7 +191,7 @@
       }
 
       $timeout(function () {
-        $rootScope.$broadcast('kmsscan.run.activate.succeed');
+        $rootScope.$broadcast('kmsscan.sync.succeeded');
         $rootScope.initLoadingModal.hide();
         $rootScope.syncIsActive = false;
       }, 800);
@@ -179,11 +199,20 @@
     }
 
     function _onError(err) {
-      log.error('stop -> catch', err);
-      $rootScope.initModalFailed = err;
-      $timeout(function () {
-        $rootScope.$broadcast('kmsscan.run.activate.failed');
-      });
+      log.error('_onError -> catch', err);
+      pagesStoreService.isEmpty()
+        .then(function (res) {
+          $rootScope.initModalHasData = !res;
+        })
+        .catch(function (err) {
+          log.error('isEmpty -> catch', err);
+        })
+        .finally(function () {
+          $rootScope.initModalFailed = err;
+          $timeout(function () {
+            $rootScope.$broadcast('kmsscan.sync.failed');
+          });
+        });
     }
 
   }

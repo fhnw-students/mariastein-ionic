@@ -35,7 +35,7 @@
     vm.getNewsBadgeInfos = getNewsBadgeInfos;
 
     $rootScope.$on('kmsscan.views.newsPage.activated', activate);
-    $rootScope.$on('kmsscan.run.activate.succeed', activate);
+    $rootScope.$on('kmsscan.sync.succeeded', activate);
 
     activate();
     //////////////////////

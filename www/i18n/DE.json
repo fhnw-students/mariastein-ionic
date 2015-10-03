@@ -46,7 +46,8 @@
     "TUTORIALSETTINGSZOOMING":  "Schaltet die Text-Zoom-Funktion ein und aus.",
     "VIBRATION":  "Vibration",
     "WELCOME":  "Willkommen",
-    "ZOOM":  "Text-Zoom"
+    "ZOOM":  "Text-Zoom",
+    "USE_OFFLINE":  "Ja, ohne Aktualisierung weiterfahren"
   },
   "MESSAGE": {
     "SYNC": {
@@ -54,15 +55,17 @@
       "DEVICE": "Warte auf das Gerät...",
       "DATA": "Lade Inhalte vom Server herunter...",
       "STORE": "Speichere die Inhalte...",
-      "IMAGES": "Lade Bilder vom Server...",
+      "IMAGES": "Lade Bilder({{counter}} von {{amount}}) vom Server...",
       "SUCCESS": "Synchronisation erfolgreich abgeschlossen!"
     },
     "ERROR": {
       "UNKONW": "<b>Unbekannter Fehler</b><br/><br/>Bitte erneut versucen.",
-      "NO_CONNECTION": "<b>Keine Internet Verbindung</b><br/><br/>Sorry no Internet connectivity detected. Please reconnect and try again.",
+      "NO_CONNECTION": "<b>Keine Internet Verbindung</b><br/><br/>Es konnte leider keine Verbindung zum Internet hergestellt werden. Bitte überprüfen Sie die Netzwerkeinstelunngen Ihres Telefons oder begeben Sie sich an einen Ort mit besserem Empfang. ",
       "HTTP_ERROR": "<b>Http Error occurred</b><br/><br/>Please reconnect and try again."
     },
-    "EMPTY_HISTORY": "Sie haben leider noch kein Objekt gescanned. Bitte scannen Sie ein Objekt!",
+    "NO_DATA_YET": "Leider konnten Sie noch keine Daten herunterladen können. Bitte stellen Sie eine Verbindung zum Internet her und laden Sie die Daten herunter, um diese App gebrauchen zu können.",
+    "USE_OFFLINE": "Da Sie bereits Daten heruntergeladen haben, könne Sie auch ohne eine Aktualisierung in die App gehen.",
+    "EMPTY_HISTORY": "Es konnte leider kein Objekt mit dem gescannten QR-Code gefunden werden.",
     "NOT_FOUND": "Es wurde kein Objekt gefunden. Bitte nochmals versuchen!",
     "SCAN": "scannt...",
     "SCAN_CANCELLED": "Scannen abgebrochen",

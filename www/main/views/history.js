@@ -38,7 +38,7 @@
     vm.isReady = isReady;
 
     if ($rootScope.syncIsActive) {
-      $rootScope.$on('kmsscan.run.activate.succeed', activate);
+      $rootScope.$on('kmsscan.sync.succeeded', activate);
     } else {
       activate();
     }

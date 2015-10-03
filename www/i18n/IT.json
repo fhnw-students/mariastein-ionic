@@ -46,7 +46,8 @@
     "TUTORIALSETTINGSZOOMING":  "Permette l'impostazione della Funzione d'ingrandimento del Testo.",
     "VIBRATION":  "Vibrazione",
     "WELCOME":  "Benvenuti",
-    "ZOOM":  "Ingrandimento testo"
+    "ZOOM":  "Ingrandimento testo",
+    "USE_OFFLINE":  "Sì continuare senza aggiornare"
   },
   "MESSAGE": {
     "SYNC": {
@@ -62,6 +63,8 @@
       "NO_CONNECTION": "<b>Nessuna connessione ad internet.</b><br/><br/>Spiacente, ma non è stata rilevata alcuna connessione ad internet. Riprovi a connettersi.",
       "HTTP_ERROR": "<b>Si è verificato un errore Http</b><br/><br/>Riprovi a connettersi."
     },
+    "NO_DATA_YET": "Leider konnten Sie noch keine Daten herunterladen können. Bitte stellen Sie eine Verbindung zum Internet her und laden Sie die Daten herunter, um diese App gebrauchen zu können.",
+    "USE_OFFLINE": "Da Sie bereits Daten heruntergeladen haben, könne Sie auch ohne eine Aktualisierung in die App gehen.",
     "EMPTY_HISTORY": "Non ha effettuato scansioni. Effettui una scansione!",
     "NOT_FOUND": "Non è stato rilevato alcun codie. Effettui nuovamente la scansione!",
     "SCAN": "Scanzione in corso...",
