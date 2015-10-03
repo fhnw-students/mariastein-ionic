@@ -154,7 +154,7 @@
 
     function _downloadImages(r) {
       $rootScope.initModalMessage = 'MESSAGE.SYNC.IMAGES';
-      $rootScope.initModalMessageValues.counter = 0;
+      $rootScope.initModalMessageValues.counter = 1;
       $rootScope.initModalMessageValues.amount = Object.keys(r.images).length || 0;
       var deferred = $q.defer();
       imagesService.download(r.images)

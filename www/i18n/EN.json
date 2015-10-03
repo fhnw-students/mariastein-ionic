@@ -64,8 +64,8 @@
       "NO_CONNECTION": "<b>No Internet Connection</b><br/><br/>Sorry no Internet connectivity detected. Please reconnect and try again.",
       "HTTP_ERROR": "<b>Http Error occurred</b><br/><br/>Please reconnect and try again."
     },
-    "NO_DATA_YET": "Leider konnten Sie noch keine Daten herunterladen können. Bitte stellen Sie eine Verbindung zum Internet her und laden Sie die Daten herunter, um diese App gebrauchen zu können.",
-    "USE_OFFLINE": "Da Sie bereits Daten heruntergeladen haben, könne Sie auch ohne eine Aktualisierung in die App gehen.",
+    "NO_DATA_YET": "Leider konnten noch keine Daten heruntergeladen werden. Bitte stellen Sie eine Verbindung zum Internet her und laden Sie die Daten herunter, um diese App gebrauchen zu können.",
+    "USE_OFFLINE": "Da Sie bereits Daten heruntergeladen haben, kann die App auch ohne eine Aktualisierung verwendet werden.",
     "EMPTY_HISTORY": "No objects scanned yet, please scan an object!",
     "NOT_FOUND": "No item was found. Please try again!",
     "NO_CONTENT": "No Contents available. Please connect to the internet and update your content!",
