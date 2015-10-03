@@ -1,0 +1,139 @@
+<ion-view view-title="{{'LABEL.TUTORIAL' | translate}}">
+    <!-- <ion-nav-bar class="bar-positive"></ion-nav-bar> /-->
+    <ion-content class="padding tutorial-content">
+
+        <kms-spinner ng-hide="tutorial.isReady()"></kms-spinner>
+
+        <div id="tutorial-big-div" ng-if="tutorial.isReady()">
+
+            <ion-slide-box active-slide="tutorial.startSlide">
+                <ion-slide>
+                    <div class="welcome" style="margin: 1px">
+                        <h1>{{'LABEL.WELCOME' | translate}}</h1>
+                        <p>{{ 'LABEL.SELECTLANGUAGE' | translate }}</p>
+                        <ion-radio ng-model="tutorial.settings.language" ng-value="'DE'"
+                                   ng-change="tutorial.onLanguageChange()">Deutsch
+                        </ion-radio>
+                        <ion-radio ng-model="tutorial.settings.language" ng-value="'EN'"
+                                   ng-change="tutorial.onLanguageChange()">English
+                        </ion-radio>
+                        <ion-radio ng-model="tutorial.settings.language" ng-value="'FR'"
+                                   ng-change="tutorial.onLanguageChange()">Fran&ccedil;ais
+                        </ion-radio>
+                        <ion-radio ng-model="tutorial.settings.language" ng-value="'IT'"
+                                   ng-change="tutorial.onLanguageChange()">Italiano
+                        </ion-radio>
+                        <br>
+                    </div>
+                </ion-slide>
+
+                <ion-slide>
+                    <div class="Tutorial page settings" style="margin: 1px">
+                        <h1>{{'LABEL.SETTINGS' | translate}}</h1>
+                        <ion-scroll direction="y" ng-style="{height: tutorial.hgt+ 'px'}">
+                        <ion-item class="item item-divider item-divider-text item-text-wrap">
+                            {{'LABEL.TUTORIALSETTINGSVIBRATION' | translate}}
+                        </ion-item>
+                        <ion-toggle ng-model="tutorial.settings.vibration" ng-change="tutorial.saveSettings()"
+                                    toggle-class="toggle-calm">{{ 'LABEL.VIBRATION' | translate }}
+                        </ion-toggle>
+
+                        <ion-item class="item item-divider item-divider-text item-text-wrap">
+                            {{'LABEL.TUTORIALSETTINGSZOOMING' | translate}}
+                        </ion-item>
+                        <ion-toggle ng-model="tutorial.settings.zooming" ng-change="tutorial.saveSettings()"
+                                    toggle-class="toggle-calm">{{ 'LABEL.ZOOM' | translate }}
+                        </ion-toggle>
+
+                        <!--<ion-item class="item item-divider item-divider-text item-text-wrap">-->
+                            <!--{{'LABEL.TUTORIALSETTINGSMUSIC' | translate}}-->
+                        <!--</ion-item>-->
+                        <!--<ion-toggle ng-model="menu.settings.music" ng-change="menu.saveSettings()"-->
+                                    <!--toggle-class="toggle-calm">{{ 'LABEL.MUSIC' | translate }}-->
+                        <!--</ion-toggle>-->
+                        </ion-scroll>
+                    </div>
+                </ion-slide>
+
+                <ion-slide>
+                    <div class="Tutorial page">
+                        <h1>{{'LABEL.MENU' | translate}}</h1>
+                        <p>{{'LABEL.TUTORIALMENU' | translate}}</p>
+                        <br/><br/>
+                        <p style="text-align: center">
+                            <i class="icon ion-navicon" style="font-size:5em"></i>
+                        </p>
+                    </div>
+                </ion-slide>
+
+                <ion-slide>
+                    <div class="Tutorial page scan">
+                        <h1>{{'LABEL.SCAN' | translate}}</h1>
+                        <p>{{'LABEL.TUTORIALSCAN' | translate}}</p>
+                        <br/><br/>
+                        <p style="text-align: center">
+                            <i class="icon ion-qr-scanner" style="font-size:5em"></i>
+                        </p>
+                    </div>
+                </ion-slide>
+
+                <ion-slide>
+                    <div class="Tutorial page map">
+                        <h1>{{'LABEL.MAP' | translate}}</h1>
+                        <p>{{'LABEL.TUTORIALMAP' | translate}}</p>
+                        <br/><br/>
+                        <p style="text-align: center">
+                            <i class="icon ion-map" style="font-size:5em"></i>
+                        </p>
+                    </div>
+                </ion-slide>
+
+                <ion-slide>
+                    <div class="Tutorial page history">
+                        <h1>{{'LABEL.HISTORY' | translate}}</h1>
+                        <p>{{'LABEL.TUTORIALHISTORY' | translate}}</p>
+                        <br/><br/>
+                        <p style="text-align: center">
+                            <i class="icon ion-clock" style="font-size:5em"></i>
+                        </p>
+                    </div>
+                </ion-slide>
+
+                <ion-slide>
+                    <div class="Tutorial page more">
+                        <h1>{{'LABEL.MORELESS' | translate}}</h1>
+
+                        <p ng-if="!tutorial.more" ng-bind-html="'LABEL.TUTORIALMORE' | translate"></p>
+                        <button ng-if="!tutorial.more" class="button button-clear button-positive"
+                                on-tap="tutorial.showMore()">
+                            {{'LABEL.MORE'|translate}}
+                        </button>
+                        <p ng-if="tutorial.more" ng-bind-html="'LABEL.TUTORIALLESS' | translate"></p>
+                        <button ng-if="tutorial.more" class="button button-clear button-positive"
+                                on-tap="tutorial.showLess()">
+                            {{'LABEL.LESS'|translate}}
+                        </button>
+
+                    </div>
+                </ion-slide>
+            </ion-slide-box>
+        </div>
+
+    </ion-content>
+
+    <ion-footer-bar>
+        <div class="button-bar">
+            <a class="button icon-left ion-chevron-left button-clear button-dark" style="-webkit-box-flex: 1; flex: 1"
+               ng-disabled="tutorial.getSlideIndex()==0" ng-click="tutorial.prevSlide()">
+            </a>
+            <a id="tutorial-skip-button" class="button button-clear button-dark" ng-click="tutorial.historyGoBack()" style="-webkit-box-flex: 2; flex: 2">
+                <span ng-if="tutorial.getSlideIndex()!=tutorial.getSlideMaxIndex()">{{'LABEL.SKIPTUTORIAL' | translate}}</span>
+                <span ng-if="tutorial.getSlideIndex()==tutorial.getSlideMaxIndex()">{{'LABEL.TUTORIALFINISH' | translate}}</span>
+            </a>
+            <a class="button icon-right ion-chevron-right button-clear button-dark" style="-webkit-box-flex: 1; flex: 1"
+               ng-disabled="tutorial.getSlideIndex()==tutorial.getSlideMaxIndex()" ng-click="tutorial.nextSlide()">
+            </a>
+        </div>
+    </ion-footer-bar>
+
+</ion-view>

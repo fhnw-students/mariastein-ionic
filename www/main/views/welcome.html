@@ -1,0 +1,22 @@
+<ion-view view-title="{{'LABEL.WELCOME' | translate}}">
+
+    <ion-content>
+
+        <kms-spinner ng-hide="welcome.isReady()"></kms-spinner>
+
+        <div class="row responsive-lg" ng-if="!welcome.noContent && welcome.isReady() && !welcome.hasFailed">
+            <div class="col"><kms-image image-id="welcome.page.image[0]" width="100%"></kms-image></div>
+            <div class="col"><p ng-bind-html="welcome.page.content"></p></div>
+        </div>
+
+        <kms-info-card message="MESSAGE.NO_CONTENT" ng-if="welcome.noContent">
+            <kms-update-content-button></kms-update-content-button>
+        </kms-info-card>
+
+    </ion-content>
+    
+    <ion-footer-bar class="footer-button" ng-show="!welcome.noContent && welcome.isReady()">
+        <kms-scan-button></kms-scan-button>
+    </ion-footer-bar>
+
+</ion-view>

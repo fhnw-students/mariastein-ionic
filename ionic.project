@@ -1,4 +1,12 @@
 {
   "name": "mariastein-ionic",
-  "app_id": "66df3a8b"
+  "app_id": "66df3a8b",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
 }

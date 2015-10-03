@@ -1,0 +1,74 @@
+<ion-view view-title="{{ 'LABEL.SETTINGS' | translate }}">
+    <ion-content>
+        <kms-spinner ng-hide="settings.isReady()"></kms-spinner>
+
+        <ion-list ng-show="settings.isReady()">
+
+            <!-- Settings -->
+            <ion-item class="item item-divider item-divider-text item-text-wrap">
+                {{'LABEL.TUTORIALSETTINGSVIBRATION' | translate}}
+            </ion-item>
+            <ion-toggle ng-model="settings.settings.vibration" ng-change="settings.saveSettings()"
+                        toggle-class="toggle-calm">{{ 'LABEL.VIBRATION' | translate }}
+            </ion-toggle>
+
+            <ion-item class="item item-divider item-divider-text item-text-wrap">
+                {{'LABEL.TUTORIALSETTINGSZOOMING' | translate}}
+            </ion-item>
+            <ion-toggle ng-model="settings.settings.zooming" ng-change="settings.saveSettings()"
+                        toggle-class="toggle-calm">{{ 'LABEL.ZOOM' | translate }}
+            </ion-toggle>
+
+            <!--<ion-item class="item item-divider item-divider-text item-text-wrap">-->
+            <!--{{'LABEL.TUTORIALSETTINGSMUSIC' | translate}}-->
+            <!--</ion-item>-->
+            <!--<ion-toggle ng-model="settings.settings.music" ng-change="settings.saveSettings()"-->
+            <!--toggle-class="toggle-calm">{{ 'LABEL.MUSIC' | translate }}-->
+            <!--</ion-toggle>-->
+
+            <ion-item class="item item-divider item-divider-text item-text-wrap">
+                {{ 'LABEL.SELECTLANGUAGE' | translate }}
+            </ion-item>
+
+            <ion-item class="item-select" type="item-text-wrap">
+                <i class=""></i>
+                {{ 'LABEL.LANGUAGE' | translate }}
+                        <span class="item-note">
+                            <select ng-model="settings.settings.language" ng-change="settings.onLanguageChange()"
+                                    selected="settings.settings.language">
+                                <option value="DE">Deutsch</option>
+                                <option value="EN">English</option>
+                                <option value="FR">Fran&ccedil;ais</option>
+                                <option value="IT">Italiano</option>
+                            </select>
+                        </span>
+            </ion-item>
+        </ion-list>
+
+        <br/>
+
+        <!-- About -->
+        <ion-list>
+            <ion-item class="item item-divider item-divider-text item-text-wrap">
+                {{ 'LABEL.ABOUT' | translate }}
+            </ion-item>
+            <ion-item>{{ 'LABEL.VERSION' | translate }}<span class="item-note">1.0.0-rc.1</span></ion-item>
+        </ion-list>
+
+        <br/>
+
+        <div class="padding">
+            <kms-update-content-button class="button-block button-outline"></kms-update-content-button>
+
+            <button class="button button-block button-assertive button-outline icon-left ion-trash-a"
+                    ng-click="settings.destroyContent()">
+                {{ 'LABEL.DESTROY_CONTENT' | translate }}
+            </button>
+        </div>
+
+    </ion-content>
+
+</ion-view>
+
+
+

@@ -1,0 +1,38 @@
+<ion-modal-view>
+    <ion-content has-bouncing="false" scroll="false">
+
+        <div class="row responsive-lg" style="text-align: center; margin-top: 15px" ng-if="initModalFailed === false">
+            <div class="col"><img src="./img/init.png" width="100%"></div>
+            <div class="col" style="padding-top: 3em; margin-bottom:0">
+                <ion-spinner icon="ripple"></ion-spinner>
+            </div>
+        </div>
+
+        <div class="kmsscan-error-card" ng-if="initModalFailed">
+            <div class="card">
+                <div class="item item-text-wrap item-icon-left">
+                    <i class="icon ion-alert"></i>
+                    <span ng-bind-html="initModalFailed.error.text | translate"></span>
+                </div>
+            </div>
+
+            <kms-update-content-button></kms-update-content-button>
+
+        </div>
+
+
+    </ion-content>
+
+    <div class="bar bar-footer bar-light kmsscan-init-modal" style="height: 80px">
+        <div class="row responsive-lg" style="text-align: center;" ng-if="initModalFailed === false">
+            <div class="col">
+                <p class="positive" translate="{{initModalMessage}}"></p>
+
+                <p>
+                    <small translate="MESSAGE.SYNC.PLEASE_WAIT"></small>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</ion-modal-view>
