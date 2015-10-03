@@ -8813,10 +8813,7 @@ a.button {
       max-width: 100%;
       width: 100%; } }
 
-/**
- * Utility Classes
- * --------------------------------------------------
- */
+positive
 .hide {
   display: none; }
 
@@ -9467,5 +9464,9 @@ p i {
 .bar .button {
   font-size: 16px; }
 
-p small {
-  font-size: 0.7em; }
+.kmsscan-init-modal p {
+  font-size: 0.9em;
+  margin: 0; }
+
+.kmsscan-init-modal p small {
+  font-size: 0.68em; }

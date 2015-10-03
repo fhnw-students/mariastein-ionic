@@ -270,17 +270,17 @@ span {
   }
 }
 
-h3, h2, h1, .title{
-  color: $positive;
-  font-style: normal;
+h3, h2, h1, .title {
+  color:       $positive;
+  font-style:  normal;
   font-weight: normal;
 }
 
-h4, h5{
+h4, h5 {
   font-family: $font-family-sans-serif;
 }
 
-p i{
+p i {
   font-style: italic;
 }
 
@@ -288,6 +288,12 @@ p i{
   font-size: 16px;
 }
 
-p small{
-  font-size: 0.7em;
+.kmsscan-init-modal {
+  p {
+    font-size: 0.9em;
+    margin:    0;
+  }
+  p small {
+    font-size: 0.68em;
+  }
 }
