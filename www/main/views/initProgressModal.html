@@ -1,10 +1,10 @@
 <ion-modal-view>
-    <ion-content>
+    <ion-content has-bouncing="false" scroll="false">
 
         <div class="row responsive-lg" style="text-align: center; margin-top: 15px" ng-if="initModalFailed === false">
             <div class="col"><img src="./img/init.png" width="100%"></div>
-            <div class="col">
-                <ion-spinner icon="ripple" style="font-size: 2.5em"></ion-spinner>
+            <div class="col" style="padding-top: 3em; margin-bottom:0">
+                <ion-spinner icon="ripple"></ion-spinner>
             </div>
         </div>
 
@@ -23,8 +23,8 @@
 
     </ion-content>
 
-    <div class="bar bar-footer bar-light kmsscan-init-modal" style="height: 105px">
-        <div class="row responsive-lg" style="text-align: center; margin-top: 15px" ng-if="initModalFailed === false">
+    <div class="bar bar-footer bar-light kmsscan-init-modal" style="height: 80px">
+        <div class="row responsive-lg" style="text-align: center;" ng-if="initModalFailed === false">
             <div class="col">
                 <p class="positive" translate="{{initModalMessage}}"></p>
 
