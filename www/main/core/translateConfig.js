@@ -30,7 +30,7 @@
    * This configuration sets $translate settings like default language
    */
   function TranslateConfig($translateProvider) {
-    $translateProvider.preferredLanguage('EN');
+    $translateProvider.preferredLanguage('DE');
     $translateProvider.useSanitizeValueStrategy(null);
     $translateProvider.useStaticFilesLoader({
       prefix: './i18n/',
