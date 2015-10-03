@@ -50,6 +50,7 @@
   },
   "MESSAGE": {
     "SYNC": {
+      "PLEASE_WAIT": "Aspetta. Questo potrebbe richiedere alcuni minuti .",
       "DEVICE": "Attendo dispositivo...",
       "DATA": "Scarico contenuti dal server...",
       "STORE": "Salvataggio dei contenuti...",

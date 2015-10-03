@@ -1,10 +1,12 @@
 <ion-modal-view>
     <ion-content class="padding">
-        <h3 style="text-align: center; margin-top: 15px" ng-if="initModalFailed === false">
-            <img src="./img/init.png" width="100%">
-            <ion-spinner style="font-size: 3.5em"></ion-spinner>
-            <p translate="{{initModalMessage}}"></p>
-        </h3>
+
+        <div class="row responsive-lg" style="text-align: center; margin-top: 15px" ng-if="initModalFailed === false">
+            <div class="col"><img src="./img/init.png" width="100%"></div>
+            <div class="col"><ion-spinner icon="ripple" style="font-size: 2.5em"></ion-spinner></div>
+            <div class="col"><p class="positive" translate="{{initModalMessage}}"></p></div>
+            <div class="col"><p><small translate="MESSAGE.SYNC.PLEASE_WAIT"></small></p></div>
+        </div>
 
         <div class="kmsscan-error-card" ng-if="initModalFailed">
             <div class="card">
