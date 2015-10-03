@@ -119,20 +119,21 @@
             </ion-slide-box>
         </div>
 
-        <div class="bar bar-footer bar-light" ng-if="tutorial.isReady()">
-            <a class="button icon-left ion-chevron-left button-clear button-dark"
+    </ion-content>
+
+    <ion-footer-bar>
+        <div class="button-bar">
+            <a class="button icon-left ion-chevron-left button-clear button-dark" style="-webkit-box-flex: 1; flex: 1"
                ng-disabled="tutorial.getSlideIndex()==0" ng-click="tutorial.prevSlide()">
             </a>
-            <a class="button button-large button-clear button-dark" ng-click="tutorial.historyGoBack()"
-               id="tutorial-skip-button">
-                <p ng-if="tutorial.getSlideIndex()!=tutorial.getSlideMaxIndex()">{{'LABEL.SKIPTUTORIAL' | translate}}</p>
-                <p ng-if="tutorial.getSlideIndex()==tutorial.getSlideMaxIndex()">{{'LABEL.TUTORIALFINISH' | translate}}</p>
+            <a id="tutorial-skip-button" class="button button-clear button-dark" ng-click="tutorial.historyGoBack()" style="-webkit-box-flex: 2; flex: 2">
+                <span ng-if="tutorial.getSlideIndex()!=tutorial.getSlideMaxIndex()">{{'LABEL.SKIPTUTORIAL' | translate}}</span>
+                <span ng-if="tutorial.getSlideIndex()==tutorial.getSlideMaxIndex()">{{'LABEL.TUTORIALFINISH' | translate}}</span>
             </a>
-            <a class="button icon-right ion-chevron-right button-clear button-dark"
+            <a class="button icon-right ion-chevron-right button-clear button-dark" style="-webkit-box-flex: 1; flex: 1"
                ng-disabled="tutorial.getSlideIndex()==tutorial.getSlideMaxIndex()" ng-click="tutorial.nextSlide()">
             </a>
-
         </div>
+    </ion-footer-bar>
 
-    </ion-content>
 </ion-view>

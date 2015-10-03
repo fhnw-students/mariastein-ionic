@@ -3338,9 +3338,9 @@ body,
   padding: 0;
   color: #707173;
   word-wrap: break-word;
-  font-size: 16px;
+  font-size: 15px;
   font-family: "ZwoOT-Regular", "Arial", sans-serif;
-  line-height: 22px;
+  line-height: 21px;
   text-rendering: optimizeLegibility;
   -webkit-backface-visibility: hidden;
   -webkit-user-drag: none;
@@ -3556,7 +3556,7 @@ ion-infinite-scroll {
  * --------------------------------------------------
  */
 p {
-  margin: 0 0 11px; }
+  margin: 0 0 10.5px; }
 
 small {
   font-size: 85%; }
@@ -3587,8 +3587,8 @@ h1, h2, h3, h4, h5, h6,
 h1, .h1,
 h2, .h2,
 h3, .h3 {
-  margin-top: 22px;
-  margin-bottom: 11px; }
+  margin-top: 21px;
+  margin-bottom: 10.5px; }
   h1:first-child, .h1:first-child,
   h2:first-child, .h2:first-child,
   h3:first-child, .h3:first-child {
@@ -3614,44 +3614,44 @@ h3, .h3 {
   h3 + h3, h3 + .h3, .h3 + h1, .h3 + .h1,
   .h3 + h2, .h3 + .h2,
   .h3 + h3, .h3 + .h3 {
-    margin-top: 11px; }
+    margin-top: 10.5px; }
 
 h4, .h4,
 h5, .h5,
 h6, .h6 {
-  margin-top: 11px;
-  margin-bottom: 11px; }
+  margin-top: 10.5px;
+  margin-bottom: 10.5px; }
 
 h1, .h1 {
-  font-size: 41px; }
+  font-size: 39px; }
 
 h2, .h2 {
-  font-size: 34px; }
+  font-size: 32px; }
 
 h3, .h3 {
-  font-size: 28px; }
+  font-size: 26px; }
 
 h4, .h4 {
-  font-size: 20px; }
+  font-size: 19px; }
 
 h5, .h5 {
-  font-size: 16px; }
+  font-size: 15px; }
 
 h6, .h6 {
-  font-size: 14px; }
+  font-size: 13px; }
 
 h1 small, .h1 small {
-  font-size: 28px; }
+  font-size: 26px; }
 
 h2 small, .h2 small {
-  font-size: 20px; }
+  font-size: 19px; }
 
 h3 small, .h3 small,
 h4 small, .h4 small {
-  font-size: 16px; }
+  font-size: 15px; }
 
 dl {
-  margin-bottom: 22px; }
+  margin-bottom: 21px; }
 
 dt,
 dd {
@@ -3661,12 +3661,12 @@ dt {
   font-weight: bold; }
 
 blockquote {
-  margin: 0 0 22px;
-  padding: 11px 22px;
+  margin: 0 0 21px;
+  padding: 10.5px 21px;
   border-left: 5px solid gray; }
   blockquote p {
     font-weight: 300;
-    font-size: 20px;
+    font-size: 18.75px;
     line-height: 1.25; }
   blockquote p:last-child {
     margin-bottom: 0; }
@@ -3684,7 +3684,7 @@ blockquote:after {
 
 address {
   display: block;
-  margin-bottom: 22px;
+  margin-bottom: 21px;
   font-style: normal;
   line-height: 1.42857; }
 
@@ -6996,7 +6996,7 @@ legend {
   width: 100%;
   border: 1px solid #ddd;
   color: #544c46;
-  font-size: 24px;
+  font-size: 22.5px;
   line-height: 2.85714; }
   legend small {
     color: #bfc0bf;
@@ -7008,7 +7008,7 @@ button,
 select,
 textarea {
   font-weight: normal;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.42857; }
 
 input,
@@ -7160,7 +7160,7 @@ textarea {
 
 .item-stacked-label input {
   overflow: hidden;
-  height: 50px; }
+  height: 48px; }
 
 .item-floating-label {
   display: block;
@@ -7197,11 +7197,11 @@ input[type="color"] {
   display: block;
   padding-top: 2px;
   padding-left: 0;
-  height: 38px;
+  height: 36px;
   color: #111;
   vertical-align: middle;
-  font-size: 16px;
-  line-height: 18px; }
+  font-size: 15px;
+  line-height: 17px; }
 
 .platform-ios input[type="datetime-local"],
 .platform-ios input[type="date"],
@@ -7264,7 +7264,7 @@ input[type="checkbox"] {
   width: auto; }
 
 input[type="file"] {
-  line-height: 36px; }
+  line-height: 35px; }
 
 .previous-input-focus,
 .cloned-text-input + input,
@@ -7949,7 +7949,7 @@ input:checked + .checkbox-icon:after {
     text-indent: .01px;
     text-overflow: '';
     white-space: nowrap;
-    font-size: 16px;
+    font-size: 15px;
     cursor: pointer;
     direction: rtl; }
   .item-select select::-ms-expand {
@@ -9279,6 +9279,15 @@ positive
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+h1 {
+  font-size: 26px; }
+
+h2 {
+  font-size: 21px; }
+
+h3 {
+  font-size: 18px; }
+
 .bar-header .title, .bar-header h1 {
   font-family: "ZwoOT-Regular", serif;
   color: #456aa2 !important; }
@@ -9363,7 +9372,7 @@ positive
   color: white; }
 
 #tutorial-big-div {
-  height: 90%; }
+  height: 100%; }
 
 #tutorial-skip-button {
   margin: auto;

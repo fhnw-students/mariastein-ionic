@@ -35,8 +35,8 @@ $dark: rgb(84, 76, 70) !default;
 
 $base-color: rgb(112, 113, 115) !default;
 
-$font-size-base: 16px !default;
-$font-size-large: 20px !default;
+$font-size-base: 15px !default;
+$font-size-large: 18px !default;
 $font-size-small: 13px !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
@@ -46,6 +46,11 @@ $bar-title-font-size: 18px !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+
+h1{ font-size: 26px; }
+h2{ font-size: 21px; }
+h3{ font-size: 18px; }
+
 
 .bar-header .title, .bar-header h1 {
   font-family: $headings-font-family;
@@ -156,7 +161,7 @@ $bar-title-font-size: 18px !default;
 }
 
 #tutorial-big-div {
-  height: 90%;
+  height: 100%;
 }
 
 #tutorial-skip-button {

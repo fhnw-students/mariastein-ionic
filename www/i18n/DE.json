@@ -30,11 +30,11 @@
     "SCAN":  "Scannen",
     "SELECTLANGUAGE":  "Sprache wählen:",
     "SETTINGS":  "Einstellungen",
-    "SKIPTUTORIAL":  "Tutorial überspringen",
+    "SKIPTUTORIAL":  "überspringen",
     "SUBMIT_BUTTON":  "Senden",
     "TELEPHONE":  "Telefon",
     "TUTORIAL":  "Tutorial",
-    "TUTORIALFINISH":  "Tutorial beenden",
+    "TUTORIALFINISH":  "beenden",
     "TUTORIALHISTORY":  "Mit diesem Menüpunkt können sie ihren Scanverlauf einsehen.",
     "TUTORIALLESS":  "Jetzt wird der gesamte Text angezeigt, welcher detaillierte Informationen über das vorher vorgestellte Objekt bietet.<br>Tippen Sie auf den blauen \"Weniger\"  Text, um wieder den Kurztext anzuzeigen.",
     "TUTORIALMAP":  "Mit diesem Menüpunkt können Sie den klostergrundriss einsehen.",
@@ -50,7 +50,7 @@
   },
   "MESSAGE": {
     "SYNC": {
-      "PLEASE_WAIT": "Bitte warten. Dies kann einige minuten dauern.",
+      "PLEASE_WAIT": "Bitte warten. Dies kann einige Minuten dauern.",
       "DEVICE": "Warte auf das Gerät...",
       "DATA": "Lade Inhalte vom Server herunter...",
       "STORE": "Speichere die Inhalte...",
