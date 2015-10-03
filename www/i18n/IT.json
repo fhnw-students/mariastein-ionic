@@ -57,9 +57,9 @@
       "SUCCESS": "Sincronizzazione terminata con successo!"
     },
     "ERROR": {
-      "UNKONW": "<b>Errore sconosciuto<b><br/><br/>Riporovare nuovamente.",
-      "NO_CONNECTION": "<b>Nessuna connessione ad internet.<b><br/><br/>Spiacente, ma non è stata rilevata alcuna connessione ad internet. Riprovi a connettersi.",
-      "HTTP_ERROR": "<b>Si è verificato un errore Http<b><br/><br/>Riprovi a connettersi."
+      "UNKONW": "<b>Errore sconosciuto</b><br/><br/>Riporovare nuovamente.",
+      "NO_CONNECTION": "<b>Nessuna connessione ad internet.</b><br/><br/>Spiacente, ma non è stata rilevata alcuna connessione ad internet. Riprovi a connettersi.",
+      "HTTP_ERROR": "<b>Si è verificato un errore Http</b><br/><br/>Riprovi a connettersi."
     },
     "EMPTY_HISTORY": "Non ha effettuato scansioni. Effettui una scansione!",
     "NOT_FOUND": "Non è stato rilevato alcun codie. Effettui nuovamente la scansione!",

@@ -10,7 +10,7 @@
             <div class="card">
                 <div class="item item-text-wrap item-icon-left">
                     <i class="icon ion-alert"></i>
-                    {{ initModalFailed.error.text | translate}}
+                    <span ng-bind-html="initModalFailed.error.text | translate"></span>
                 </div>
             </div>
 

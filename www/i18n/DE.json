@@ -57,9 +57,9 @@
       "SUCCESS": "Synchronisation erfolgreich abgeschlossen!"
     },
     "ERROR": {
-      "UNKONW": "<b>Unbekannter Fehler<b><br/><br/>Bitte erneut versucen.",
-      "NO_CONNECTION": "<b>Keine Internet Verbindung<b><br/><br/>Sorry no Internet connectivity detected. Please reconnect and try again.",
-      "HTTP_ERROR": "<b>Http Error occurred<b><br/><br/>Please reconnect and try again."
+      "UNKONW": "<b>Unbekannter Fehler</b><br/><br/>Bitte erneut versucen.",
+      "NO_CONNECTION": "<b>Keine Internet Verbindung</b><br/><br/>Sorry no Internet connectivity detected. Please reconnect and try again.",
+      "HTTP_ERROR": "<b>Http Error occurred</b><br/><br/>Please reconnect and try again."
     },
     "EMPTY_HISTORY": "Sie haben leider noch kein Objekt gescanned. Bitte scannen Sie ein Objekt!",
     "NOT_FOUND": "Es wurde kein Objekt gefunden. Bitte nochmals versuchen!",

@@ -57,9 +57,9 @@
       "SUCCESS": "synchronisation réussie!"
     },
     "ERROR": {
-      "UNKONW": "<b>erreur inconnue<b><br/><br/>S'il vous plaît essayez encore.",
-      "NO_CONNECTION": "<b>Pas de connection à l'Internet<b><br/><br/>Excuse il n'y a pas de connecxion ä l'Internet. S'il vour plaît reconnecter et reessayer.",
-      "HTTP_ERROR": "<b>Http erreur est apparu<b><br/><br/>S'il vous plaît reconnecter et reessayer."
+      "UNKONW": "<b>erreur inconnue</b><br/><br/>S'il vous plaît essayez encore.",
+      "NO_CONNECTION": "<b>Pas de connection à l'Internet</b><br/><br/>Excuse il n'y a pas de connecxion ä l'Internet. S'il vour plaît reconnecter et reessayer.",
+      "HTTP_ERROR": "<b>Http erreur est apparu</b><br/><br/>S'il vous plaît reconnecter et reessayer."
     },
     "EMPTY_HISTORY":"Malheureusement, vous n'avez pas encore scanné un objet. Scannez un objet, s'il vous plaît!",
     "NOT_FOUND": "Pas d'objet trouvé. Essayez encore une fois, s'il vous plaît!",
