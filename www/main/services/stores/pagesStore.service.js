@@ -267,7 +267,10 @@
     }
 
     function cleanHistory() {
-      return pouchDbUtilsService.destroyDb(historyDb);
+      return pouchDbUtilsService.destroyDb(historyDb).then(function () {
+        _initHistoryDb();
+        return;
+      });
     }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
@@ -445,9 +448,13 @@
       return data;
     }
 
+    function _initHistoryDb() {
+      historyDb = pouchDbUtilsService.createDb(PagesStoreService.DBNAME.HISTORY);
+    }
+
     function _activate() {
       pagesDb = pouchDbUtilsService.createDb(PagesStoreService.DBNAME.PAGES);
-      historyDb = pouchDbUtilsService.createDb(PagesStoreService.DBNAME.HISTORY);
+      _initHistoryDb();
       var deferred = $q.defer();
       deferred.resolve([
         pagesDb, historyDb
