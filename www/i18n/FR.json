@@ -63,8 +63,8 @@
       "NO_CONNECTION": "<b>Pas de connection à l'Internet</b><br/><br/>Excuse il n'y a pas de connecxion ä l'Internet. S'il vour plaît reconnecter et reessayer.",
       "HTTP_ERROR": "<b>Http erreur est apparu</b><br/><br/>S'il vous plaît reconnecter et reessayer."
     },
-    "NO_DATA_YET": "Malheureusement ce était pas possible de télécharger les contenus. S'il vous plaît connecter sur Internet pour faire l'appli utile par télécharger les contenus.",
-    "USE_OFFLINE": "Parce que vous avez télécharger les contenus l'appli est utile sans mise à jour.",
+    "NO_DATA_YET": "Malheureusement c'a n'était pas possible de télécharger les contenus. S'il vous plaît connecter sur Internet pour faire l'appli utile par télécharger les contenus.",
+    "USE_OFFLINE": "Parce que vous avez déjà télécharger les contenus, vous pouvez utiliser l'appli sans mise à jour.",
     "EMPTY_HISTORY":"Malheureusement, vous n'avez pas encore scanné un objet. Scannez un objet, s'il vous plaît!",
     "NOT_FOUND": "Pas d'objet trouvé. Essayez encore une fois, s'il vous plaît!",
     "SCAN": "en train de scanner...",
