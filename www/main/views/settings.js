@@ -61,11 +61,7 @@
 
     function destroyContent() {
       $ionicLoading.show();
-      pagesStoreService.clean();
       pagesStoreService.cleanHistory()
-        .then(function () {
-          return settingsStoreService.init();
-        })
         .then(function () {
           activate();
         });
