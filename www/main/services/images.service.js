@@ -32,7 +32,6 @@
     var service = {
       getPath: getPath,
       download: download
-      //sync: sync
     };
 
     return service;

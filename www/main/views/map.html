@@ -5,7 +5,7 @@
         <div ng-if="map.isReady()">
 
             <div class="list map-list" ng-if="map.rooms.length > 0">
-                <a ng-repeat="item in map.rooms" href="#/menu/mapPage/{{item.uid}}" class="item item-thumbnail-left">
+                <a ng-repeat="item in map.rooms | orderBy:'position'" href="#/menu/mapPage/{{item.uid}}" class="item item-thumbnail-left">
                     <img src="{{item.previewImageUid}}"/>
 
                     <h2>{{item.title}}</h2>

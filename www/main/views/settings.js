@@ -34,8 +34,7 @@
   }
 
 
-  function SettingsController(Logger, $rootScope, settingsStoreService, syncService, pagesStoreService, $q,
-                              $ionicLoading) {
+  function SettingsController(Logger, $rootScope, settingsStoreService, syncService, pagesStoreService, $ionicLoading) {
     var vm = this; // view-model
     var log = new Logger(namespace);
 
@@ -62,13 +61,7 @@
 
     function destroyContent() {
       $ionicLoading.show();
-      $q.all([
-        settingsStoreService.clean(),
-        pagesStoreService.cleanHistory()
-      ])
-        .then(function () {
-          return settingsStoreService.init();
-        })
+      pagesStoreService.cleanHistory()
         .then(function () {
           activate();
         });
