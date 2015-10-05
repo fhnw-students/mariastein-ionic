@@ -41,7 +41,7 @@
     "TUTORIALMAP":  "Select this menu item to view the monestary map.",
     "TUTORIALMENU":  "With this icon which is found in the upper left corner, you can open the menu, navigate through the whole app and set all settings.",
     "TUTORIALMORE":  "This Text is only the teaser.<br>Tap on the blue \"More\"  to expand the full text.",
-    "TUTORIALSCAN":  "Select this menu item to scan a QR-Code.",
+    "TUTORIALSCAN":  "Select this menu item to scan a QR-Code.<br>Ensure that the QR-Code is scanned in a right angle.",
     "TUTORIALSETTINGSMUSIC":  "Enables or disables sound output. (Please only use it with headphones in the monestary)",
     "TUTORIALSETTINGSVIBRATION":  "Enables or disables the vibration when successfully scanned a QR-Code.",
     "TUTORIALSETTINGSZOOMING":  "Enables or disables the text zooming function.",
