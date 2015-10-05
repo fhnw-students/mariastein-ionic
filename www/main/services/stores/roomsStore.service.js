@@ -1,7 +1,7 @@
 /**
  * @name roomsStoreService
- * @module kmsscan.services.stores.stores
- * @author Gery Hirschfeld
+ * @module kmsscan.services.stores.Rooms
+ * @author Gerhard Hirschfeld
  *
  * @description
  * This Service Class handel's the rooms data. It works with the local
@@ -18,16 +18,16 @@
       'pouchdb',
       'kmsscan.utils.Logger',
       'kmsscan.utils.Helpers',
-      'kmsscan.utils.PouchDb'
+      'kmsscan.utils.PouchDb',
+      'kmsscan.directives.Image'
     ])
     .factory('roomsStoreService', RoomsStoreService);
 
   RoomsStoreService.DBNAME = 'kmsscan.rooms';
 
-  function RoomsStoreService(Logger, $q, helpersUtilsService, pouchDbUtilsService) {
+  function RoomsStoreService(Logger, $q, helpersUtilsService, pouchDbUtilsService, imagesService) {
     var log = new Logger(namespace);
     var roomsDb;
-    log.info('init');
 
     // Public API
     var service = {
@@ -54,10 +54,13 @@
      * @returns Object<page>
      */
     function get(uid, langKey) {
-      return roomsDb.get(helpersUtilsService.buildDocId(uid, langKey))
-        .then(function (page) {
-          return page;
-        });
+      if (uid && langKey) {
+        return roomsDb.get(helpersUtilsService.buildDocId(uid, langKey))
+          .then(function (page) {
+            return _convertImageUidToPath(page);
+          });
+      }
+      return undefined;
     }
 
     /**
@@ -75,6 +78,11 @@
         .then(_parseDocs)
         .then(function (results) {
           return helpersUtilsService.filterDocsWithSameLangKey(results, langKey);
+        })
+        .then(function (results) {
+          return results.map(function (doc) {
+            return _convertImageUidToPath(doc);
+          });
         });
     }
 
@@ -89,25 +97,15 @@
      * @param data Array<Object>
      * @returns deferred.promise|{then, always} rooms
      */
-    function sync(langKey, idx, data) {
+    function sync(rooms) {
       var deferred = $q.defer();
-      var rooms = data[idx].rooms;
-      var pages = data[idx - data.length / 2].objects;
-      var counterObjectsInRooms = countObjectsInRooms(pages);
-      rooms = addCounter(rooms, counterObjectsInRooms);
       log.debug('sync', rooms);
       _activate()
         .then(function () {
-          return _sync(langKey, rooms);
+          return _sync(rooms);
         })
-        .then(function () {
-          log.debug('success');
-          deferred.resolve(rooms);
-        })
-        .catch(function (err) {
-          log.error('failed', err);
-          deferred.reject(err);
-        });
+        .then(deferred.resolve)
+        .catch(deferred.reject);
 
       return deferred.promise;
     }
@@ -158,18 +156,23 @@
     }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
-    function _sync(langkey, data) {
+    function _convertImageUidToPath(doc) {
+      doc.previewImageUid = imagesService.getPath(doc.previewImageUid);
+      doc.mapImageUid = imagesService.getPath(doc.mapImageUid);
+      return doc;
+    }
+
+    function _sync(data) {
       var queue = [];
       for (var i = 0; i < data.length; i++) {
-        queue.push(_syncRoom(langkey, data[i]));
+        queue.push(_syncRoom(data[i]));
       }
       return $q.all(queue);
     }
 
-    function _syncRoom(langkey, record) {
+    function _syncRoom(record) {
       var deferred = $q.defer();
-      record.langkey = helpersUtilsService.getLanguageKeyByValue(langkey);
-      var id = helpersUtilsService.buildDocId(record.uid, record.langkey);
+      var id = helpersUtilsService.buildDocId(record.uid, record.langKey);
       roomsDb.put(record, id)
         .then(function (response) {
           log.debug('add() -> success', response);

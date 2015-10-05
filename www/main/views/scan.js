@@ -1,3 +1,13 @@
+/**
+ * @module kmsscan.views.Scan
+ * @author Gabriel Brunner
+ *
+ * @description
+ * This view opens the camera to scan the QR-Code of an object, but if no
+ * barcode scanner is available a input will appear to test the scan
+ * manually
+ *
+ */
 (function () {
   'use strict';
 
@@ -5,6 +15,7 @@
 
   angular.module(namespace, [
     'kmsscan.utils.Logger',
+    'kmsscan.services.stores.Settings',
     'kmsscan.services.stores.Pages'
   ])
     .config(StateConfig)
@@ -23,28 +34,34 @@
       });
   }
 
-  function ScanController($cordovaBarcodeScanner, $ionicPlatform, $rootScope, $cordovaVibration, $state,
-                          settingsStoreService, Logger, pagesStoreService) {
+  function ScanController($q, $ionicHistory, $cordovaBarcodeScanner, $ionicPlatform, $rootScope, $cordovaVibration,
+                          $state, settingsStoreService, Logger, pagesStoreService) {
     var vm = this; // view-model
     var log = new Logger(namespace);
 
     vm.isBarcodeScannerReady = false;
+    vm.hasFailed = false;
     vm.isPending = true;
+    vm.noContent = false;
     vm.barcodeText = '';
     vm.settings = {};
 
     vm.isReady = isReady;
     vm.scan = scan;
     vm.submit = submit;
-    vm.destroy = destroy;
 
     $ionicPlatform.ready(activate);
     //////////////////////////////////////////
     function activate() {
-      settingsStoreService.get()
-        .then(function (settings) {
-          vm.isPending = false;
-          vm.settings = settings;
+
+      $q.all([
+        settingsStoreService.get(),
+        pagesStoreService.isEmpty()
+      ])
+        .then(function (results) {
+          vm.settings = results[0];
+          vm.noContent = results[1];
+          vm.hasFailed = false;
 
           if (window.cordova) {
             vm.isBarcodeScannerReady = true;
@@ -52,11 +69,14 @@
           } else {
             log.warn('Barcode-Scanner is not available!');
           }
+        })
+        .catch(function (err) {
+          log.error('Failed to load visited pages!', err);
+          vm.hasFailed = true;
+        })
+        .finally(function () {
+          vm.isPending = false;
         });
-    }
-
-    function destroy() {
-      pagesStoreService.destroy();
     }
 
     function scan() {
@@ -89,6 +109,9 @@
       log.debug('afterScan()', qrCode);
       pagesStoreService.visited(qrCode)
         .then(function (uid) {
+          $ionicHistory.nextViewOptions({
+            disableBack: true
+          });
           $state.go('menu.detail', {
             uid: uid
           }, {
@@ -96,6 +119,9 @@
           });
         })
         .catch(function () {
+          $ionicHistory.nextViewOptions({
+            disableBack: true
+          });
           $state.go('menu.notFound', {}, {
             location: 'replace'
           });

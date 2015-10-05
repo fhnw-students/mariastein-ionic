@@ -1,0 +1,48 @@
+<ion-modal-view>
+    <ion-content has-bouncing="false" scroll="false">
+
+        <div class="row responsive-lg" style="text-align: center; margin-top: 15px" ng-if="initModalFailed === false">
+            <div class="col"><img src="./img/init.png" width="100%"></div>
+            <div class="col" style="padding-top: 3em; margin-bottom:0">
+                <ion-spinner icon="ripple"></ion-spinner>
+            </div>
+        </div>
+
+        <div class="kmsscan-error-card" ng-if="initModalFailed">
+            <div class="card">
+                <div class="item item-text-wrap item-icon-left">
+                    <i class="icon ion-alert"></i>
+                    <span ng-bind-html="initModalFailed.error.text | translate"></span>
+                </div>
+            </div>
+        </div>
+
+        <kms-info-card message="MESSAGE.NO_DATA_YET" ng-if="initModalFailed && !initModalHasData"></kms-info-card>
+
+        <kms-info-card message="MESSAGE.USE_OFFLINE" ng-if="initModalFailed && initModalHasData">
+            <div class="padding">
+                <button class="button button-stable button-block icon-left ion-arrow-right-b"
+                        translate="LABEL.USE_OFFLINE"
+                        ng-click="initModalOpenApp()"></button>
+            </div>
+        </kms-info-card>
+
+    </ion-content>
+
+    <div class="bar bar-footer bar-light kmsscan-init-modal" style="height: 80px">
+
+        <kms-update-content-button ng-if="initModalFailed" style="margin-left: 5px;margin-right: 5px;">
+
+        </kms-update-content-button>
+
+        <div class="row responsive-lg" style="text-align: center;" ng-if="initModalFailed === false">
+            <div class="col">
+                <p class="positive">{{initModalMessage|translate:initModalMessageValues}}</p>
+                <p>
+                    <small translate="MESSAGE.SYNC.PLEASE_WAIT"></small>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</ion-modal-view>

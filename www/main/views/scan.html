@@ -3,7 +3,7 @@
 
         <kms-spinner ng-hide="scan.isReady()"></kms-spinner>
 
-        <h3 style="text-align: center; margin-top: 2em;" ng-show="scan.isReady()">
+        <h3 style="text-align: center; margin-top: 2em;" ng-show="scan.isReady() && !scan.noContent">
             <i class="ion-qr-scanner big-icon"></i>
             <br/>
             <span ng-if="!scan.isBarcodeScannerReady">
@@ -18,17 +18,18 @@
                         </button>
                     </div>
                 </form>
-
-                <button class="button button-block button-royal" ng-click="scan.destroy()">
-                  destroy
-                </button>
             </span>
             <span ng-if="!(scan.format || scan.cancel || !scan.isBarcodeScannerReady)">{{ 'MESSAGE.SCAN' | translate }}</span>
             <span ng-if="scan.format">{{ 'MESSAGE.SCAN_WRONG_FORMAT' | translate }}</span>
             <span ng-if="scan.cancel">{{ 'MESSAGE.SCAN_CANCELLED' | translate }}</span>
         </h3>
+
+        <kms-info-card message="MESSAGE.NO_CONTENT" ng-if="scan.noContent">
+            <kms-update-content-button></kms-update-content-button>
+        </kms-info-card>
+
     </ion-content>
-    <ion-footer-bar class="footer-button" ng-show="scan.isReady() && scan.isBarcodeScannerReady">
+    <ion-footer-bar class="footer-button" ng-show="scan.isReady() && scan.isBarcodeScannerReady && !scan.noContent">
         <button class="button button-full button-positive ion-qr-scanner" on-tap="scan.scan()">
             {{ 'LABEL.SCAN' | translate }}
         </button>

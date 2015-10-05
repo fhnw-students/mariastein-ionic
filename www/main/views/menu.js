@@ -1,14 +1,23 @@
+/**
+ * @module kmsscan.views.Menu
+ * @author Gianni Alagna
+ *
+ * @description
+ * This view shows the abstract view with the menu
+ *
+ */
 (function () {
   'use strict';
 
   var namespace = 'kmsscan.views.Menu';
 
   angular.module(namespace, [
-    'kmsscan.utils.Logger',
-    'kmsscan.services.stores.Settings'
+    'kmsscan.services.stores.Settings',
+    'kmsscan.services.stores.Pages'
   ])
     .config(StateConfig)
     .controller('MenuCtrl', MenuController);
+
 
   function StateConfig($stateProvider) {
     $stateProvider.state('menu', {
@@ -19,38 +28,34 @@
     });
   }
 
-  function MenuController(Logger, $rootScope, settingsStoreService) {
+  function MenuController($rootScope, settingsStoreService, pagesStoreService) {
     var vm = this;
-    var log = new Logger(namespace);
 
-    vm.settings = {};
-    vm.saveSettings = saveSettings;
-    vm.onLanguageChange = onLanguageChange;
+    vm.newsBadgeInfos = 0;
+    vm.getNewsBadgeInfos = getNewsBadgeInfos;
+
+    $rootScope.$on('kmsscan.views.newsPage.activated', activate);
+    $rootScope.$on('kmsscan.sync.succeeded', activate);
 
     activate();
-    ///////////////////////////////
+    //////////////////////
     function activate() {
-      $rootScope.$on('onLanguageChange', function (event, langKey) {
-        vm.settings.language = angular.uppercase(langKey);
-      });
-      settingsStoreService.get().then(function (settings) {
-        log.debug('activate() - success', settings);
-        vm.settings = settings;
-      });
+      settingsStoreService.get()
+        .then(function (settings) {
+          return pagesStoreService.getNewsBadgeInfos(settings.language);
+        })
+        .then(function (result) {
+          vm.newsBadgeInfos = result.unread;
+        });
     }
 
-    function saveSettings() {
-      return settingsStoreService.set(vm.settings).then(function (settings) {
-        log.debug('saveSettings() - success', settings);
-        vm.settings = settings;
-        return settings;
-      });
+    function getNewsBadgeInfos() {
+      return vm.newsBadgeInfos;
     }
 
-    function onLanguageChange() {
-      saveSettings(vm.settings).then(function () {
-        $rootScope.$broadcast('onLanguageChange', vm.settings.language);
-      });
-    }
+
   }
+
+
 }());
+

@@ -1,5 +1,7 @@
 {
-  "name": "HelloIonic",
+  "name": "mariastein-ionic",
+  "version": "1.0.0-rc.1",
+  "description": "Applikation des Klosters Mariastein - Einblick und Hintergründe für Besucher",
   "private": "true",
   "devDependencies": {
     "angular-mocks": "*",
@@ -15,6 +17,7 @@
     "moment": "~2.10.6",
     "ngCordova": "~0.1.17-alpha",
     "pouchdb": "~4.0.1",
-    "pouchdb-find": "~0.3.5"
+    "pouchdb-find": "~0.3.5",
+    "angular-ios9-uiwebview-patch": "~1.1.1"
   }
 }

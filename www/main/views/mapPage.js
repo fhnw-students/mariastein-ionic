@@ -1,3 +1,12 @@
+/**
+ * @module kmsscan.views.MapPage
+ * @author Ramon Herzig
+ *
+ * @description
+ * This state is used for display the room with the given uid-parameter.
+ * It also shows a map where the room are.
+ *
+ */
 (function () {
   'use strict';
 
@@ -35,7 +44,7 @@
     vm.isReady = isReady;
 
     if ($rootScope.syncIsActive) {
-      $rootScope.$on('kmsscan.run.activate.succeed', activate);
+      $rootScope.$on('kmsscan.sync.succeeded', activate);
     } else {
       activate();
     }

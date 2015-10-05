@@ -1,3 +1,11 @@
+/**
+ * @module kmsscan.views.Welcome
+ * @author Gabriel Brunner
+ *
+ * @description
+ * This state is used for the special-content "welcome"
+ *
+ */
 (function () {
   'use strict';
 
@@ -23,20 +31,23 @@
       });
   }
 
-  function WelcomeController(Logger, $scope, $rootScope, pagesStoreService, settingsStoreService) {
+  function WelcomeController($q, Logger, $scope, $rootScope, pagesStoreService, settingsStoreService) {
     var vm = this; // view-model
     var log = new Logger(namespace);
 
     vm.page = {};
+    vm.settings = {};
     vm.imagePath = '';
     vm.isPending = true;
+    vm.noContent = false;
     vm.hasFailed = false;
 
     vm.isReady = isReady;
 
     // Events
     if ($rootScope.syncIsActive) {
-      $rootScope.$on('kmsscan.run.activate.succeed', activate);
+      $rootScope.$on('kmsscan.sync.succeeded', activate);
+      $rootScope.$on('kmsscan.sync.skipped', activate);
     } else {
       activate();
     }
@@ -51,10 +62,14 @@
 
     ////////////////////////////////
     function activate() {
-      log.info('activate()');
-      settingsStoreService.get()
-        .then(function (settings) {
-          return pagesStoreService.getWelcomePage(settings.language);
+      $q.all([
+        settingsStoreService.get(),
+        pagesStoreService.isEmpty()
+      ])
+        .then(function (results) {
+          vm.settings = results[0];
+          vm.noContent = results[1];
+          return pagesStoreService.getWelcomePage(vm.settings.language);
         })
         .then(function (page) {
           log.debug('activate() -> succeed', page);

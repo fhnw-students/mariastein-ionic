@@ -1,3 +1,11 @@
+/**
+ * @module kmsscan.views.Map
+ * @author Ramon Herzig
+ *
+ * @description
+ * This state is used for display all rooms with objects to scan.
+ *
+ */
 (function () {
   'use strict';
 
@@ -35,7 +43,7 @@
     vm.isReady = isReady;
 
     if ($rootScope.syncIsActive) {
-      $rootScope.$on('kmsscan.run.activate.succeed', activate);
+      $rootScope.$on('kmsscan.sync.succeeded', activate);
     } else {
       activate();
     }

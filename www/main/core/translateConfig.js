@@ -1,3 +1,10 @@
+/**
+ * @module kmsscan.translateConfig
+ * @author Gerhard Hirschfeld
+ *
+ * @description
+ * This configuration defines the handle of the third-party-lib $translate
+ */
 (function () {
   'use strict';
 
@@ -17,14 +24,13 @@
     ];
   }
 
-
   /**
    * @name TranslateConfig
    * @description
    * This configuration sets $translate settings like default language
    */
   function TranslateConfig($translateProvider) {
-    $translateProvider.preferredLanguage('EN');
+    $translateProvider.preferredLanguage('DE');
     $translateProvider.useSanitizeValueStrategy(null);
     $translateProvider.useStaticFilesLoader({
       prefix: './i18n/',

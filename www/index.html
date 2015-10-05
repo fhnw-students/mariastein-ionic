@@ -17,6 +17,7 @@
     <script src="lib/pouchdb/dist/pouchdb.min.js"></script>
     <script src="lib/pouchdb-find/dist/pouchdb.find.min.js"></script>
     <script src="lib/angular-pouchdb/angular-pouchdb.min.js"></script>
+    <script src="lib/angular-ios9-uiwebview-patch/angular-ios9-uiwebview-patch.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
@@ -35,6 +36,8 @@
     <script src="main/utils/utils.module.js"></script>
     <script src="main/utils/logger.js"></script>
     <script src="main/utils/helpers.js"></script>
+    <script src="main/utils/parsers.js"></script>
+    <script src="main/utils/erros.js"></script>
     <script src="main/utils/pouchDb.js"></script>
 
     <script src="main/core/ionicPlatform.js"></script>
@@ -45,16 +48,18 @@
     <script src="main/services/stores/settingsStore.service.js"></script>
     <script src="main/services/stores/pagesStore.service.js"></script>
     <script src="main/services/stores/roomsStore.service.js"></script>
+    <script src="main/services/sync.service.js"></script>
     <script src="main/services/images.service.js"></script>
 
     <script src="main/directives/navMenuButton.js"></script>
     <script src="main/directives/scanButton.js"></script>
     <script src="main/directives/spinner.js"></script>
+    <script src="main/directives/infoCard.js"></script>
+    <script src="main/directives/updateContentButton.js"></script>
     <script src="main/directives/image.js"></script>
 
     <script src="main/app.run.js"></script>
 
-    <script src="main/views/init.js"></script>
     <script src="main/views/tutorial.js"></script>
     <script src="main/views/detail.js"></script>
     <script src="main/views/notFound.js"></script>
@@ -62,7 +67,6 @@
     <script src="main/views/contact.js"></script>
     <script src="main/views/history.js"></script>
     <script src="main/views/news.js"></script>
-    <script src="main/views/newsPage.js"></script>
     <script src="main/views/map.js"></script>
     <script src="main/views/mapPage.js"></script>
     <script src="main/views/menu.js"></script>
@@ -72,6 +76,8 @@
 
 </head>
 <body ng-app="kmsscan">
-<ion-nav-view></ion-nav-view>
+<div ng-hide="syncIsActive">
+    <ion-nav-view></ion-nav-view>
+</div>
 </body>
 </html>

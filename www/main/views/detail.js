@@ -1,3 +1,12 @@
+/**
+ * @name DetailController
+ * @module kmsscan.views.Detail
+ * @author Gabriel Brunner & David Heimgartner
+ *
+ * @description
+ * This view shows the typo3 pages such as news or objects to scan
+ *
+ */
 (function () {
   'use strict';
 
@@ -48,9 +57,10 @@
     vm.scrollTop = scrollTop;
     vm.zoom = zoom;
     vm.updateSlideStatus = updateSlideStatus;
+    vm.isNews = isNews;
 
     if ($rootScope.syncIsActive) {
-      $rootScope.$on('kmsscan.run.activate.succeed', activate);
+      $rootScope.$on('kmsscan.sync.succeeded', activate);
     } else {
       activate();
     }
@@ -70,6 +80,12 @@
           return pagesStoreService.get($stateParams.uid, settings.language);
         })
         .then(function (doc) {
+          if (doc.type === 'news') {
+            pagesStoreService.visitedByUid($stateParams.uid)
+              .then(function () {
+                $rootScope.$broadcast('kmsscan.views.newsPage.activated');
+              });
+          }
           log.debug('activate() -> succeed', doc);
           vm.doc = doc;
           vm.isPending = false;
@@ -80,6 +96,10 @@
           vm.isPending = false;
           vm.hasFailed = true;
         });
+    }
+
+    function isNews() {
+      return vm.doc && vm.doc.type === 'news';
     }
 
     function isReady() {

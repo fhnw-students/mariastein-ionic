@@ -1,3 +1,13 @@
+/**
+ * @name helpersUtilsService
+ * @module kmsscan.utils.Helpers
+ * @author Gerhard Hirschfeld
+ *
+ * @description
+ * This Service Class has some useful helper function, which are
+ * used in several other services or controllers
+ *
+ */
 (function () {
   'use strict';
 
@@ -65,12 +75,12 @@
      * Filters all the docs with the given language-key
      *
      * @param list Array<doc>
-     * @param langkey Number
+     * @param langKey Number
      * @returns Array<doc>
      */
-    function filterDocsWithSameLangKey(list, langkey) {
+    function filterDocsWithSameLangKey(list, langKey) {
       return list.filter(function (doc) {
-        return langkey === doc.langkey;
+        return langKey === doc.langKey;
       });
     }
 

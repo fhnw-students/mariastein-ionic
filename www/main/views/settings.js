@@ -1,10 +1,21 @@
+/**
+ * @module kmsscan.views.Settings
+ * @author Gabriel Brunner
+ *
+ * @description
+ * This Controller is used for the settings.html page.
+ *
+ */
 (function () {
   'use strict';
 
   var namespace = 'kmsscan.views.Settings';
 
   angular.module(namespace, [
-    'kmsscan.services.stores.Settings'
+    'kmsscan.services.stores.Settings',
+    'kmsscan.services.Sync',
+    'kmsscan.services.stores.Pages',
+    'kmsscan.services.stores.Rooms'
   ])
     .config(StateConfig)
     .controller('SettingsCtrl', SettingsController);
@@ -22,17 +33,21 @@
       });
   }
 
-  //syncIsActive
-  function SettingsController(Logger, $rootScope, settingsStoreService) {
+
+  function SettingsController(Logger, $rootScope, settingsStoreService, syncService, pagesStoreService, $ionicLoading) {
     var vm = this; // view-model
     var log = new Logger(namespace);
 
     vm.settings = {};
+    vm.isReady = isReady;
     vm.saveSettings = saveSettings;
     vm.onLanguageChange = onLanguageChange;
+    vm.syncContent = syncContent;
+    vm.destroyContent = destroyContent;
 
     activate();
-    ///////////////////////////////
+
+    ////////////////////////////////////////
     function activate() {
       $rootScope.$on('onLanguageChange', function (event, langKey) {
         vm.settings.language = angular.uppercase(langKey);
@@ -40,7 +55,24 @@
       settingsStoreService.get().then(function (settings) {
         log.debug('activate() - success', settings);
         vm.settings = settings;
+        $ionicLoading.hide();
       });
+    }
+
+    function destroyContent() {
+      $ionicLoading.show();
+      pagesStoreService.cleanHistory()
+        .then(function () {
+          activate();
+        });
+    }
+
+    function syncContent() {
+      syncService.run();
+    }
+
+    function isReady() {
+      return !$rootScope.syncIsActive && !vm.isPending;
     }
 
     function saveSettings() {

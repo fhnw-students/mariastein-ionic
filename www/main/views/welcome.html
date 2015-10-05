@@ -1,29 +1,21 @@
-<ion-view view-title="{{welcome.page.title}}">
+<ion-view view-title="{{'LABEL.WELCOME' | translate}}">
 
-    <ion-content class="padding">
+    <ion-content>
 
         <kms-spinner ng-hide="welcome.isReady()"></kms-spinner>
 
-        <div class="row responsive-sm" ng-if="welcome.isReady() && welcome.hasFailed">
-            <div class="card">
-              <div class="item item-divider">
-                Error
-              </div>
-              <div class="item item-text-wrap">
-                Not Found!!!
-              </div>
-            </div>
+        <div class="row responsive-lg" ng-if="!welcome.noContent && welcome.isReady() && !welcome.hasFailed">
+            <div class="col"><kms-image image-id="welcome.page.image[0]" width="100%"></kms-image></div>
+            <div class="col"><p ng-bind-html="welcome.page.content"></p></div>
         </div>
 
-        <div class="row responsive-sm" ng-if="welcome.isReady() && !welcome.hasFailed">
-            <kms-image image-id="welcome.page.image[0]" width="100%"></kms-image>
-            <br>
-            <p>{{welcome.page.content}}</p>
-        </div>
+        <kms-info-card message="MESSAGE.NO_CONTENT" ng-if="welcome.noContent">
+            <kms-update-content-button></kms-update-content-button>
+        </kms-info-card>
 
     </ion-content>
     
-    <ion-footer-bar class="footer-button" ng-show="welcome.isReady()">
+    <ion-footer-bar class="footer-button" ng-show="!welcome.noContent && welcome.isReady()">
         <kms-scan-button></kms-scan-button>
     </ion-footer-bar>
 
