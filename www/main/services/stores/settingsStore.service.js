@@ -17,7 +17,8 @@
     .module(namespace, [
       'pouchdb',
       'kmsscan.utils.Logger',
-      'kmsscan.utils.PouchDb'
+      'kmsscan.utils.PouchDb',
+      'pascalprecht.translate'
     ])
     .factory('settingsStoreService', SettingsStoreService);
 

@@ -126,7 +126,7 @@ describe('Unit: kmsscan.services.rest.Typo3', function () {
       };
 
       /* ######### Init test ######### */
-      $httpBackend.expectGET('httbowp://kloster-mariastein.business-design.ch/index.php?L=DE&id=138&type=5000').respond(roomsJsonDE);
+      $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/index.php?L=DE&id=138&type=5000').respond(roomsJsonDE);
 
       typo3Service.loadRooms('DE')
           .then(testResult)
