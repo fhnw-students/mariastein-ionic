@@ -1,10 +1,10 @@
 /**
- * @name Typo3 service test class
+ * @name RoomsStore service test class
  * @module kmsscan.services.stores.Rooms
  * @author Luca Indermuehle
  *
  * @description
- * This class tests the functionality of roomsStore.service.js
+ * This class tests the functionality of roomsStore.service.js with Unit-Tests
  */
 'use strict';
 describe('Unit: kmsscan.services.stores.Rooms', function () {
@@ -21,6 +21,9 @@ describe('Unit: kmsscan.services.stores.Rooms', function () {
 
     }));
 
+    /**
+     * Checks the correct structure like dependency injection.
+     */
     describe('Structure', function () {
         it('should contain an roomsStoreService',
             inject(function (roomsStoreService) {

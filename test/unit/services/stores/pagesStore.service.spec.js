@@ -1,10 +1,10 @@
 /**
- * @name Typo3 service test class
+ * @name PagesStore service test class
  * @module kmsscan.services.rest.Pages
  * @author Luca Indermuehle
  *
  * @description
- * This class tests the functionality of pagesStore.service.js
+ * This class tests the functionality of pagesStore.service.js with Unit-Tests
  */
 'use strict';
 describe('Unit: kmsscan.services.stores.Pages', function () {
@@ -21,6 +21,9 @@ describe('Unit: kmsscan.services.stores.Pages', function () {
 
   }));
 
+  /**
+   * Checks the correct structure like dependency injection.
+   */
   describe('Structure', function () {
     it('should contain an pageStoreService',
         inject(function (pagesStoreService) {
