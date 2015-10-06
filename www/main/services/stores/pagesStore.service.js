@@ -60,7 +60,10 @@
     return service;
 
     // PUBLIC ///////////////////////////////////////////////////////////////////////////////////////////
-
+    /**
+     * @name isEmpty
+     * @returns Promise<boolean>
+     */
     function isEmpty() {
       var deferred = $q.defer();
       pagesDb.allDocs({
@@ -106,11 +109,12 @@
     }
 
     /**
-     * @name
+     * @name getNewsBadgeInfos
      * @description
+     * This counts the unread news and returns the amount.
      *
      * @param langKey
-     * @returns {*}
+     * @returns { unread: Number }
      */
     function getNewsBadgeInfos(langKey) {
       return $q.all([
@@ -266,6 +270,13 @@
       return pouchDbUtilsService.destroyDb(pagesDb);
     }
 
+    /**
+     * @name cleanHistory
+     * @description
+     * Clears the history of scanned objects and news
+     *
+     * @returns {*}
+     */
     function cleanHistory() {
       return pouchDbUtilsService.destroyDb(historyDb).then(function () {
         _initHistoryDb();
@@ -274,12 +285,6 @@
     }
 
     // PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////
-    function _convertImages(docs) {
-      return docs.map(function (doc) {
-        return _convertImagesUidToPath(doc);
-      });
-    }
-
     function _convertImagesUidToPath(doc) {
       doc.image = doc.image.map(function (image) {
         return imagesService.getPath(image);
