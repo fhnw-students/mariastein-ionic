@@ -9,12 +9,12 @@
 'use strict';
 describe('Unit: kmsscan.services.stores.Pages', function () {
 
-  var pageStoreService, $httpBackend, $rootScope, $q;
+  var pagesStoreService, $httpBackend, $rootScope, $q;
   beforeEach(module('kmsscan.services.stores.Pages'));
 
 
-  beforeEach(inject(function (_pageStoreService_, _$httpBackend_, _$rootScope_, _$q_) {
-    pageStoreService = _pageStoreService_;
+  beforeEach(inject(function (_pagesStoreService_, _$httpBackend_, _$rootScope_, _$q_) {
+      pagesStoreService = _pagesStoreService_;
     $httpBackend = _$httpBackend_;
     $rootScope = _$rootScope_;
     $q = _$q_;
@@ -23,15 +23,15 @@ describe('Unit: kmsscan.services.stores.Pages', function () {
 
   describe('Structure', function () {
     it('should contain an pageStoreService',
-        inject(function (pageStoreService) {
-          expect(pageStoreService)
+        inject(function (pagesStoreService) {
+          expect(pagesStoreService)
               .not.to.equal(null);
         })
     );
 
     it('should return a factory->object',
-        inject(function (pageStoreService) {
-          expect(pageStoreService)
+        inject(function (pagesStoreService) {
+          expect(pagesStoreService)
               .to.be.a('object');
         })
     );

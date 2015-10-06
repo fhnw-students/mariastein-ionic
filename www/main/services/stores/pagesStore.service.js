@@ -19,7 +19,9 @@
       'kmsscan.utils.Logger',
       'kmsscan.utils.Helpers',
       'kmsscan.utils.PouchDb',
-      'kmsscan.directives.Image'
+      'kmsscan.directives.Image',
+      'kmsscan.translateConfig',
+      'pascalprecht.translate'
     ])
     .factory('pagesStoreService', PagesStoreService);
 
