@@ -4,7 +4,7 @@
  * @author Gery Hirschfeld
  *
  * @description
- * This Service Class handel's all the ajax requestto the typo3 backend.
+ * This Service Class handel's all the ajax requests the typo3 backend.
  *
  */
 (function () {
@@ -178,62 +178,6 @@
       }
       return a;
     }
-
-    //function _parseRooms(data) {
-    //  var rooms = data
-    //    .map(function (room) {
-    //      room.image = _parseImage(room.image);
-    //      return room;
-    //    })
-    //    .map(function (room) {
-    //      room.previewImageUid = _getImageByTitle(room.image, 'preview');
-    //      room.mapImageUid = _getImageByTitle(room.image, 'map');
-    //      delete room.image;
-    //      return room;
-    //    });
-    //  return rooms;
-    //}
-    //
-    //function _getImageByTitle(images, title) {
-    //  images = images.filter(function (image) {
-    //    return image.originalResource.title === title;
-    //  });
-    //  var image = (images.length > 0) ? images[0] : undefined;
-    //  return (image) ? image.uid : image;
-    //}
-    //
-    //function _parseImages(data) {
-    //  var images = [];
-    //  for (var i = 0; i < data.length; i++) {
-    //    for (var n = 0; n < data[i].image.length; n++) {
-    //      if (data[i].image[n]) {
-    //        images.push(data[i].image[n]);
-    //      }
-    //    }
-    //  }
-    //  return _.uniq(images, function (item) {
-    //    return item.uid;
-    //  });
-    //}
-    //
-    //function _parseImagesFromRooms(data) {
-    //  var roomsWithImages = data.map(function (obj) {
-    //    return obj.image;
-    //  })
-    //    .map(function (image) {
-    //      return _parseImage(image);
-    //    });
-    //
-    //  var images = [];
-    //  for (var r = roomsWithImages.length - 1; r >= 0; r--) {
-    //    for (var i = roomsWithImages[r].length - 1; i >= 0; i--) {
-    //      images.push(roomsWithImages[r][i]);
-    //    }
-    //  }
-    //
-    //  return _.uniq(images, function (item) {
-    //    return item.uid;
-    //  });
-    //}
+    
   }
 })();

@@ -32,13 +32,12 @@
      * @returns Array
      */
     function parsePagesFromTypo3Response(responses) {
-      var pages = responses
+      return responses
         .filter(_filterPageResponses)
         .map(_parseImages)
         .map(_parseRooms)
         .map(_setLanguageKey)
         .map(_parseTexts);
-      return pages;
     }
 
     /**
@@ -48,7 +47,7 @@
      */
     function parseRoomsFromTypo3Response(responses) {
       var pages = responses[0];
-      var rooms = responses
+      return responses
         .filter(_filterRoomsResponses)
         .map(function (rooms) {
           return rooms.map(function (room) {
@@ -63,7 +62,6 @@
         })
         .map(_setLanguageKey)
         .map(_parseTexts);
-      return rooms;
     }
 
     /**
@@ -162,19 +160,5 @@
       })
       .join('');
   }
-
-  //function parseImages(results) {
-  //  results = results
-  //    .filter(function (item) {
-  //      return _.isArray(item);
-  //    });
-  //  var images = {};
-  //  for (var l = 0; l < results.length; l++) {
-  //    for (var c = 0; c < results[l].length; c++) {
-  //      images[results[l][c].uid] = results[l][c].originalResource.publicUrl;
-  //    }
-  //  }
-  //  return images;
-  //}
 
 }());

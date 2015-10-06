@@ -4,7 +4,7 @@
  * @author Gerhard Hirschfeld
  *
  * @description
- * TODO
+ * This service coordinated the synchronisation with the backend.
  *
  */
 (function () {
@@ -42,7 +42,8 @@
     /**
      * @name run
      * @description
-     * TODO
+     * This is the main method of this service and starts the synchronisation. It will open a modal
+     * with a spinner and some loading infos.
      */
     function run() {
       $rootScope.syncIsActive = true;

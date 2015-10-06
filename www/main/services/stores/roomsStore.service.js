@@ -92,9 +92,7 @@
      * This method is called by app.run.js for the synchronisation. It parses the images of
      * the pages and rooms. Afterwards it downloads the images from the typo3 backend.
      *
-     * @param langKey String
-     * @param idx Number
-     * @param data Array<Object>
+     * @param rooms Array<Object>
      * @returns deferred.promise|{then, always} rooms
      */
     function sync(rooms) {
