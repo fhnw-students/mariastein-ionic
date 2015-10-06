@@ -1,6 +1,6 @@
 {
   "name": "mariastein-ionic",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0",
   "description": "Applikation des Klosters Mariastein - Einblick und Hintergründe für Besucher",
   "private": "true",
   "devDependencies": {
