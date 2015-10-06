@@ -40,7 +40,7 @@
     "TUTORIALMAP":  "In questa schermata è possibile visualizzare la pianta del monastero",
     "TUTORIALMENU":  "Il suddeto simbolo allocato sulla barra superione, si naviga attraverso il menu e l'applicazione stessa.",
     "TUTORIALMORE":  "Questa è la visualizzazione abbreviata. <br> Selezionando \"estendi\" è possibile leggere maggiori contenuti.",
-    "TUTORIALSCAN":  "Attraverso questa schermata è possibile effettuare scansioni di codici QR.",
+    "TUTORIALSCAN":  "Attraverso questa schermata è possibile effettuare scansioni di codici QR.<br>La scansione deve essere effettuata in angolo retto al codice.",
     "TUTORIALSETTINGSMUSIC":  "Permette l'attivazione e disattivazione del suono. Da utilizzare unicamente con cuffie all'interno delle aree del monastero.",
     "TUTORIALSETTINGSVIBRATION":  "Attiva o disattiva la funzione vibratoria dopo successiva scansione del codie QR.",
     "TUTORIALSETTINGSZOOMING":  "Permette l'impostazione della Funzione d'ingrandimento del Testo.",
