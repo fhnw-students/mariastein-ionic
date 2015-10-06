@@ -16,17 +16,19 @@
 3. Install XCode and Android Studio for the Native-Development
 
 #### Install Ionic and Node Env
-1. Install Ionic ```$ npm install -g cordova ionic gulp```
+1. Install Ionic and some NodeJs modules globally ```$ npm install -g cordova ionic gulp```
 
 ### Run App
 #### Update Third-Party-Libs
 1. Open your Terminal and navigate to the project folder
-2. Install Node-Modules ```$ npm install```
+2. Install local NodeJS modules ```$ npm install```
 3. Install Bower-Components ```$ bower install```
+  - Use AngularJS Version 1.3.13
 4. Install Cordova-Plugins and platforms ```$ ionic state restore```
 
 #### Start App
 - **Browser** Run ```$ ionic serve```
+  - Activate the Google Chrome Extension **Allow-Control-Allow-Origin**
 - **IOS-Simulator** Run ```$ ionic emulate ios```
 - **Android-Simulator** Run ```$ ionic emulate android```
 For more information use ```$ ionic --help```
