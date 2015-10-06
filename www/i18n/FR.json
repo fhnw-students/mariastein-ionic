@@ -40,7 +40,7 @@
     "TUTORIALMAP":  "par cette option du menu, vous pouvez voir le plan du monastère.",
     "TUTORIALMENU":  "par ce symbole qui se trouve en haut à droite, on peut ouvrir le menu pour naviguer sur toute l'aplication et adapter les réglages",
     "TUTORIALMORE":  "Ceci est seulement le texte abrégé.<br> Cliquez sur \"plus\" en bleu pour afficher la description détaillée",
-    "TUTORIALSCAN":  "Par cette option du menu, vous pouvez scanner le code QR.",
+    "TUTORIALSCAN":  "Par cette option du menu, vous pouvez scanner le code QR.<br>Respectez de scanner le code QR à niveau.",
     "TUTORIALSETTINGSMUSIC":  "active ou désactive le son. (Utilisez le son seulement avec les écouteurs à l'intérieur du monastère, s'il vous plaît.)",
     "TUTORIALSETTINGSVIBRATION":  "active et désactive l'affirmation de le vibreur au scan du code QR réussi.",
     "TUTORIALSETTINGSZOOMING":  "active e désactive la fonction pour zoomer le texte/ du texte-zoom.",

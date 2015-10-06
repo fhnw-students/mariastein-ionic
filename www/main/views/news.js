@@ -1,3 +1,11 @@
+/**
+ * @module kmsscan.views.News
+ * @author David Heimgartner
+ *
+ * @description
+ * This view lists the news. Unread news are shown bold.
+ *
+ */
 (function () {
   'use strict';
 
@@ -24,7 +32,7 @@
         });
   }
 
-  function NewsController($q, $scope, $rootScope, Logger, pagesStoreService, settingsStoreService) {
+  function NewsController($scope, $rootScope, Logger, pagesStoreService, settingsStoreService) {
     var log = new Logger(namespace);
     var vm = this; // view-model
     vm.isPending = true;
@@ -72,10 +80,6 @@
 
     function isUnread(doc) {
       return doc.visitedAt === undefined;
-    }
-
-    function formatDate(date) {
-      return moment(date).format();
     }
 
   }
