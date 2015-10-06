@@ -13,7 +13,8 @@
 
   angular
     .module('kmsscan.utils.Helpers', [
-      'kmsscan.translateConfig'
+      'kmsscan.translateConfig',
+      'pascalprecht.translate'
     ])
     .factory('helpersUtilsService', HelpersUtilsService);
 

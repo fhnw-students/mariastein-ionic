@@ -8,7 +8,9 @@
 (function () {
   'use strict';
 
-  angular.module('kmsscan.translateConfig', [])
+  angular.module('kmsscan.translateConfig', [
+      'pascalprecht.translate'
+  ])
     .constant('languagesConstant', new Languages())
     .config(TranslateConfig);
 

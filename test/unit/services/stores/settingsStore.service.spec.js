@@ -1,10 +1,10 @@
 /**
- * @name Settings service test class
+ * @name SettingsStore service test class
  * @module kmsscan.services.stores.Settings
  * @author Luca Indermuehle
  *
  * @description
- * This class tests the functionality of settingsStore.service.js
+ * This class tests the functionality of settingsStore.service.js with Unit-Tests
  */
 'use strict';
 describe('Unit: kmsscan.services.stores.Settings', function () {
@@ -21,6 +21,9 @@ describe('Unit: kmsscan.services.stores.Settings', function () {
 
     }));
 
+    /**
+     * Checks the correct structure like dependency injection.
+     */
     describe('Structure', function () {
         it('should contain an settingsStoreService',
             inject(function (settingsStoreService) {

@@ -4,7 +4,7 @@
  * @author Luca Indermuehle
  *
  * @description
- * This class tests the functionality of typo3.service.js
+ * This class tests the functionality of typo3.service.js with Unit-Tests
  */
 'use strict';
 describe('Unit: kmsscan.services.rest.Typo3', function () {
@@ -21,6 +21,9 @@ describe('Unit: kmsscan.services.rest.Typo3', function () {
 
   }));
 
+  /**
+   * Checks the correct structure like dependency injection.
+   */
   describe('Structure', function () {
     it('should contain an typo3Service',
       inject(function (typo3Service) {
@@ -38,14 +41,14 @@ describe('Unit: kmsscan.services.rest.Typo3', function () {
   });
 
   /**
-   * tests the public api from the typo3 service
+   * Checks the public API from the typo3 service
    */
   describe('Public API', function () {
 
     it('typo3Service.loadPages(DE) - should return a correct json response with pages', function(done) {
 
       /* ######### Init test ######### */
-      $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000&L=DE&id=136&type=5000').respond(pagesJsonDE);
+      $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/index.php?L=DE&id=137&type=5000').respond(pagesJsonDE);
 
       typo3Service.loadPages('DE')
         .then(testResult)
@@ -77,7 +80,7 @@ describe('Unit: kmsscan.services.rest.Typo3', function () {
     it('typo3Service.loadPages(FR) - should return a correct french json response with the pages', function(done) {
 
       /* ######### Init test ######### */
-      $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/index.php?id=136&type=5000&L=FR&id=136&type=5000').respond(pagesJsonFR);
+      $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/index.php?L=FR&id=137&type=5000').respond(pagesJsonFR);
 
       typo3Service.loadPages('FR')
           .then(testResult)
@@ -109,11 +112,11 @@ describe('Unit: kmsscan.services.rest.Typo3', function () {
 
       /* ######### verify result ######### */
       var testResult = function(res) {
-        expect(res.images.length).to.be.equal(2);
-        expect(res.rooms.length).to.be.equal(1);
+        expect(res[0].image.length).to.be.equal(2);
+        //expect(res.rooms.length).to.be.equal(1);
 
         // Stichkontrollen beim einigen Eintraegen
-        expect(res.rooms[0].title).to.be.equal("Raum 1")
+        //expect(res.rooms[0].title).to.be.equal("Raum 1")
       };
 
       var failTest = function(error) {
@@ -123,7 +126,7 @@ describe('Unit: kmsscan.services.rest.Typo3', function () {
       };
 
       /* ######### Init test ######### */
-      $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json?L=DE').respond(roomsJsonDE);
+      $httpBackend.expectGET('httbowp://kloster-mariastein.business-design.ch/index.php?L=DE&id=138&type=5000').respond(roomsJsonDE);
 
       typo3Service.loadRooms('DE')
           .then(testResult)
@@ -143,7 +146,7 @@ describe('Unit: kmsscan.services.rest.Typo3', function () {
   it('typo3Service.loadRooms(IT) - should return a correct json response with rooms', function(done) {
 
     /* ######### Init test ######### */
-    $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/routing/klomaapp/room/json?L=IT').respond(roomsJsonIT);
+    $httpBackend.expectGET('http://kloster-mariastein.business-design.ch/index.php?L=IT&id=138&type=5000').respond(roomsJsonIT);
 
     typo3Service.loadRooms('IT')
         .then(testResult)

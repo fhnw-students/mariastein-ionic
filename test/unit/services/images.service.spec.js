@@ -7,7 +7,7 @@
  * @author Luca Indermuehle
  *
  * @description
- * This class tests the functionality of images.service.js
+ * This class tests the functionality of images.service.js with Unit-Tests
  */
 'use strict';
 describe('Unit: kmsscan.services.Images', function () {
@@ -24,6 +24,9 @@ describe('Unit: kmsscan.services.Images', function () {
 
     }));
 
+    /**
+     * Checks the correct structure like dependency injection.
+     */
     describe('Structure', function () {
         it('should contain an imagesService',
             inject(function (imagesService) {
