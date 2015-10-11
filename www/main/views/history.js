@@ -1,3 +1,11 @@
+/**
+ * @module kmsscan.views.History
+ * @author Gerhard Hirschfeld
+ *
+ * @description
+ * This view lists all scanned objects. 
+ *
+ */
 (function () {
   'use strict';
 
