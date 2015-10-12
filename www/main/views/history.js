@@ -3,7 +3,7 @@
  * @author Gerhard Hirschfeld
  *
  * @description
- * This view lists all scanned objects. 
+ * This view lists all scanned objects.
  *
  */
 (function () {
