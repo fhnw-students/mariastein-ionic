@@ -68,7 +68,6 @@
           if (vm.settings.isPristine) {
             vm.startSlide = 0;
           }
-          alert(vm.startSlide);
           $ionicSlideBoxDelegate.slide(vm.startSlide);
           $ionicSlideBoxDelegate.start();
           vm.settings.isPristine = false;
